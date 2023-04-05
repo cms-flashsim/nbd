@@ -1,9 +1,9 @@
 # define the dictionaries of objects to be simulated and their parameters
-from extraction.electrons import electrons 
-from models.electrons.geneleeff import ElectronClassifier
-from models.electrons.fromgenele import load_mixture_model
-from postprocessing.electrons.columns_ele_old import ele_cond, reco_columns
-from postprocessing.electrons.post_actions_ele_old import vars_dictionary
+from nbd.extraction.electrons import electrons 
+from nbd.models.electrons.geneleeff import ElectronClassifier
+from nbd.models.electrons.fromgenele import load_mixture_model
+from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns
+from nbd.postprocessing.electrons.post_actions_ele_old import vars_dictionary
 
 
 objs_dicts = {

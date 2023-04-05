@@ -8,7 +8,7 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import nbd.builder.object_simulator as object_simulator
-from objs_dicts import objs_dicts
+from nbd.builder.objs_dicts import objs_dicts
 
 
 def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=1000):

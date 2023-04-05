@@ -14,12 +14,6 @@ from pathlib import Path
 import sys
 import os
 
-dirpath = os.path.dirname(__file__)
-
-sys.path.insert(0, os.path.join(dirpath, "..", "utils"))
-from masks import create_block_binary_mask, create_identity_mask
-from permutations import BlockPermutation, IdentityPermutation
-
 from nflows.transforms.base import Transform
 from nflows.transforms.autoregressive import AutoregressiveTransform
 from nflows.transforms import made as made_module

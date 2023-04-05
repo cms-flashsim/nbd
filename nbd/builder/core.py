@@ -7,8 +7,8 @@ import uproot
 import awkward as ak
 import pandas as pd
 import torch
-from ..utils.gendataset import GenDataset
-from ..postprocessing.postprocessing import postprocessing
+from nbd.utils.gendataset import GenDataset
+from nbd.postprocessing.postprocessing import postprocessing
 
 # from ..models.electrons.geneleeff import ElectronClassifier
 from torch.utils.data import DataLoader

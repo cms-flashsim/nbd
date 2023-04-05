@@ -7,7 +7,7 @@ import awkward as ak
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
-import core
+import nbd.builder.core as core
 
 
 def simulator(
