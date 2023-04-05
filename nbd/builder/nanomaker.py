@@ -20,6 +20,7 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=1
     full_columns = list(full.GetColumnNames())
 
     a_full = ak.from_rdataframe(full, columns=full_columns)
+    print('done')
 
     flash_list = []
     for i in range(len(objects_keys)):
