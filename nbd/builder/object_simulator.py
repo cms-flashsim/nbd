@@ -29,7 +29,9 @@ def simulator(
 
     # extract
     rdf_ass = derived_vars_func(rdf)
+    print("done 2")
     a_gen_data = ak.from_rdataframe(rdf_ass, columns=gen_columns)
+    print("done 3")
 
     model_i = model(len(gen_columns))
     to_flash, reco_struct = core.select_gen(
