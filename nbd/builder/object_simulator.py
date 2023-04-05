@@ -31,8 +31,9 @@ def simulator(
     rdf_ass = derived_vars_func(rdf)
     a_gen_data = ak.from_rdataframe(rdf_ass, columns=gen_columns)
 
+    model_i = model(len(gen_columns))
     to_flash, reco_struct = core.select_gen(
-        a_gen_data, gen_columns, model, model_path, device, eff, batch_size=batch_size,
+        a_gen_data, gen_columns, model_i, model_path, device, eff, batch_size=batch_size,
     )
 
     a_flash = core.flash_simulate(
