@@ -29,13 +29,13 @@ from nflows.transforms.splines.quadratic import (
 #    rational_quadratic_spline,
 #    unconstrained_rational_quadratic_spline,)
 
-from modded_spline import (
+from nbd.models.modded_nflows.modded_spline import (
     unconstrained_rational_quadratic_spline,
     rational_quadratic_spline,
 )
 # import .modded_nflows.modded_spline
-from ..modded_nflows import modded_spline
-from ..modded_nflows.modded_base_flow import FlowM
+from nbd.models.modded_nflows import modded_spline
+from nbd.models.modded_nflows.modded_base_flow import FlowM
 from nflows.utils import torchutils
 
 # from nflows.transforms import splines
