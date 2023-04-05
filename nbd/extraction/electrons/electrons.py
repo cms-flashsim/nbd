@@ -72,7 +72,7 @@ def extractGenElectronFeatures(df):
         .Define("GenElectron_eta", "GenPart_eta[GenElectronMask]")
         .Define("GenElectron_phi", "GenPart_phi[GenElectronMask]")
         .Define("GenElectron_pdgId", "GenPart_pdgId[GenElectronMask]")
-        .Define("GenElectron_charge", "GenPart_charge[GenElectronMask]")
+        .Define("GenElectron_charge", "charge(GenElectron_pdgId)")
         .Define("GenElectron_statusFlags", "GenPart_statusFlags[GenElectronMask]")
         .Define("GenElectron_statusFlag0", "BitwiseDecoder(GenElectron_statusFlags, 0)")
         .Define("GenElectron_statusFlag1", "BitwiseDecoder(GenElectron_statusFlags, 1)")
