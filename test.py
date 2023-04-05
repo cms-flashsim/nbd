@@ -20,11 +20,12 @@ if __name__ == "__main__":
         for f in os.listdir(os.path.join(root_nano, d))
     ]
 
-    files_paths = files_paths[3:4]
+    files_paths = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"
+    # files_paths[3:4]
 
     print(f"We will process a total of {len(files_paths)} files")
 
     # generation loop
     for path in tqdm(files_paths):
         path_str = str(path)
-        nanomaker(path_str, "null", ['Electron'], device="cuda:0",  limit=1000)
+        nanomaker(path_str, "null", ["Electron"], device="cuda:0", limit=1000)
