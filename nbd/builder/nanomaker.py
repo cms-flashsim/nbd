@@ -41,5 +41,5 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=1
 
     merged = ak.zip(total, depth_limit=1)
     to_file = ak.to_rdataframe(merged)
-    to_file.Snapshot("Events", new_file_path)
+    to_file.Snapshot("Events", "~/test.root")
     # a_full.to_root("output.root", treename="Events")

@@ -16,10 +16,9 @@ objs_dicts = {
     "gen_columns": ele_cond,
     "reco_columns": reco_columns,
     "vars_dictionary": vars_dictionary,
-    "scale_file_path": "../postprocessing/electrons/scale_factors_ele_old.json",
-    "device":"cuda:0",
+    "scale_file_path": "nbd/postprocessing/electrons/scale_factors_ele_old.json",
     "batch_size":10000,
-    "saturate_ranges_path": "../postprocessing/electrons/saturate_ranges_ele_old.json",
+    "saturate_ranges_path": "nbd/postprocessing/electrons/saturate_ranges_ele_old.json",
     "eff":True,
     }
 }
