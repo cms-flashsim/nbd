@@ -1,5 +1,7 @@
 // utilities for electrons
+#ifndef UTILS_ELE_H
 #define UTILS_ELE_H
+
 
 auto closest_jet_dr(ROOT::VecOps::RVec<float> &etaj,
                     ROOT::VecOps::RVec<float> &phij,
