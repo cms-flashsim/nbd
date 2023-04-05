@@ -31,7 +31,7 @@ def simulator(
     rdf_ass = derived_vars_func(rdf)
     a_gen_data = ak.from_rdataframe(rdf_ass, columns=gen_columns)
 
-    to_flash, reco_struct, a_eff_mask = core.select_gen(
+    to_flash, reco_struct = core.select_gen(
         a_gen_data, gen_columns, model, model_path, device, eff, batch_size=batch_size,
     )
 
@@ -48,5 +48,8 @@ def simulator(
         batch_size=10000,
         saturate_ranges_path=saturate_ranges_path,
     )
+    # temporary fix to change charges
+    charges = ak.unflatten(to_flash.GenElectron_charge, reco_struct)
+    a_flash["Electron_charges"] = charges
 
-    return a_flash, a_eff_mask
+    return a_flash

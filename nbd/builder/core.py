@@ -55,8 +55,7 @@ def select_gen(a_gen, columns, model, model_path, device="cpu", eff=True, batch_
     # drop mask column
     to_flash = to_flash.drop(columns=["Mask"])
 
-    return to_flash, reco_struct, a_eff_mask
-
+    return to_flash, reco_struct
 
 def flash_simulate(
     flow_loader,
@@ -131,7 +130,7 @@ def flash_simulate(
     total = np.concatenate((tot_sample, leftover_sample), axis=0)
 
     total = pd.DataFrame(total, columns=reco_columns)
-    total = postprocessing(total, vars_dictionary, scale_file_path, saturate_ranges_path)
+    total = postprocessing(total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path)
 
     d = dict(zip(reco_columns, total.values.T))
 

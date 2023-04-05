@@ -8,6 +8,16 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 
+def multiply_by_gen(df, gen_df, column_name, gen_column_name):
+    df[column_name] = df[column_name] * gen_df[gen_column_name]
+    return df[column_name]
+
+
+def add_gen(df, gen_df, column_name, gen_column_name):
+    df[column_name] = df[column_name] + gen_df[gen_column_name]
+    return df[column_name]
+
+
 def restore_range(column_name, scale_dict, df):
     """
     Restore data range to the original value before dividing by max
@@ -50,7 +60,7 @@ def cut_unsmearing(df, column_name, cut, x1, x2):
     return df[column_name]
 
 
-def process_column_var(column_name, operations, df):
+def process_column_var(column_name, operations, df, gen_df):
 
     for op in operations:
 
@@ -68,12 +78,22 @@ def process_column_var(column_name, operations, df):
             p = op[2]
             df[column_name] = inverse_transform(df, column_name, function, p)
 
+        elif op[0] == "m":
+            gen_column_name = op[1]
+            df[column_name] = multiply_by_gen(df, gen_df, column_name, gen_column_name)
+
+        elif op[0] == "a":
+            gen_column_name = op[1]
+            df[column_name] = add_gen(df, gen_df, column_name, gen_column_name)
+
         else:
             return df[column_name]
     return df[column_name]
 
 
-def postprocessing(df, vars_dictionary, scale_file_path, saturate_ranges_path=None):
+def postprocessing(
+    df, gen_df, vars_dictionary, scale_file_path, saturate_ranges_path=None
+):
     """
     Postprocessing general function given any dataframe and its dictionary
     """
@@ -83,7 +103,7 @@ def postprocessing(df, vars_dictionary, scale_file_path, saturate_ranges_path=No
 
     for column_name, operation in vars_dictionary.items():
         df[column_name] = restore_range(column_name, scale_dict, df)
-        df[column_name] = process_column_var(column_name, operation, df)
+        df[column_name] = process_column_var(column_name, operation, df, gen_df)
 
     # df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
     if saturate_ranges_path != None:

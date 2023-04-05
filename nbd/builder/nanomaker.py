@@ -7,33 +7,39 @@ import awkward as ak
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
+import object_simulator
+from objs_dicts import objs_dicts
 
 
+def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=1000):
 
-if __name__=='__main__':
-
-    full = ROOT.RDataFrame("Events", "")
+    if limit is not None:
+        full = ROOT.RDataFrame("Events", file_path).Range(limit)
+    else:
+        full = ROOT.RDataFrame("Events", file_path)
     full_columns = full.GetColumnNames()
-
-    # extract
-    # 
-
 
     a_full = ak.from_rdataframe(full, columns=full_columns)
 
-    a_data = ak.from_rdataframe(full)
+    flash_list = []
+    for i in range(len(objects_keys)):
+        a_flash = object_simulator.simulator(
+            full,
+            device=device,
+            **objs_dicts[i]
+        )
 
-    a_flash = flash_simulate(
-        flow_loader,
-        model_path,
-        to_flash,
-        gen_columns,
-        reco_columns,
-        vars_dictionary,
-        scale_file,
-        reco_struct,
-    )
+        flash_list.append(a_flash)
 
-    a_full = ak.concatenate([a_full, a_flash], axis=1)
+    # explicit check on dict keys
+    # merge same type of reco on the evet with ak.concatenate (for flash)
+    dict_1 = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
+    for i in range(len(objects_keys)):
+        dict_2 = dict(zip(flash_list[i].fields, [flash_list[i][field] for field in flash_list[i].fields]))
+        total = dict_1 | dict_2
+        dict_1 = total
 
-    a_full.to_root('output.root', treename='Events
+    merged = ak.zip(total, depth_limit=1)
+    to_file = ak.to_rdataframe(merged)
+    to_file.Snapshot("Events", new_file_path)
+    # a_full.to_root("output.root", treename="Events")
