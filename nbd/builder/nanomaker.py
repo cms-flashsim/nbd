@@ -7,7 +7,7 @@ import awkward as ak
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
-import object_simulator
+import nbd.builder.object_simulator as object_simulator
 from objs_dicts import objs_dicts
 
 

@@ -27,4 +27,4 @@ if __name__ == "__main__":
     # generation loop
     for path in tqdm(files_paths):
         path_str = str(path)
-        nanomaker(path_str, "null", objs_dicts, device="cuda:0",  limit=1000)
+        nanomaker(path_str, "null", ['Electron'], device="cuda:0",  limit=1000)
