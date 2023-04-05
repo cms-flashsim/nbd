@@ -12,12 +12,12 @@ from nbd.builder.objs_dicts import objs_dicts
 
 if __name__ == "__main__":
 
-    root = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
+    root_nano = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
     new_root = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1/"
     files_paths = [
         os.path.join(d, f)
-        for d in os.listdir(root)
-        for f in os.listdir(os.path.join(root, d))
+        for d in os.listdir(root_nano)
+        for f in os.listdir(os.path.join(root_nano, d))
     ]
 
     files_paths = files_paths[3:4]
