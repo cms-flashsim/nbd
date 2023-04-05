@@ -64,6 +64,8 @@ def extractGenElectronFeatures(df):
         rdataframe: expanded df
     """
 
+    df = cleanGenJetCollection(df)
+
     extracted = (
         df.Define("GenElectronMask", "abs(GenPart_pdgId == 11)")
         .Define("GenElectron_pt", "GenPart_pt[GenElectronMask]")

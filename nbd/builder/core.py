@@ -8,6 +8,7 @@ import awkward as ak
 import pandas as pd
 import torch
 from ..utils.gendataset import GenDataset
+from ..postprocessing.postprocessing import postprocessing
 
 # from ..models.electrons.geneleeff import ElectronClassifier
 from torch.utils.data import DataLoader
@@ -34,15 +35,15 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
     return mask
 
 
-def select_gen(a_data, columns, model, model_path, device="cpu", eff=True):
+def select_gen(a_gen, columns, model, model_path, device="cpu", eff=True, batch_size=10000):
 
-    a_gen = a_data[columns]
+    # a_gen = a_data[columns]
     ev_struct = ak.num(a_gen[columns[0]])
 
     df_gen = ak.to_dataframe(a_gen).reset_index(drop=True)
 
     if eff:
-        eff_mask = compute_efficiency(model, model_path, df_gen, device)
+        eff_mask = compute_efficiency(model, model_path, df_gen, device, batch_size=batch_size)
     else:
         eff_mask = np.ones(len(df_gen), dtype=bool)
 
@@ -64,10 +65,11 @@ def flash_simulate(
     gen_columns,
     reco_columns,
     vars_dictionary,
-    scale_file,
+    scale_file_path,
     reco_struct,
     device="cpu",
     batch_size=10000,
+    saturate_ranges_path=None,
 ):
 
     dataset = GenDataset(to_flash, gen_columns).to(device)
@@ -129,9 +131,7 @@ def flash_simulate(
     total = np.concatenate((tot_sample, leftover_sample), axis=0)
 
     total = pd.DataFrame(total, columns=reco_columns)
-    total = postprocessing(total, vars_dictionary, scale_file)
-
-    # saturation?
+    total = postprocessing(total, vars_dictionary, scale_file_path, saturate_ranges_path)
 
     d = dict(zip(reco_columns, total.values.T))
 

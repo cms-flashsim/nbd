@@ -7,33 +7,46 @@ import awkward as ak
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
+import core
 
 
-
-if __name__=='__main__':
-
-    full = ROOT.RDataFrame("Events", "")
-    full_columns = full.GetColumnNames()
+def simulator(
+    rdf,
+    derived_vars_func,
+    model,
+    model_path,
+    flow_loader,
+    flow_path,
+    gen_columns,
+    reco_columns,
+    vars_dictionary,
+    scale_file_path,
+    device="cpu",
+    batch_size=10000,
+    saturate_ranges_path=None,
+    eff=True,
+):
 
     # extract
-    # 
+    rdf_ass = derived_vars_func(rdf)
+    a_gen_data = ak.from_rdataframe(rdf_ass, columns=gen_columns)
 
+    to_flash, reco_struct, a_eff_mask = core.select_gen(
+        a_gen_data, gen_columns, model, model_path, device, eff, batch_size=batch_size,
+    )
 
-    a_full = ak.from_rdataframe(full, columns=full_columns)
-
-    a_data = ak.from_rdataframe(full)
-
-    a_flash = flash_simulate(
+    a_flash = core.flash_simulate(
         flow_loader,
-        model_path,
+        flow_path,
         to_flash,
         gen_columns,
         reco_columns,
         vars_dictionary,
-        scale_file,
+        scale_file_path,
         reco_struct,
+        device="cpu",
+        batch_size=10000,
+        saturate_ranges_path=saturate_ranges_path,
     )
 
-    a_full = ak.concatenate([a_full, a_flash], axis=1)
-
-    a_full.to_root('output.root', treename='Events
+    return a_flash, a_eff_mask
