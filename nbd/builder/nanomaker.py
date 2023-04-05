@@ -17,7 +17,7 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=1
         full = ROOT.RDataFrame("Events", file_path).Range(limit)
     else:
         full = ROOT.RDataFrame("Events", file_path)
-    full_columns = full.GetColumnNames()
+    full_columns = list(full.GetColumnNames())
 
     a_full = ak.from_rdataframe(full, columns=full_columns)
 
