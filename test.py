@@ -7,8 +7,8 @@ import torch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models"))
 
-from nbd.builder.nanomaker import nanomaker
-from nbd.builder.objs_dicts import objs_dicts
+from local_nbd.builder.nanomaker import nanomaker
+from local_nbd.builder.objs_dicts import objs_dicts
 
 if __name__ == "__main__":
     print("Starting the generation of new events")
