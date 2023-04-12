@@ -2,4 +2,7 @@
 
 import setuptools
 
-setuptools.setup()
+setuptools.setup(
+     name='localnbd',  
+     version='0.1',
+ )
