@@ -3,6 +3,6 @@
 import setuptools
 
 setuptools.setup(
-     name='localnbd',  
+     name='nbd',  
      version='0.1',
  )
