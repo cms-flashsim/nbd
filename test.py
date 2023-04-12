@@ -11,6 +11,7 @@ from nbd.builder.nanomaker import nanomaker
 from nbd.builder.objs_dicts import objs_dicts
 
 if __name__ == "__main__":
+    print("Starting the generation of new events")
     # root_nano = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
     # new_root = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1/"
     # files = [
