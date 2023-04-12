@@ -20,6 +20,8 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=N
     print(full)
     full_columns_list = list(full.GetColumnNames())
     print(type(full_columns_list))
+    for col in full_columns_list:
+        print(type(col))
     print("columns read")
     full_columns = list((str(col) for col in full_columns_list))
     print(full_columns)
