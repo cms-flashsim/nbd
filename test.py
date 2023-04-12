@@ -21,6 +21,7 @@ if __name__ == "__main__":
 
     files_paths = [os.path.join(root_nano, f) for f in files]
     files_paths = files_paths[:1]
+    print(files_paths)
     print(f"We will process a total of {len(files_paths)} files")
 
     # generation loop
