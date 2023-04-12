@@ -16,6 +16,8 @@ full = ROOT.RDataFrame("Events", path).Range(10)
 
 full_columns_list = list(full.GetColumnNames())
 print(full_columns_list[:2])
+for col in full_columns_list:
+    print(type(col))
 # full_columns = list((str(col) for col in full_columns_list))
 
 # print(full_columns)
