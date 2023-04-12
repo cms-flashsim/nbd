@@ -19,10 +19,12 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=N
         full = ROOT.RDataFrame("Events", file_path)
     print(full)
     full_columns_list = list(full.GetColumnNames())
-    print(full_columns_list[0])
+    print(type(full_columns_list))
     print("columns read")
     full_columns = list((str(col) for col in full_columns_list))
     print(full_columns)
+    tmp = np.array(full_columns)
+    print(tmp.shape)
 
     a_full = ak.from_rdataframe(full, columns=["Electron_pt", "Electron_eta"])
     print("Done")
