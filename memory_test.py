@@ -15,10 +15,10 @@ full = ROOT.RDataFrame("Events", path).Range(10)
 
 full_columns_list = list(full.GetColumnNames())
 
-full_columns = (str(col) for col in full_columns_list)
+full_columns = list((str(col) for col in full_columns_list))
 
 print(full_columns)
 
 a_full = ak.from_rdataframe(full, columns=full_columns)
 
-print(a_full.fields)
+# print(a_full.fields)
