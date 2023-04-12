@@ -11,7 +11,7 @@ import nbd.builder.object_simulator as object_simulator
 from nbd.builder.objs_dicts import objs_dicts
 
 
-def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=10):
+def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=None):
 
     if limit is not None:
         full = ROOT.RDataFrame("Events", file_path).Range(limit)
