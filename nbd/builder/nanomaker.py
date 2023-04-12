@@ -17,12 +17,12 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=N
         full = ROOT.RDataFrame("Events", file_path).Range(limit)
     else:
         full = ROOT.RDataFrame("Events", file_path)
-    full_columns = list(full.GetColumnNames())
+    full_columns_list = list(full.GetColumnNames())
 
-    full_columns = [str(col) for col in full_columns]
+    full_columns = [str(col) for col in full_columns_list]
 
     a_full = ak.from_rdataframe(full, columns=full_columns)
-    print('done')
+    print("Done")
 
     flash_list = []
     for i in range(len(objects_keys)):
