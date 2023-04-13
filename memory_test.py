@@ -12,19 +12,19 @@ import numpy as np
 #     "047F4368-97D4-1A4E-B896-23C6C72DD2BE.root",
 # )
 
-path = "../43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"
+objs_dicts = {
+    "Electron": {
+    "model_path":"~/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
+    "flow_path": "~/wipfs/generation/electrons/EM1/checkpoint-latest.pt",
+    }
+}
 
+def printtt(model_path, flow_path):
+    print(model_path)
+    print(flow_path)
 
-full = ROOT.RDataFrame("Events", path).Range(10)
+obj_keys = ["Electron"]
 
-full_columns_list = full.GetColumnNames()
-
-full_columns = []
-for name in full_columns_list:
-    full_columns.append(str(name))
-
-print(type(full_columns[0])) 
-
-a_full = ak.from_rdataframe(full, columns=full_columns)
-
-print(a_full.fields)
+for obj in obj_keys:
+    printtt(**objs_dicts[obj])
+    

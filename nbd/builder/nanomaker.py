@@ -27,8 +27,8 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
     print("Awkward array created")
 
     flash_list = []
-    for i in range(len(objects_keys)):
-        a_flash = object_simulator.simulator(full, device=device, **objs_dicts[i])
+    for obj in objects_keys:
+        a_flash = object_simulator.simulator(full, device=device, **objs_dicts[obj])
         flash_list.append(a_flash)
 
     # explicit check on dict keys
