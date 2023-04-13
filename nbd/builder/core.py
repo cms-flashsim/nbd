@@ -20,7 +20,6 @@ def isReco(y_pred):
 
 
 def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
-
     model.load_state_dict(torch.load(model_path))
     model = model.to(device)
     model.eval()
@@ -37,27 +36,31 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
     return mask
 
 
-def select_gen(a_gen, columns, model, model_path, device="cpu", eff=True, batch_size=10000):
-
+def select_gen(
+    a_gen, columns, model, model_path, device="cpu", eff=True, batch_size=10000
+):
     # a_gen = a_data[columns]
     ev_struct = ak.num(a_gen[columns[0]])
 
     df_gen = ak.to_dataframe(a_gen).reset_index(drop=True)
 
     if eff:
-        eff_mask = compute_efficiency(model, model_path, df_gen, device, batch_size=batch_size)
+        eff_mask = compute_efficiency(
+            model, model_path, df_gen, device, batch_size=batch_size
+        )
     else:
         eff_mask = np.ones(len(df_gen), dtype=bool)
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
     a_gen["Mask"] = a_eff_mask
 
-    reco_struct = ak.num(a_gen.Mask[a_gen.Mask == True])
-    to_flash = ak.to_dataframe(a_gen[a_gen.Mask == True]).reset_index(drop=True)
+    reco_struct = ak.num(a_gen["Mask"][a_gen["Mask"]])
+    to_flash = ak.to_dataframe(a_gen[a_gen["Mask"]]).reset_index(drop=True)
     # drop mask column
     to_flash = to_flash.drop(columns=["Mask"])
 
     return to_flash, reco_struct
+
 
 def flash_simulate(
     flow_loader,
@@ -72,7 +75,6 @@ def flash_simulate(
     batch_size=10000,
     saturate_ranges_path=None,
 ):
-
     dataset = GenDataset(to_flash, gen_columns).to(device)
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
@@ -91,7 +93,6 @@ def flash_simulate(
 
     with torch.no_grad():
         for batch_idx, y in enumerate(data_loader):
-
             print(f"Batch: {batch_idx}/{len(data_loader)}    ", end="")
 
             y = y.float().to(device, non_blocking=True)
@@ -132,7 +133,9 @@ def flash_simulate(
     total = np.concatenate((tot_sample, leftover_sample), axis=0)
 
     total = pd.DataFrame(total, columns=reco_columns)
-    total = postprocessing(total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path)
+    total = postprocessing(
+        total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
+    )
 
     d = dict(zip(reco_columns, total.values.T))
 
