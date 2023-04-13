@@ -30,7 +30,7 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
     with torch.no_grad():
         for batch in loader:
             out = model.predict(batch)  # predict
-            y_pred = np.concatenate((y_pred, out.cpu().numpy())).flatten()
+            y_pred = np.concatenate((y_pred, out.cpu().numpy().flatten()))
 
     mask = isReco(y_pred)
 
