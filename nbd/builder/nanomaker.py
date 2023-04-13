@@ -11,40 +11,36 @@ import nbd.builder.object_simulator as object_simulator
 from nbd.builder.objs_dicts import objs_dicts
 
 
-def nanomaker(file_path, new_file_path, objects_keys=None, device='cpu', limit=None):
-
+def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=None):
     if limit is not None:
         full = ROOT.RDataFrame("Events", file_path).Range(limit)
     else:
         full = ROOT.RDataFrame("Events", file_path)
-    print(full)
-    full_columns_list = list(full.GetColumnNames())
+
+    full_columns_list = full.GetColumnNames()
 
     full_columns = []
-    for col in full_columns_list:
-        full_columns.append(str(col))
-    print("columns read")
-    print(full_columns[:2
-    ])
+    for name in full_columns_list:
+        full_columns.append(str(name))
 
     a_full = ak.from_rdataframe(full, columns=full_columns)
-    print("Done")
+    print("Awkward array created")
 
     flash_list = []
     for i in range(len(objects_keys)):
-        a_flash = object_simulator.simulator(
-            full,
-            device=device,
-            **objs_dicts[i]
-        )
-
+        a_flash = object_simulator.simulator(full, device=device, **objs_dicts[i])
         flash_list.append(a_flash)
 
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
     dict_1 = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     for i in range(len(objects_keys)):
-        dict_2 = dict(zip(flash_list[i].fields, [flash_list[i][field] for field in flash_list[i].fields]))
+        dict_2 = dict(
+            zip(
+                flash_list[i].fields,
+                [flash_list[i][field] for field in flash_list[i].fields],
+            )
+        )
         total = dict_1 | dict_2
         dict_1 = total
 
