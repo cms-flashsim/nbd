@@ -10,9 +10,9 @@ objs_dicts = {
     "Electron": {
     "derived_vars_func": electrons.extractGenElectronFeatures,
     "model": ElectronClassifier,
-    "model_path":"~/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
+    "model_path":"/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
     "flow_loader": load_mixture_model,
-    "flow_path": "~/wipfs/generation/electrons/EM1/checkpoint-latest.pt",
+    "flow_path": "/home/users/cattafe/wipfs/generation/electrons/EM1/checkpoint-latest.pt",
     "gen_columns": ele_cond,
     "reco_columns": reco_columns,
     "vars_dictionary": target_dictionary,
