@@ -21,7 +21,8 @@ def isReco(y_pred):
 
 def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
 
-    model.load_state_dict(torch.load(model_path)).to(device)
+    model.load_state_dict(torch.load(model_path))
+    model = model.to(device)
     model.eval()
     X = GenDataset(data, data.columns).train_data.to(device)
     loader = torch.utils.data.DataLoader(X, batch_size=batch_size, shuffle=False)
