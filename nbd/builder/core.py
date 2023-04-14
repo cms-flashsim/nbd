@@ -75,7 +75,8 @@ def flash_simulate(
     batch_size=10000,
     saturate_ranges_path=None,
 ):
-    dataset = GenDataset(to_flash, gen_columns).to(device)
+    dataset = GenDataset(to_flash, gen_columns)
+    dataset = dataset.to(device)
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
     flow, _, _, _, _, _ = flow_loader(
