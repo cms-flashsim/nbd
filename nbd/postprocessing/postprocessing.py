@@ -85,10 +85,12 @@ def process_column_var(column_name, operations, df):
 def process_column_var_gen(column_name, operations, df, gen_df):
     for op in operations:
         if op[0] == "m":
+            print(column_name)
             gen_column_name = op[1]
             df[column_name] = multiply_by_gen(df, gen_df, column_name, gen_column_name)
 
         elif op[0] == "a":
+            print(column_name)
             gen_column_name = op[1]
             df[column_name] = add_gen(df, gen_df, column_name, gen_column_name)
 
@@ -126,7 +128,7 @@ def postprocessing(
                 saturated = np.where(saturated > max, max, saturated)
                 df[col] = saturated
 
-    for column_name, operation in vars_dictionary.items():
-        df[column_name] = process_column_var_gen(column_name, operation, df, gen_df)
+    for column_name, operations in vars_dictionary.items():
+        df[column_name] = process_column_var_gen(column_name, operations, df, gen_df)
 
     return df
