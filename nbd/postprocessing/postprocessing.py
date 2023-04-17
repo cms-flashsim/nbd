@@ -97,7 +97,7 @@ def process_column_var_gen(column_name, operations, df, gen_df):
             df[column_name] = add_gen(df, gen_df, column_name, gen_column_name)
 
         else:
-            return df[column_name]
+            pass
     return df[column_name]
 
 
