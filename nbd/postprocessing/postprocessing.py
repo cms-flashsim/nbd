@@ -109,7 +109,7 @@ def postprocessing(
 
     for column_name, operation in vars_dictionary.items():
         df[column_name] = restore_range(column_name, scale_dict, df)
-        df[column_name] = process_column_var(column_name, operation, df, gen_df)
+        df[column_name] = process_column_var(column_name, operation, df)
 
     # df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
     if saturate_ranges_path != None:
