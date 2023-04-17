@@ -9,6 +9,7 @@ import pandas as pd
 import torch
 from nbd.utils.gendataset import GenDataset
 from nbd.postprocessing.postprocessing import postprocessing
+from nbd.postprocessing.electrons.columns_ele_old import pu
 
 # from ..models.electrons.geneleeff import ElectronClassifier
 from torch.utils.data import DataLoader
@@ -37,27 +38,47 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
 
 
 def select_gen(
-    a_gen, columns, model, model_path, device="cpu", eff=True, batch_size=10000
+    df,
+    eff_columns,
+    gen_columns,
+    eff_model,
+    eff_model_path,
+    device="cpu",
+    eff=True,
+    batch_size=10000,
 ):
-    # a_gen = a_data[columns]
-    ev_struct = ak.num(a_gen[columns[0]])
-
-    df_gen = ak.to_dataframe(a_gen).reset_index(drop=True)
+    a_eff = ak.from_rdataframe(df, columns=eff_columns)
+    ev_struct = ak.num(a_eff[eff_columns[0]])
+    df_eff = ak.to_dataframe(a_eff).reset_index(drop=True)
 
     if eff:
         eff_mask = compute_efficiency(
-            model, model_path, df_gen, device, batch_size=batch_size
+            eff_model, eff_model_path, df_eff, device, batch_size=batch_size
         )
     else:
-        eff_mask = np.ones(len(df_gen), dtype=bool)
+        eff_mask = np.ones(len(df_eff), dtype=bool)
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
+
+    a_gen = ak.from_rdataframe(df, columns=gen_columns)
     a_gen["Mask"] = a_eff_mask
 
-    reco_struct = ak.num(a_gen["Mask"][a_gen["Mask"]])
-    to_flash = ak.to_dataframe(a_gen[a_gen["Mask"]]).reset_index(drop=True)
+    if pu in gen_columns:
+        gen_columns_nopu = gen_columns.copy()
+        gen_columns_nopu.remove(pu)
+
+        masked_gen = a_gen[gen_columns_nopu][a_gen["Mask"]]
+
+        # add back Pileup columns (creates empty events for masked-out events)
+        for col in pu:
+            masked_gen[col] = a_gen[col] 
+    else:
+        masked_gen = a_gen[gen_columns][a_gen["Mask"]]
+
+    reco_struct = ak.num(masked_gen)
+    to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
-    to_flash = to_flash.drop(columns=["Mask"])
+    # to_flash = to_flash.drop(columns=["Mask"])
 
     return to_flash, reco_struct
 

@@ -13,10 +13,11 @@ import nbd.builder.core as core
 def simulator(
     rdf,
     derived_vars_func,
-    model,
-    model_path,
+    eff_model,
+    eff_model_path,
     flow_loader,
     flow_path,
+    eff_columns,
     gen_columns,
     reco_columns,
     vars_dictionary,
@@ -26,14 +27,22 @@ def simulator(
     saturate_ranges_path=None,
     eff=True,
 ):
-
     # extract
     rdf_ass = derived_vars_func(rdf)
-    a_gen_data = ak.from_rdataframe(rdf_ass, columns=gen_columns)
+    a_gen_data = ak.from_rdataframe(
+        rdf_ass, columns=eff_columns + gen_columns
+    )  # no duplicate fields awkward 2.0
 
-    model_i = model(len(gen_columns))
+    eff_model_init = eff_model(len(eff_columns))
     to_flash, reco_struct = core.select_gen(
-        a_gen_data, gen_columns, model_i, model_path, device, eff, batch_size=batch_size,
+        a_gen_data,
+        eff_columns,
+        gen_columns,
+        eff_model_init,
+        eff_model_path,
+        device,
+        eff,
+        batch_size=batch_size,
     )
 
     a_flash = core.flash_simulate(
