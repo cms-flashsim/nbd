@@ -77,7 +77,8 @@ def select_gen(
         print("Pileup columns not found in gen_columns")
         masked_gen = a_gen[gen_columns][a_gen["Mask"]]
 
-    reco_struct = ak.num(masked_gen, axis=1)
+    masked_gen.show(limit_cols=1000)
+    reco_struct = ak.num(masked_gen[], axis=1)
     print(f"Reco events: {reco_struct}")
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
