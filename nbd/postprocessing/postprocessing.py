@@ -28,7 +28,6 @@ def restore_range(column_name, scale_dict, df):
 
 
 def inverse_transform(df, column_name, function, p):
-
     df[column_name] = df[column_name].apply(lambda x: (function(x) - p[1]) / p[0])
     return df[column_name]
 
@@ -54,16 +53,13 @@ def unsmearing(df, column_name, interval):
 
 
 def cut_unsmearing(df, column_name, cut, x1, x2):
-
     val = df[column_name].values
     df[column_name] = np.where(val < cut, x1, x2)
     return df[column_name]
 
 
 def process_column_var(column_name, operations, df, gen_df):
-
     for op in operations:
-
         if op[0] == "d":
             mask_condition = op[1]
             df[column_name] = unsmearing(df, column_name, mask_condition)
@@ -98,7 +94,7 @@ def postprocessing(
     Postprocessing general function given any dataframe and its dictionary
     """
 
-    with open(os.path(scale_file_path)) as scale_file:
+    with open(scale_file_path) as scale_file:
         scale_dict = json.load(scale_file)
 
     for column_name, operation in vars_dictionary.items():
@@ -108,7 +104,7 @@ def postprocessing(
     # df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
     if saturate_ranges_path != None:
         # Saturate ranges is a json file with the ranges to saturate
-        with open(os.path(saturate_ranges_path)) as saturate_file:
+        with open(saturate_ranges_path) as saturate_file:
             saturate_dict = json.load(saturate_file)
 
         for col, ranges in saturate_dict.items():
