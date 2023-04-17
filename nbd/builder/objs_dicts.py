@@ -13,7 +13,7 @@ objs_dicts = {
         "model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
         "flow_loader": load_mixture_model,
         "flow_path": "/home/users/cattafe/wipfs/generation/electrons/EM1/checkpoint-latest.pt",
-        "eff_columns": None,
+        "eff_columns": eff_ele,
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
         "vars_dictionary": target_dictionary,

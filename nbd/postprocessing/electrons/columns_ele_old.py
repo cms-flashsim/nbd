@@ -33,9 +33,7 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
-eff_ele = [var.replace("C", "GC", 1) for var in ele_cond] + [
-    "GenElectron_isReco"
-]  # for efficiency
+eff_ele = ele_cond.copy()
 
 gen_ele = [var.replace("G", "MG", 1) for var in ele_cond]  # for flow
 
