@@ -83,6 +83,7 @@ def process_column_var(column_name, operations, df):
 
 
 def process_column_var_gen(column_name, operations, df, gen_df):
+    print(column_name, operations)
     for op in operations:
         print(op[0])
         if op[0] == "m":
@@ -130,7 +131,6 @@ def postprocessing(
                 df[col] = saturated
 
     for column_name, operation in vars_dictionary.items():
-        print("pre-multiply")
         df[column_name] = process_column_var_gen(column_name, operation, df, gen_df)
 
     return df
