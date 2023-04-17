@@ -41,7 +41,7 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
                 [flash_list[i][field] for field in flash_list[i].fields],
             )
         )
-        total = dict_1 | dict_2
+        total = {**dict_1, **dict_2}
         dict_1 = total
 
     merged = ak.zip(total, depth_limit=1)

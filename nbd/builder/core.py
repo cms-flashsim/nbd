@@ -163,6 +163,5 @@ def flash_simulate(
 
     a_flash = ak.zip(d)
     a_flash = ak.unflatten(a_flash, reco_struct)
-    a_flash.show(limit_cols=1000)
 
     return a_flash
