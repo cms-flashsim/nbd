@@ -63,7 +63,8 @@ def select_gen(
     a_gen = a_gen_data[gen_columns]
     a_gen["Mask"] = a_eff_mask
 
-    if pu in gen_columns:
+    if set(pu) <= set(gen_columns):
+        print("Pileup columns found in gen_columns")
         gen_columns_nopu = gen_columns.copy()
         gen_columns_nopu.remove(pu)
 
@@ -73,6 +74,7 @@ def select_gen(
         for col in pu:
             masked_gen[col] = a_gen[col]
     else:
+        print("Pileup columns not found in gen_columns")
         masked_gen = a_gen[gen_columns][a_gen["Mask"]]
 
     reco_struct = ak.num(masked_gen)
