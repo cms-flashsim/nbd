@@ -38,7 +38,7 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
 
 
 def select_gen(
-    df,
+    a_gen_data,
     eff_columns,
     gen_columns,
     eff_model,
@@ -47,7 +47,7 @@ def select_gen(
     eff=True,
     batch_size=10000,
 ):
-    a_eff = ak.from_rdataframe(df, columns=eff_columns)
+    a_eff = a_gen_data[eff_columns]
     ev_struct = ak.num(a_eff[eff_columns[0]])
     df_eff = ak.to_dataframe(a_eff).reset_index(drop=True)
 
@@ -60,7 +60,7 @@ def select_gen(
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
 
-    a_gen = ak.from_rdataframe(df, columns=gen_columns)
+    a_gen = a_gen_data[gen_columns]
     a_gen["Mask"] = a_eff_mask
 
     if pu in gen_columns:
@@ -71,7 +71,7 @@ def select_gen(
 
         # add back Pileup columns (creates empty events for masked-out events)
         for col in pu:
-            masked_gen[col] = a_gen[col] 
+            masked_gen[col] = a_gen[col]
     else:
         masked_gen = a_gen[gen_columns][a_gen["Mask"]]
 
