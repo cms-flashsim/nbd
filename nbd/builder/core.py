@@ -60,6 +60,7 @@ def select_gen(
         eff_mask = np.ones(len(df_eff), dtype=bool)
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
+    a_eff_mask.show(limit_cols=1000)
 
     a_gen = a_gen_data[gen_columns]
     a_gen["Mask"] = a_eff_mask
