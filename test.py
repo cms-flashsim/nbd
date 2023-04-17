@@ -28,4 +28,4 @@ if __name__ == "__main__":
 
     # generation loop
     for path in tqdm(files_paths):
-        nanomaker(path, "null", ["Electron"], device="cuda:0", limit=10)
+        nanomaker(path, "null", ["Electron"], device="cuda:0", limit=100)
