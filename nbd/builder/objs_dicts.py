@@ -9,8 +9,8 @@ from nbd.postprocessing.electrons.post_actions_ele_old import target_dictionary
 objs_dicts = {
     "Electron": {
         "derived_vars_func": electrons.extractGenElectronFeatures,
-        "model": ElectronClassifier,
-        "model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
+        "eff_model": ElectronClassifier,
+        "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
         "flow_loader": load_mixture_model,
         "flow_path": "/home/users/cattafe/wipfs/generation/electrons/EM1/checkpoint-latest.pt",
         "eff_columns": eff_ele,
