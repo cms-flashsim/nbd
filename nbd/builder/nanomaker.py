@@ -44,6 +44,8 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
         total = {**dict_1, **dict_2}
         dict_1 = total
 
+    print(total)
+
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", "~/test.root")
     # a_full.to_root("output.root", treename="Events")
