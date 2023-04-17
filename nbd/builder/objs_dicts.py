@@ -19,7 +19,7 @@ objs_dicts = {
         "vars_dictionary": target_dictionary,
         "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele_old.json",
         "batch_size": 10000,
-        "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele_old.json",
+        "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "eff": True,
     }
 }
