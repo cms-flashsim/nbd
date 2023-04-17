@@ -61,7 +61,7 @@ def cut_unsmearing(df, column_name, cut, x1, x2):
     return df[column_name]
 
 
-def process_column_var(column_name, operations, df, gen_df):
+def process_column_var(column_name, operations, df):
     for op in operations:
         if op[0] == "d":
             mask_condition = op[1]
@@ -77,7 +77,14 @@ def process_column_var(column_name, operations, df, gen_df):
             p = op[2]
             df[column_name] = inverse_transform(df, column_name, function, p)
 
-        elif op[0] == "m":
+        else:
+            return df[column_name]
+    return df[column_name]
+
+
+def process_column_var_gen(column_name, operations, df, gen_df):
+    for op in operations:
+        if op[0] == "m":
             gen_column_name = op[1]
             df[column_name] = multiply_by_gen(df, gen_df, column_name, gen_column_name)
 
@@ -118,5 +125,8 @@ def postprocessing(
                 saturated = np.where(val < min, min, val)
                 saturated = np.where(saturated > max, max, saturated)
                 df[col] = saturated
+
+    for column_name, operation in vars_dictionary.items():
+        df[column_name] = process_column_var_gen(column_name, operation, df, gen_df)
 
     return df
