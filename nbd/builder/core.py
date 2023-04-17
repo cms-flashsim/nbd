@@ -65,8 +65,7 @@ def select_gen(
 
     if set(pu) <= set(gen_columns):
         print("Pileup columns found in gen_columns")
-        gen_columns_nopu = gen_columns.copy()
-        gen_columns_nopu.remove(pu)
+        gen_columns_nopu = [var for var in gen_columns if var not in pu]
 
         masked_gen = a_gen[gen_columns_nopu][a_gen["Mask"]]
 
