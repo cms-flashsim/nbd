@@ -78,7 +78,7 @@ def select_gen(
         masked_gen = a_gen[gen_columns][a_gen["Mask"]]
 
     masked_gen.show(limit_cols=1000)
-    reco_struct = ak.num(masked_gen[], axis=1)
+    reco_struct = ak.num(masked_gen, axis=0)
     print(f"Reco events: {reco_struct}")
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
