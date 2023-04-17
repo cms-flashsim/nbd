@@ -84,6 +84,7 @@ def process_column_var(column_name, operations, df):
 
 def process_column_var_gen(column_name, operations, df, gen_df):
     for op in operations:
+        print(op[0])
         if op[0] == "m":
             print(column_name)
             gen_column_name = op[1]
