@@ -49,7 +49,6 @@ def select_gen(
 ):
     a_eff = a_gen_data[eff_columns]
     ev_struct = ak.num(a_eff[eff_columns[0]])
-    print(f"Events: {ev_struct}")
     df_eff = ak.to_dataframe(a_eff).reset_index(drop=True)
 
     if eff:
@@ -60,7 +59,6 @@ def select_gen(
         eff_mask = np.ones(len(df_eff), dtype=bool)
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
-    a_eff_mask.show(limit_cols=1000)
 
     a_gen = a_gen_data[gen_columns]
     a_gen["Mask"] = a_eff_mask
@@ -77,9 +75,8 @@ def select_gen(
     else:
         print("Pileup columns not found in gen_columns")
         masked_gen = a_gen[gen_columns][a_gen["Mask"]]
-    masked_gen.show(limit_cols=1000)
+
     reco_struct = ak.num(masked_gen[gen_columns[0]], axis=1)
-    print(f"Reco events: {reco_struct}")
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
@@ -165,7 +162,7 @@ def flash_simulate(
     d = dict(zip(reco_columns, total.values.T))
 
     a_flash = ak.zip(d)
-    a_flash.show(limit_cols=1000)
     a_flash = ak.unflatten(a_flash, reco_struct)
+    a_flash.show(limit_cols=1000)
 
     return a_flash
