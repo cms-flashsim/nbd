@@ -60,6 +60,6 @@ def simulator(
     )
     # temporary fix to change charges
     charges = ak.unflatten(to_flash.GenElectron_charge, reco_struct)
-    a_flash["Electron_charges"] = charges
+    a_flash["MElectron_charge"] = charges
 
     return a_flash

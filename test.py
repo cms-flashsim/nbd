@@ -22,10 +22,12 @@ if __name__ == "__main__":
 
     # files_paths = [os.path.join(root_nano, f) for f in files]
     # files_paths = files_paths[:1]
-    files_paths = ["~/43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"]
+    # files_paths = ["~/43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"] # DY
+    files_paths = ["~/151B72D8-0233-8D4E-AE8A-6611942542C0.root"]  # TTJets
+
     print(files_paths)
     print(f"We will process a total of {len(files_paths)} files")
 
     # generation loop
     for path in tqdm(files_paths):
-        nanomaker(path, "null", ["Electron"], device="cuda:0", limit=100)
+        nanomaker(path, "null", ["Electron"], device="cuda:0", limit=None)

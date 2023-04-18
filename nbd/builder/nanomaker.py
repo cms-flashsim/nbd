@@ -45,5 +45,5 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
         dict_1 = total
 
     to_file = ak.to_rdataframe(total)
-    to_file.Snapshot("Events", "~/test.root")
+    to_file.Snapshot("Events", "~/test_TTJets.root")
     # a_full.to_root("output.root", treename="Events")
