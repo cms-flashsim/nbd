@@ -44,12 +44,12 @@ matched = (
     cleaned.Define("GenPart_ElectronIdx_empty", "Electron_genObjMatchMaker(GenPart_pt)")
     .Define(
         "GenPart_genElectron_ElectronIdx",
-        "GenPart_ElectronIdx<double>(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge, GenPart_ElectronIdx_empty, 0)",
+        "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge, GenPart_ElectronIdx_empty, 0)",
     )
     .Define("GenPart_MElectronIdx_empty", "Electron_genObjMatchMaker(GenPart_pt)")
     .Define(
         "GenPart_genElectron_MElectronIdx",
-        "GenPart_ElectronIdx<double>(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, MElectron_ptRatio, MElectron_etaMinusGen, MElectron_phiMinusGen, MElectron_charge, GenPart_MElectronIdx_empty, 0)",
+        "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, MElectron_ptRatio, MElectron_etaMinusGen, MElectron_phiMinusGen, MElectron_charge, GenPart_MElectronIdx_empty, 0)",
     )
     .Define(
         "GenElectronMask",

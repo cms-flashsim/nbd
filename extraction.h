@@ -419,12 +419,12 @@ auto flavour_encoder(ROOT::VecOps::RVec<int> &fj,
 }
 
 template <typename T>
-ROOT::VecOps::RVec<int> GenPart_ElectronIdx(
+auto GenPart_ElectronIdx(
     ROOT::VecOps::RVec<float> &gen_pt, ROOT::VecOps::RVec<float> &gen_eta,
     ROOT::VecOps::RVec<float> &gen_phi, ROOT::VecOps::RVec<int> &gen_pdgid,
     ROOT::VecOps::RVec<int> &gen_status, ROOT::VecOps::RVec<T> &ele_pt,
     ROOT::VecOps::RVec<T> &ele_eta, ROOT::VecOps::RVec<T> &ele_phi,
-    ROOT::VecOps::RVec<int> &ele_charge, ROOT::VecOps::RVec<int> &idx,
+    ROOT::VecOps::RVec<T> &ele_charge, ROOT::VecOps::RVec<int> &idx,
     int type) {
 
   auto size_outer = gen_pt.size();
