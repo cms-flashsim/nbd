@@ -60,19 +60,21 @@ matched = (
         "GenElectron_FullMatched",
         "GenPart_genElectron_ElectronIdx[GenElectronMask] >= 0",
     )
+    .Define("FullMatched", "GenElectron_pt[GenElectron_FullMatched]")
     .Define(
         "GenElectron_FlashMatched",
         "GenPart_genElectron_MElectronIdx[GenElectronMask] >= 0",
     )
+    .Define("FlashMatched", "GenElectron_pt[GenElectron_FlashMatched]")
 )
 
 
 n_full = (
-    matched.Histo1D("GenElectron_FullMatched").GetEntries()
+    matched.Histo1D("FullMatched").GetEntries()
     / matched.Histo1D("GenElectron_pt").GetEntries()
 )
 n_flash = (
-    matched.Histo1D("GenElectron_FlashMatched").GetEntries()
+    matched.Histo1D("FlashMatched").GetEntries()
     / matched.Histo1D("GenElectron_pt").GetEntries()
 )
 
