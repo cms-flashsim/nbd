@@ -418,11 +418,12 @@ auto flavour_encoder(ROOT::VecOps::RVec<int> &fj,
   return fenc;
 }
 
+template <typename T>
 auto GenPart_ElectronIdx(
     ROOT::VecOps::RVec<T> &gen_pt, ROOT::VecOps::RVec<T> &gen_eta,
     ROOT::VecOps::RVec<T> &gen_phi, ROOT::VecOps::RVec<int> &gen_pdgid,
     ROOT::VecOps::RVec<int> &gen_status, ROOT::VecOps::RVec<T> &ele_pt,
-    ROOT::VecOps::RVec<T> &ele_eta, ROOT::VecOps::RVec<fT> &ele_phi,
+    ROOT::VecOps::RVec<T> &ele_eta, ROOT::VecOps::RVec<T> &ele_phi,
     ROOT::VecOps::RVec<int> &ele_charge, ROOT::VecOps::RVec<int> &idx,
     int type) {
 
