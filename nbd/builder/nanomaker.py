@@ -46,4 +46,6 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
 
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", "~/test_TTJets.root")
+    # add a new ttrees to the output file
+    
     # a_full.to_root("output.root", treename="Events")

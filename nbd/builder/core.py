@@ -47,16 +47,17 @@ def select_gen(
     eff=True,
     batch_size=10000,
 ):
-    a_eff = a_gen_data[eff_columns]
-    ev_struct = ak.num(a_eff[eff_columns[0]])
-    df_eff = ak.to_dataframe(a_eff).reset_index(drop=True)
+    a_gen = a_gen_data[gen_columns]
+    ev_struct = ak.num(a_gen[gen_columns[0]])
 
     if eff:
+        a_eff = a_gen_data[eff_columns]
+        df_eff = ak.to_dataframe(a_eff).reset_index(drop=True)
         eff_mask = compute_efficiency(
             eff_model, eff_model_path, df_eff, device, batch_size=batch_size
         )
     else:
-        eff_mask = np.ones(len(df_eff), dtype=bool)
+        eff_mask = np.ones(ak.sum(ev_struct), dtype=bool)
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
 
