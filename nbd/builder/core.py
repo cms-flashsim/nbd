@@ -112,7 +112,7 @@ def flash_simulate(
     times = []
 
     print(f"Batch size: {batch_size}")
-
+    print(device)
     with torch.no_grad():
         for batch_idx, y in enumerate(data_loader):
             print(f"Batch: {batch_idx}/{len(data_loader)}    ", end="")
