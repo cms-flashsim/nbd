@@ -69,14 +69,14 @@ matched = (
 )
 
 
-n_full = (
-    matched.Histo1D("FullMatched").GetEntries()
-    / matched.Histo1D("GenElectron_pt").GetEntries()
-)
-n_flash = (
-    matched.Histo1D("FlashMatched").GetEntries()
-    / matched.Histo1D("GenElectron_pt").GetEntries()
-)
+n_full = matched.Histo1D("FullMatched").GetEntries()
 
-print(f"Flash: {n_flash:.2%}")
-print(f"Full: {n_full:.2%}")
+n_flash = d.Histo1D("MElectron_ptRatio").GetEntries()
+
+# n_flash = (
+#     matched.Histo1D("FlashMatched").GetEntries()
+#     / matched.Histo1D("GenElectron_pt").GetEntries()
+# )
+
+print(f"Flash: {n_flash}")
+print(f"Full: {n_full}")
