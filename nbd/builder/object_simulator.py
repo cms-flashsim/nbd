@@ -40,8 +40,8 @@ def simulator(
         gen_columns,
         eff_model_init,
         eff_model_path,
-        device,
-        eff,
+        device=device,
+        eff=eff,
         batch_size=batch_size,
     )
 
@@ -54,7 +54,7 @@ def simulator(
         vars_dictionary,
         scale_file_path,
         reco_struct,
-        device="cpu",
+        device=device,
         batch_size=10000,
         saturate_ranges_path=saturate_ranges_path,
     )
