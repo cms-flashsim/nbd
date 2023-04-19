@@ -23,7 +23,7 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
     for name in full_columns_list:
         full_columns.append(str(name))
 
-    a_full = ak.from_rdataframe(full, columns=full_columns)
+    a_full = ak.from_rdataframe(full, columns=full_columns) # TODO remove full reco cols
     print("Awkward array created")
 
     flash_list = []
@@ -33,11 +33,13 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
 
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
+    # TODO use uproot for saving. loop on left part of fields and add to the file
+    # for each left unique field, define dict with all the fields and add as branch
     dict_1 = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     for i in range(len(objects_keys)):
         dict_2 = dict(
             zip(
-                flash_list[i].fields,
+                flash_list[i].fields, # TODO check if fields are the same
                 [flash_list[i][field] for field in flash_list[i].fields],
             )
         )

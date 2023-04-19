@@ -8,6 +8,32 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 
+def saturate_on_full(df, column_name, saturate_ranges_path):
+    if saturate_ranges_path != None:
+        # Saturate ranges is a json file with the ranges to saturate
+        with open(saturate_ranges_path) as saturate_file:
+            saturate_dict = json.load(saturate_file)
+            if column_name in saturate_dict.keys():
+                ranges = saturate_dict[column_name]
+                min = ranges[0]
+                max = ranges[1]
+                val = df[column_name].values
+                saturated = np.where(val < min, min, val)
+                saturated = np.where(saturated > max, max, saturated)
+                df[column_name] = saturated
+    return df[column_name]
+
+
+def pi_minuspi_periodicity(df, column_name):
+    df[column_name] = np.where(
+        df[column_name] < -np.pi, column_name + 2 * np.pi, df[column_name]
+    )
+    df[column_name] = np.where(
+        df[column_name] > np.pi, df[column_name] - 2 * np.pi, df[column_name]
+    )
+    return df[column_name]
+
+
 def multiply_by_gen(df, gen_df, column_name, gen_column_name):
     print("Multiplied!")
     print(df[column_name])
@@ -61,7 +87,7 @@ def cut_unsmearing(df, column_name, cut, x1, x2):
     return df[column_name]
 
 
-def process_column_var(column_name, operations, df):
+def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path=None):
     for op in operations:
         if op[0] == "d":
             mask_condition = op[1]
@@ -77,24 +103,19 @@ def process_column_var(column_name, operations, df):
             p = op[2]
             df[column_name] = inverse_transform(df, column_name, function, p)
 
-        else:
-            return df[column_name]
-    return df[column_name]
-
-
-def process_column_var_gen(column_name, operations, df, gen_df):
-    print(column_name, operations)
-    for op in operations:
-        print(op)
-        if op[0] == "m":
-            print(column_name)
+        elif op[0] == "m":
             gen_column_name = op[1]
             df[column_name] = multiply_by_gen(df, gen_df, column_name, gen_column_name)
 
         elif op[0] == "a":
-            print(column_name)
             gen_column_name = op[1]
             df[column_name] = add_gen(df, gen_df, column_name, gen_column_name)
+
+        elif op[0] == "s":
+            df[column_name] = saturate_on_full(df, column_name, saturate_ranges_path)
+
+        elif op[0] == "pmp":
+            df[column_name] = pi_minuspi_periodicity(df, column_name)
 
         else:
             pass
@@ -102,35 +123,20 @@ def process_column_var_gen(column_name, operations, df, gen_df):
 
 
 def postprocessing(
-    df, gen_df, vars_dictionary, scale_file_path, saturate_ranges_path=None
+    df, gen_df, vars_dictionary, scale_file_path=None, saturate_ranges_path=None
 ):
     """
     Postprocessing general function given any dataframe and its dictionary
     """
-
-    with open(scale_file_path) as scale_file:
-        scale_dict = json.load(scale_file)
-
-    for column_name, operation in vars_dictionary.items():
-        df[column_name] = restore_range(column_name, scale_dict, df)
-        df[column_name] = process_column_var(column_name, operation, df)
-
-    # df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
-    if saturate_ranges_path != None:
-        # Saturate ranges is a json file with the ranges to saturate
-        with open(saturate_ranges_path) as saturate_file:
-            saturate_dict = json.load(saturate_file)
-
-        for col, ranges in saturate_dict.items():
-            if col in saturate_dict.keys():
-                min = ranges[0]
-                max = ranges[1]
-                val = df[col].values
-                saturated = np.where(val < min, min, val)
-                saturated = np.where(saturated > max, max, saturated)
-                df[col] = saturated
+    if scale_file_path != None:
+        with open(scale_file_path) as scale_file:
+            scale_dict = json.load(scale_file)
 
     for column_name, operation in vars_dictionary.items():
-        df[column_name] = process_column_var_gen(column_name, operation, df, gen_df)
+        if scale_file_path != None:
+            df[column_name] = restore_range(column_name, scale_dict, df)
+        df[column_name] = process_column_var(
+            column_name, operation, df, gen_df, saturate_ranges_path
+        )
 
     return df

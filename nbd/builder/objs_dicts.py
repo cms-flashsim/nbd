@@ -5,7 +5,10 @@ from nbd.models.electrons.geneleeff import ElectronClassifier
 from nbd.models.electrons.fromgenele import load_mixture_model
 from nbd.models.jets.jets_muons import load_model
 from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns, eff_ele
-from nbd.postprocessing.electrons.post_actions_ele_old import target_dictionary
+from nbd.postprocessing.electrons.post_actions_ele_old import (
+    target_dictionary as target_dictionary_ele,
+)
+from nbd.postprocessing.jets.post_actions_jets import target_dictionary_jets
 
 
 objs_dicts = {
@@ -18,25 +21,25 @@ objs_dicts = {
         "eff_columns": eff_ele,
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
-        "vars_dictionary": target_dictionary,
+        "vars_dictionary": target_dictionary_ele,
         "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele_old.json",
         "batch_size": 10000,
         "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "eff": True,
-    }}
-#     "Jets": {
-#         "derived_vars_func": jets.extractGenJetFeatures,
-#         "eff_model": None,
-#         "eff_model_path": None,
-#         "flow_loader": load_model,
-#         "flow_path": TBD,
-#         "eff_columns": None,
-#         "gen_columns": ele_cond,
-#         "reco_columns": reco_columns,
-#         "vars_dictionary": target_dictionary,
-#         "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele_old.json",
-#         "batch_size": 10000,
-#         "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
-#         "eff": False,
-#     }
-# }
+    },
+    "Jets": {
+        "derived_vars_func": jets.extractGenJetFeatures,
+        "eff_model": None,
+        "eff_model_path": None,
+        "flow_loader": load_model,
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/test/model_jets_final_\@epoch_420.pt",
+        "eff_columns": None,
+        "gen_columns": ele_cond,
+        "reco_columns": reco_columns,
+        "vars_dictionary": target_dictionary_jets,
+        "scale_file_path": None,
+        "batch_size": 10000,
+        "saturate_ranges_path": None,
+        "eff": False,
+    },
+}
