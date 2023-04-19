@@ -29,9 +29,14 @@ def simulator(
 ):
     # extract
     rdf_ass = derived_vars_func(rdf)
-    a_gen_data = ak.from_rdataframe(
-        rdf_ass, columns=eff_columns + gen_columns
-    )  # no duplicate fields awkward 2.0
+    if eff == True:
+        a_gen_data = ak.from_rdataframe(
+            rdf_ass, columns=eff_columns + gen_columns
+        )  # no duplicate fields awkward 2.0
+    else:
+        a_gen_data = ak.from_rdataframe(
+            rdf_ass, columns=gen_columns
+        ) 
 
     eff_model_init = eff_model(len(eff_columns))
     to_flash, reco_struct = core.select_gen(

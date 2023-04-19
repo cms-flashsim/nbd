@@ -1,9 +1,6 @@
-// utilities for electrons
+// utilities for JETS
 #ifndef UTILS_JET_H
 #define UTILS_JET_H
-
-// Open a NanoAOD file and extract Gen-level condtioning AND reco targets for
-// trainings Working fine with ROOT 6.22
 
 auto DeltaPhi(ROOT::VecOps::RVec<float> &Phi1,
               ROOT::VecOps::RVec<float> &Phi2) {
