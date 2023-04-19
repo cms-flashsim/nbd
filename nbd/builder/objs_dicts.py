@@ -34,7 +34,7 @@ objs_dicts = {
         "eff_model": None,
         "eff_model_path": None,
         "flow_loader": load_model,
-        "flow_path": "/gpfs/ddn/cms/user/cattafe/test/model_jets_final_\@epoch_420.pt",
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/test/model_jets_final_@epoch_420.pt",
         "eff_columns": None,
         "gen_columns": jet_cond,
         "reco_columns": reco_columns_jets,
