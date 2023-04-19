@@ -26,7 +26,7 @@ def saturate_on_full(df, column_name, saturate_ranges_path):
 
 def pi_minuspi_periodicity(df, column_name):
     df[column_name] = np.where(
-        df[column_name] < -np.pi, column_name + 2 * np.pi, df[column_name]
+        df[column_name] < -np.pi, df[column_name] + 2 * np.pi, df[column_name]
     )
     df[column_name] = np.where(
         df[column_name] > np.pi, df[column_name] - 2 * np.pi, df[column_name]
