@@ -65,7 +65,8 @@ def simulator(
         saturate_ranges_path=saturate_ranges_path,
     )
     # temporary fix to change charges
-    charges = ak.unflatten(to_flash.GenElectron_charge, reco_struct)
-    a_flash["MElectron_charge"] = charges
+    if "MElectron_hoe" in reco_columns:
+        charges = ak.unflatten(to_flash.GenElectron_charge, reco_struct)
+        a_flash["MElectron_charge"] = charges
 
     return a_flash
