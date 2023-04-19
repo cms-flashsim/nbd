@@ -400,7 +400,7 @@ def save_model(epoch, model, scheduler, train_history, test_history, model_dir=N
     torch.save(dict, p / filename)
 
 
-def load_model(model_dir=None, filename=None):
+def load_model(model_dir=None, filename=None, device="cpu"):
     """Load a saved model.
     Args:
         filename:       File name
