@@ -7,7 +7,7 @@ ROOT.gInterpreter.ProcessLine(f'#include "{module_path}"')
 
 
 def extractGenJetFeatures(df):
-    """for going from GenJet to reco electron
+    """for going from GenJet to reco jet
 
     Args:
         df (rdataframe): original rdataframe (should be cleaned? to be decided)
@@ -16,7 +16,8 @@ def extractGenJetFeatures(df):
         rdataframe: rdataframe with new features
     """
     extracted = (
-        df.Define("MuonMaskJet", "Muon_genPartIdx >=0")
+        df.Define("buffer", "Muon_genPartIdx")
+        .Define("MuonMaskJet", "buffer >=0")
         .Define("MatchedGenMuons", "Muon_genPartIdx[MuonMaskJet]")
         .Define("JetMask", "Jet_genJetIdx >=0  && Jet_genJetIdx < nGenJet")
         .Define("MatchedGenJets", "Jet_genJetIdx[JetMask]")
