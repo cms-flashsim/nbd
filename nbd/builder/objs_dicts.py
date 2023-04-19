@@ -27,7 +27,7 @@ objs_dicts = {
         "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "eff": True,
     },
-    "Jets": {
+    "Jet": {
         "derived_vars_func": jets.extractGenJetFeatures,
         "eff_model": None,
         "eff_model_path": None,

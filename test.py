@@ -31,4 +31,4 @@ if __name__ == "__main__":
     # generation loop
     for path in tqdm(files_paths):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        nanomaker(path, "null", ["Electron"], device=device, limit=None)
+        nanomaker(path, "null", ["Electron", "Jet"], device=device, limit=1000)
