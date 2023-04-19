@@ -33,12 +33,13 @@ def simulator(
         a_gen_data = ak.from_rdataframe(
             rdf_ass, columns=eff_columns + gen_columns
         )  # no duplicate fields awkward 2.0
+        if eff_model is not None:
+            eff_model_init = eff_model(len(eff_columns))
+        else:
+            raise ValueError("Efficiency model path should be declared")
     else:
-        a_gen_data = ak.from_rdataframe(
-            rdf_ass, columns=gen_columns
-        ) 
-
-    eff_model_init = eff_model(len(eff_columns))
+        a_gen_data = ak.from_rdataframe(rdf_ass, columns=gen_columns)
+        eff_model_init = None
     to_flash, reco_struct = core.select_gen(
         a_gen_data,
         eff_columns,
