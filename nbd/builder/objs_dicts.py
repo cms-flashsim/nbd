@@ -8,6 +8,8 @@ from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns,
 from nbd.postprocessing.electrons.post_actions_ele_old import (
     target_dictionary as target_dictionary_ele,
 )
+
+from nbd.postprocessing.jets.columns_jets import reco_columns as reco_columns_jets, jet_cond
 from nbd.postprocessing.jets.post_actions_jets import target_dictionary_jets
 
 
@@ -34,8 +36,8 @@ objs_dicts = {
         "flow_loader": load_model,
         "flow_path": "/gpfs/ddn/cms/user/cattafe/test/model_jets_final_\@epoch_420.pt",
         "eff_columns": None,
-        "gen_columns": ele_cond,
-        "reco_columns": reco_columns,
+        "gen_columns": jet_cond,
+        "reco_columns": reco_columns_jets,
         "vars_dictionary": target_dictionary_jets,
         "scale_file_path": None,
         "batch_size": 10000,
