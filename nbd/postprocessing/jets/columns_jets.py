@@ -37,7 +37,7 @@ jet_names = [
         "jetId",
     ]
 
-reco_columns = [f"MJets_{name}" for name in jet_names if name != "charge"]
+reco_columns = [f"MJet_{name}" for name in jet_names if name != "charge"]
 
 # NOTE we are calling the ratio/minus variables with the same name as the original
 # for i, name in enumerate(reco_columns):

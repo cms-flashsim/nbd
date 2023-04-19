@@ -17,13 +17,15 @@ transformation: ["i", func, [a, b]]  # func(x - b) / a
 In the case of multiple operations, order follows the operation list indexing.
 """
 
-keys = ["eta", "mass", "phi", "pt"]
+keys = ["eta", "mass", "phi", "pt", "puId", "jetId"]
 full_keys = [f"MJets_{key}" for key in keys]
 post_actions = [
     [["a", "GenJet_eta"]],
     [["m", "GenJet_mass"]],
     [["a", "GenJet_phi"], ["pmp"]],
     [["m", "GenJet_pt"]],
+    [["d", None]],
+    [["d", None]],
 ]
 
 target_dictionary_jets = dict(zip(full_keys, post_actions))
