@@ -24,13 +24,13 @@ def extractGenJetFeatures(df):
             "MuonMaskJ",
             "(GenPart_pdgId == 13 | GenPart_pdgId == -13)&&((GenPart_statusFlags & 8192) > 0)",
         )
+        .Define("MMuon_pt", "GenPart_pt[MuonMaskJ]")
+        .Define("MMuon_eta", "GenPart_eta[MuonMaskJ]")
+        .Define("MMuon_phi", "GenPart_phi[MuonMaskJ]")
         .Define(
             "MClosestMuon_dr",
             "closest_muon_dr(GenJet_eta, GenJet_phi,MMuon_eta, MMuon_phi)",
         )
-        .Define("MMuon_pt", "GenPart_pt[MuonMaskJ]")
-        .Define("MMuon_eta", "GenPart_eta[MuonMaskJ]")
-        .Define("MMuon_phi", "GenPart_phi[MuonMaskJ]")
         .Define(
             "MClosestMuon_deta",
             "closest_muon_deta(GenJet_eta, GenJet_phi,MMuon_eta, MMuon_phi)",
