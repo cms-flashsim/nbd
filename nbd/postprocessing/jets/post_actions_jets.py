@@ -18,7 +18,7 @@ In the case of multiple operations, order follows the operation list indexing.
 """
 
 keys = ["eta", "mass", "phi", "pt", "puId", "jetId"]
-full_keys = [f"MJets_{key}" for key in keys]
+full_keys = [f"MJet_{key}" for key in keys]
 post_actions = [
     [["a", "GenJet_eta"]],
     [["m", "GenJet_mass"]],
