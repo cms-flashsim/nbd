@@ -155,7 +155,8 @@ def flash_simulate(
     leftover_sample = np.reshape(leftover_sample, (leftover_shape, reco_dim))
     total = np.concatenate((tot_sample, leftover_sample), axis=0)
 
-    to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
+    if gen_postrpocessing_dict is not None:
+        to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
     total = pd.DataFrame(total, columns=reco_columns)
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
