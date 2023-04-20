@@ -8,6 +8,7 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import nbd.builder.core as core
+from nbd.preprocessing.preprocessing import preprocessing
 
 
 def simulator(
@@ -26,6 +27,8 @@ def simulator(
     batch_size=10000,
     saturate_ranges_path=None,
     eff=True,
+    preprocess_dict=None,
+    gen_postprocessing_dict=None,
 ):
     # extract
     rdf_ass = derived_vars_func(rdf)
@@ -51,6 +54,10 @@ def simulator(
         batch_size=batch_size,
     )
 
+    if preprocess_dict is not None:
+        to_flash = preprocessing(to_flash, preprocess_dict)
+
+
     a_flash = core.flash_simulate(
         flow_loader,
         flow_path,
@@ -63,6 +70,7 @@ def simulator(
         device=device,
         batch_size=10000,
         saturate_ranges_path=saturate_ranges_path,
+        gen_postrpocessing_dict=gen_postprocessing_dict,
     )
     # temporary fix to change charges
     # if "MElectron_hoe" in reco_columns:

@@ -25,6 +25,8 @@ from nbd.postprocessing.muons.columns_muons import (
     reco_columns as reco_columns_muons,
 )
 from nbd.postprocessing.muons.post_actions_muons import target_dictionary_muons
+from nbd.preprocessing.gen_muons.pre_actions_gen_muons import gen_dictionary_muons
+from nbd.postprocessing.gen_muons.post_actions_gen_muons import cond_dictionary_muons
 
 objs_dicts = {
     "Electron": {
@@ -41,6 +43,8 @@ objs_dicts = {
         "batch_size": 10000,
         "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "eff": True,
+        "preprocess_dict": None,
+        "gen_postprocessing_dict": None,
     },
     "Jet": {
         "derived_vars_func": jets.extractGenJetFeatures,
@@ -56,6 +60,8 @@ objs_dicts = {
         "batch_size": 10000,
         "saturate_ranges_path": None,
         "eff": False,
+        "preprocess_dict": None,
+        "gen_postprocessing_dict": None
     },
     "Muon": {
         "derived_vars_func": muons.extractGenMuonFeatures,
@@ -71,5 +77,7 @@ objs_dicts = {
         "batch_size": 10000,
         "saturate_ranges_path": None,
         "eff": False,
+        "preprocess_dict": gen_dictionary_muons,
+        "gen_postprocessing_dict": cond_dictionary_muons
     },
 }
