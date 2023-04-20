@@ -9,6 +9,7 @@ import torch
 from torch.utils.data import DataLoader
 import nbd.builder.object_simulator as object_simulator
 from nbd.builder.objs_dicts import objs_dicts
+from nbd.utils.reco_full import get_reco_columns
 
 
 def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=None):
@@ -17,14 +18,24 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
     else:
         full = ROOT.RDataFrame("Events", file_path)
 
+    # Getting the list of columns
     full_columns_list = full.GetColumnNames()
 
     full_columns = []
     for name in full_columns_list:
         full_columns.append(str(name))
 
-    a_full = ak.from_rdataframe(full, columns=full_columns) # TODO remove full reco cols
-    print("Awkward array created")
+    # Selecting FullSim reco variables to copy in the FullSim tree
+    # Reco objects are defined in reco_full.py
+
+    old_reco_columns = get_reco_columns(full_columns)
+
+    # Selecting the other variables
+
+    remaining_columns = [var for var in full_columns if var not in old_reco_columns]  
+    
+    a_rest = ak.from_rdataframe(full, columns=remaining_columns)
+    # Flash simulation
 
     flash_list = []
     for obj in objects_keys:
@@ -33,9 +44,7 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
 
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
-    # TODO use uproot for saving. loop on left part of fields and add to the file
-    # for each left unique field, define dict with all the fields and add as branch
-    dict_1 = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
+    dict_1 = dict(zip(a_rest.fields, [a_rest[field] for field in a_rest.fields]))
     for i in range(len(objects_keys)):
         dict_2 = dict(
             zip(
@@ -49,5 +58,9 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", "~/test_TTJets.root")
     # add a new ttrees to the output file
-    
-    # a_full.to_root("output.root", treename="Events")
+    a_full = ak.from_rdataframe(full, columns=old_reco_columns)
+    old_reco = ak.to_rdataframe(a_full)
+
+    opts = ROOT.RDF.RSnapshotOptions()
+    opts.fMode = "Update"
+    old_reco.Snapshot("FullSim", "~/test_TTJets.root", "", opts)
