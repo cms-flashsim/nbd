@@ -57,7 +57,7 @@ target_dictionary = {
         ["s"],
     ],
     "Electron_ip3d": [["i", np.exp, [1, 1e-3]], ["s"]],
-    "Mlectron_isPFcand": [["d", None, None], ["s"]],
+    "Electron_isPFcand": [["d", None, None], ["s"]],
     "Electron_jetPtRelv2": [["i", np.expm1, [1, 0]], ["s"]],
     "Electron_jetRelIso": [["i", np.exp, [10, 1e-2]], ["s"]],
     "Electron_lostHits": [["d", None, None], ["s"]],
