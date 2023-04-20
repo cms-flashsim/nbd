@@ -59,7 +59,8 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
     to_file.Snapshot("Events", "~/test_TTJets.root")
     # add a new ttrees to the output file
     a_full = ak.from_rdataframe(full, columns=old_reco_columns)
-    old_reco = ak.to_rdataframe(a_full)
+    d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
+    old_reco = ak.to_rdataframe(d_full)
 
     opts = ROOT.RDF.RSnapshotOptions()
     opts.fMode = "Update"
