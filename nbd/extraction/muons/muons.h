@@ -137,7 +137,7 @@ auto Mclosest_jet_dphi(ROOT::VecOps::RVec<float> &etaj,
   }
   return dphis;
 }
-auto MBitwiseDecoder(ROOT::VecOps::RVec<int> &ints, int &bit) {
+auto MBitwiseDecoder(ROOT::VecOps::RVec<int> &ints, int bit) {
   auto size = ints.size();
   ROOT::VecOps::RVec<float> bits;
   bits.reserve(size);
