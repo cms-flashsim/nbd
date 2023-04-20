@@ -24,8 +24,8 @@ post_actions = [
     [["m", "GenJet_mass"]],
     [["a", "GenJet_phi"], ["pmp"]],
     [["m", "GenJet_pt"]],
-    [["d", None]],
-    [["d", None]],
+    [["d", None, None]],
+    [["d", None, None]],
 ]
 
 target_dictionary_jets = dict(zip(full_keys, post_actions))
