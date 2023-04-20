@@ -21,7 +21,7 @@ target_dictionary_muons = {
     "Muon_phiMinusGen": [["i", np.tan, [80, 0]], ["a", "MGenMuon_phi"], ["rename", "Muon_phi"]],
     "Muon_ptRatio": [["i", np.tan, [10, -10]], ["a", "MGenMuon_pt"], ["rename", "Muon_pt"]],
     "Muon_dxy": [["i", np.tan, [150, 0]]],
-    "Muon_dxyErr": [["i", np.exp1m, [1, 0]]],
+    "Muon_dxyErr": [["i", np.expm1, [1, 0]]],
     "Muon_dz": [["i", np.tan, [50, 0]]],
     "Muon_dzErr": [["i", np.exp, [1, 0.001]]],
     "Muon_ip3d": [["i", np.exp, [1, 0.001]]],
