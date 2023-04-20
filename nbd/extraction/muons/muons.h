@@ -2,8 +2,8 @@
 #ifndef UTILS_MUON_H
 #define UTILS_MUON_H
 
-auto DeltaPhi(ROOT::VecOps::RVec<float> &Phi1,
-              ROOT::VecOps::RVec<float> &Phi2) {
+auto MDeltaPhi(ROOT::VecOps::RVec<float> &Phi1,
+               ROOT::VecOps::RVec<float> &Phi2) {
   auto size = Phi1.size();
   ROOT::VecOps::RVec<float> dphis;
   dphis.reserve(size);
@@ -13,10 +13,10 @@ auto DeltaPhi(ROOT::VecOps::RVec<float> &Phi1,
   }
   return dphis;
 }
-auto closest_jet_dr(ROOT::VecOps::RVec<float> &etaj,
-                    ROOT::VecOps::RVec<float> &phij,
-                    ROOT::VecOps::RVec<float> &etam,
-                    ROOT::VecOps::RVec<float> &phim) {
+auto Mclosest_jet_dr(ROOT::VecOps::RVec<float> &etaj,
+                     ROOT::VecOps::RVec<float> &phij,
+                     ROOT::VecOps::RVec<float> &etam,
+                     ROOT::VecOps::RVec<float> &phim) {
 
   auto size_outer = etam.size();
   auto size_inner = etaj.size();
@@ -39,11 +39,11 @@ auto closest_jet_dr(ROOT::VecOps::RVec<float> &etaj,
   }
   return distances;
 }
-auto closest_jet_mass(ROOT::VecOps::RVec<float> &etaj,
-                      ROOT::VecOps::RVec<float> &phij,
-                      ROOT::VecOps::RVec<float> &etam,
-                      ROOT::VecOps::RVec<float> &phim,
-                      ROOT::VecOps::RVec<float> &massj) {
+auto Mclosest_jet_mass(ROOT::VecOps::RVec<float> &etaj,
+                       ROOT::VecOps::RVec<float> &phij,
+                       ROOT::VecOps::RVec<float> &etam,
+                       ROOT::VecOps::RVec<float> &phim,
+                       ROOT::VecOps::RVec<float> &massj) {
 
   auto size_outer = etam.size();
   auto size_inner = etaj.size();
@@ -64,11 +64,11 @@ auto closest_jet_mass(ROOT::VecOps::RVec<float> &etaj,
   }
   return masses;
 }
-auto closest_jet_pt(ROOT::VecOps::RVec<float> &etaj,
-                    ROOT::VecOps::RVec<float> &phij,
-                    ROOT::VecOps::RVec<float> &etam,
-                    ROOT::VecOps::RVec<float> &phim,
-                    ROOT::VecOps::RVec<float> &ptj) {
+auto Mclosest_jet_pt(ROOT::VecOps::RVec<float> &etaj,
+                     ROOT::VecOps::RVec<float> &phij,
+                     ROOT::VecOps::RVec<float> &etam,
+                     ROOT::VecOps::RVec<float> &phim,
+                     ROOT::VecOps::RVec<float> &ptj) {
 
   auto size_outer = etam.size();
   auto size_inner = etaj.size();
@@ -89,10 +89,10 @@ auto closest_jet_pt(ROOT::VecOps::RVec<float> &etaj,
   }
   return pts;
 }
-auto closest_jet_deta(ROOT::VecOps::RVec<float> &etaj,
-                      ROOT::VecOps::RVec<float> &phij,
-                      ROOT::VecOps::RVec<float> &etam,
-                      ROOT::VecOps::RVec<float> &phim) {
+auto Mclosest_jet_deta(ROOT::VecOps::RVec<float> &etaj,
+                       ROOT::VecOps::RVec<float> &phij,
+                       ROOT::VecOps::RVec<float> &etam,
+                       ROOT::VecOps::RVec<float> &phim) {
 
   auto size_outer = etam.size();
   auto size_inner = etaj.size();
@@ -113,10 +113,10 @@ auto closest_jet_deta(ROOT::VecOps::RVec<float> &etaj,
   }
   return detas;
 }
-auto closest_jet_dphi(ROOT::VecOps::RVec<float> &etaj,
-                      ROOT::VecOps::RVec<float> &phij,
-                      ROOT::VecOps::RVec<float> &etam,
-                      ROOT::VecOps::RVec<float> &phim) {
+auto Mclosest_jet_dphi(ROOT::VecOps::RVec<float> &etaj,
+                       ROOT::VecOps::RVec<float> &phij,
+                       ROOT::VecOps::RVec<float> &etam,
+                       ROOT::VecOps::RVec<float> &phim) {
 
   auto size_outer = etam.size();
   auto size_inner = etaj.size();
@@ -137,7 +137,7 @@ auto closest_jet_dphi(ROOT::VecOps::RVec<float> &etaj,
   }
   return dphis;
 }
-auto BitwiseDecoder(ROOT::VecOps::RVec<int> &ints, int &bit) {
+auto MBitwiseDecoder(ROOT::VecOps::RVec<int> &ints, int &bit) {
   auto size = ints.size();
   ROOT::VecOps::RVec<float> bits;
   bits.reserve(size);
@@ -158,7 +158,7 @@ auto muons_per_event(ROOT::VecOps::RVec<int> &MGM) {
   return size;
 }
 
-auto charge(ROOT::VecOps::RVec<int> &pdgId) {
+auto Mcharge(ROOT::VecOps::RVec<int> &pdgId) {
   auto size = pdgId.size();
   ROOT::VecOps::RVec<float> charge;
   charge.reserve(size);
