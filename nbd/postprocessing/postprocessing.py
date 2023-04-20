@@ -157,7 +157,8 @@ def postprocessing(
 
     for column_name, operation in vars_dictionary.items():
         if scale_file_path != None:
-            df[column_name] = restore_range(column_name, scale_dict, df)
+            if column_name in scale_dict.keys():
+                df[column_name] = restore_range(column_name, scale_dict, df)
         df[column_name] = process_column_var(
             column_name, operation, df, gen_df, saturate_ranges_path
         )
