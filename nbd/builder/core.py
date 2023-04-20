@@ -159,7 +159,7 @@ def flash_simulate(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
 
-    d = dict(zip(reco_columns, total.values.T))
+    d = dict(zip(total.columns, total.values.T))
 
     a_flash = ak.zip(d)
     a_flash = ak.unflatten(a_flash, reco_struct)

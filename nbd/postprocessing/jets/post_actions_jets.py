@@ -12,7 +12,7 @@ sepcify preprocessing operation. Every operation has the following template
 where "string" tells which operation to perform and *pars its parameters. Such operations are
 
 unsmearing: ["d", [inf, sup]]
-transformation: ["i", func, [a, b]]  # func(x - b) / a
+transformation: ["i", func, [a, b]]  # func(x) - b / a
 
 In the case of multiple operations, order follows the operation list indexing.
 """

@@ -8,6 +8,16 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 
+def rename_column(df, old_name, new_name):
+    df.rename(columns={old_name: new_name}, inplace=True)
+    return df[new_name]
+
+
+def overwrite_with_gen(df, gen_df, column_name, gen_column_name):
+    df[column_name] = gen_df[gen_column_name]
+    return df[column_name]
+
+
 def saturate_on_full(df, column_name, saturate_ranges_path):
     if saturate_ranges_path != None:
         # Saturate ranges is a json file with the ranges to saturate
@@ -61,7 +71,7 @@ def inverse_transform(df, column_name, function, p):
     return df[column_name]
 
 
-def unsmearing(df, column_name, interval):
+def unsmearing(df, column_name, interval, value):
     """Unsmearing for in variables. We have gaussian and uniform smearing.
     If we have interval, that means that we built a fake gaussian dataset
     in the selected interval, and then we just have to compute the sample mean
@@ -74,8 +84,8 @@ def unsmearing(df, column_name, interval):
         # Assuming that the value to be unsmeared is always np.log(1e-3),
         # which corresponds to an int value of 0 after a np.log(x + 1e-3)
         # transformation
+        val[mask_condition] = value
 
-        val[mask_condition] = np.log(1e-3)
     else:
         df[column_name] = np.rint(df[column_name].values)
     return df[column_name]
@@ -88,10 +98,11 @@ def cut_unsmearing(df, column_name, cut, x1, x2):
 
 
 def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path=None):
-    for op in operations:
+    for i, op in enumerate(operations):
         if op[0] == "d":
             mask_condition = op[1]
-            df[column_name] = unsmearing(df, column_name, mask_condition)
+            value = op[2]
+            df[column_name] = unsmearing(df, column_name, mask_condition, value)
 
         elif op[0] == "c":
             cut = op[1]
@@ -117,6 +128,18 @@ def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path
         elif op[0] == "pmp":
             df[column_name] = pi_minuspi_periodicity(df, column_name)
 
+        elif op[0] == "genow":
+            gen_column_name = op[1]
+            df[column_name] = overwrite_with_gen(
+                df, gen_df, column_name, gen_column_name
+            )
+        elif op[0] == "rename":
+            if i != len(operations) - 1:
+                raise ValueError(
+                    "Rename operation must be the last operation in the list"
+                )
+            new_name = op[1]
+            df[column_name] = rename_column(df, column_name, new_name)
         else:
             pass
     return df[column_name]

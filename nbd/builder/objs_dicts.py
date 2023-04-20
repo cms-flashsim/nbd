@@ -1,17 +1,30 @@
 # define the dictionaries of objects to be simulated and their parameters
-from nbd.extraction.electrons import electrons
-from nbd.extraction.jets import jets
+
+# electrons imports
 from nbd.models.electrons.geneleeff import ElectronClassifier
 from nbd.models.electrons.fromgenele import load_mixture_model
-from nbd.models.jets.jets_muons import load_model
+from nbd.extraction.electrons import electrons
 from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns, eff_ele
 from nbd.postprocessing.electrons.post_actions_ele_old import (
     target_dictionary as target_dictionary_ele,
 )
 
-from nbd.postprocessing.jets.columns_jets import reco_columns as reco_columns_jets, jet_cond
+# jets imports
+from nbd.extraction.jets import jets
+from nbd.models.jets.jets_muons import load_model
+from nbd.postprocessing.jets.columns_jets import (
+    reco_columns as reco_columns_jets,
+    jet_cond,
+)
 from nbd.postprocessing.jets.post_actions_jets import target_dictionary_jets
 
+# muons imports
+from nbd.extraction.muons import muons
+from nbd.postprocessing.muons.columns_muons import (
+    muon_cond,
+    reco_columns as reco_columns_muons,
+)
+from nbd.postprocessing.muons.post_actions_muons import target_dictionary_muons
 
 objs_dicts = {
     "Electron": {
@@ -39,6 +52,21 @@ objs_dicts = {
         "gen_columns": jet_cond,
         "reco_columns": reco_columns_jets,
         "vars_dictionary": target_dictionary_jets,
+        "scale_file_path": None,
+        "batch_size": 10000,
+        "saturate_ranges_path": None,
+        "eff": False,
+    },
+    "Muon": {
+        "derived_vars_func": muons.extractGenMuonFeatures,
+        "eff_model": None,
+        "eff_model_path": None,
+        "flow_loader": load_model,
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/test/model_muons_final_@epoch_580.pt",
+        "eff_columns": None,
+        "gen_columns": muon_cond,
+        "reco_columns": reco_columns_muons,
+        "vars_dictionary": target_dictionary_muons,
         "scale_file_path": None,
         "batch_size": 10000,
         "saturate_ranges_path": None,

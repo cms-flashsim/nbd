@@ -132,15 +132,15 @@ ele_names = [
     "charge",
 ]
 
-reco_columns = [f"MElectron_{name}" for name in ele_names if name != "charge"]
+reco_columns = [f"Electron_{name}" for name in ele_names if name != "charge"]
 
 for i, name in enumerate(reco_columns):
-    if name == "MElectron_pt":
-        reco_columns[i] = "MElectron_ptRatio"
-    elif name == "MElectron_phi":
-        reco_columns[i] = "MElectron_phiMinusGen"
-    elif name == "MElectron_eta":
-        reco_columns[i] = "MElectron_etaMinusGen"
+    if name == "Electron_pt":
+        reco_columns[i] = "Electron_ptRatio"
+    elif name == "Electron_phi":
+        reco_columns[i] = "Electron_phiMinusGen"
+    elif name == "Electron_eta":
+        reco_columns[i] = "Electron_etaMinusGen"
 
 
 pu = [
