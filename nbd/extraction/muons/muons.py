@@ -3,10 +3,9 @@ import ROOT
 
 module_path = os.path.join(os.path.dirname(__file__), "muons.h")
 
-ROOT.gInterpreter.ProcessLine(f'#include "{module_path}"')
-
 
 def extractGenMuonFeatures(df):
+    ROOT.gInterpreter.ProcessLine(f'#include "{module_path}"')
     """for going from GenJet to reco jet
 
     Args:
