@@ -13,7 +13,7 @@ def transform(df, column_name, function, p):
 
 def process_column_var(column_name, operations, df):
     for i, op in enumerate(operations):
-        if op[0] == "":
+        if op[0] == "t":
             function = op[1]
             p = op[2]
             df[column_name] = transform(df, column_name, function, p)
