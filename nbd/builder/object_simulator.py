@@ -76,8 +76,8 @@ def simulator(
     # if "MElectron_hoe" in reco_columns:
     #     charges = ak.unflatten(to_flash.GenElectron_charge, reco_struct)
     #     a_flash["MElectron_charge"] = charges
-    pt_col = [col for col in reco_columns if col.endswith("_pt")][0]
+    pt_col = [col for col in a_flash.fields if col.endswith("_pt")][0]
     # sort by pt
     a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=1)]
-    
+
     return a_flash
