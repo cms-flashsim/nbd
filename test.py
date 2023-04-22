@@ -19,10 +19,8 @@ if __name__ == "__main__":
     new_dir = os.path.join(flash_dir, sample, nano)
 
     # Make FlashSim directory
-    if os.path.isdir(flash_dir) is False:
-        os.mkdir(flash_dir)
     if os.path.isdir(new_dir) is False:
-        os.mkdir(new_dir)
+        os.makedirs(new_dir)
 
     # Get list of subdirectories of FullSim dataset
     subdirs = os.listdir(root_nano)
