@@ -42,7 +42,9 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     for obj in objects_keys:
         print(f"Simulating {obj} collection")
         a_flash = object_simulator.simulator(full, device=device, **objs_dicts[obj])
+        print(f"Done")
         flash_list.append(a_flash)
+
 
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
