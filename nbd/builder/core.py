@@ -114,7 +114,7 @@ def flash_simulate(
     print(f"Batch size: {batch_size}")
     with torch.no_grad():
         for batch_idx, y in enumerate(data_loader):
-            print(f"Batch: {batch_idx}/{len(data_loader)}    ", end="")
+            # print(f"Batch: {batch_idx}/{len(data_loader)}    ", end="")
 
             y = y.float().to(device, non_blocking=True)
             if len(y) == batch_size:
@@ -126,7 +126,7 @@ def flash_simulate(
                     except AssertionError:
                         print("Error, retrying")
                 taken = time.time() - start
-                print(f"{(batch_size / taken):.0f} Hz")
+                # print(f"{(batch_size / taken):.0f} Hz")
                 times.append(taken)
                 sample = sample.detach().cpu().numpy()
                 sample = np.squeeze(sample, axis=1)
