@@ -3,15 +3,16 @@ import os
 from nbd.builder.nanomaker import nanomaker
 
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
-prod_camp = "RunIIAutumn18NanoAODv6"
 
 ### DrellYan
+# prod_camp = "RunIIAutumn18NanoAODv6"
 # sample = "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
 # nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 
 ### TT
+prod_camp = "RunIISummer20UL18NanoAODv9"
 sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
-nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
+nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1"
 
 flash_dir = "/home/users/cattafe/FlashSim"
 
@@ -59,4 +60,3 @@ if __name__ == "__main__":
             input, output, ["Electron", "Jet", "Muon"], device="cuda:0", limit=None
         )
         break
-
