@@ -4,13 +4,14 @@ from nbd.builder.nanomaker import nanomaker
 
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 prod_camp = "RunIIAutumn18NanoAODv6"
-nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 
 ### DrellYan
 # sample = "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
+# nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 
 ### TT
 sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
 
 flash_dir = "/home/users/cattafe/FlashSim"
 
