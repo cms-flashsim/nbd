@@ -6,7 +6,6 @@ def transform(df, column_name, function, p):
     """
     Performs a function tranformation on column
     """
-    print(f"Applying {function} with parameters {p}...")
     df[column_name] = df[column_name].apply(lambda x: function(x * p[0] + p[1]))
     return df[column_name]
 
