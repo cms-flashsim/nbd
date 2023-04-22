@@ -11,7 +11,7 @@ mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
 ### TT
 prod_camp = "RunIISummer20UL18NanoAODv9"
-sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+sample = "TTJets_TuneCP5_13TeV-madgraphMLM-pythia8"
 nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1"
 
 flash_dir = "/home/users/cattafe/FlashSim"
