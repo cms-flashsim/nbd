@@ -57,7 +57,6 @@ def simulator(
     if preprocess_dict is not None:
         to_flash = preprocessing(to_flash, preprocess_dict)
 
-
     a_flash = core.flash_simulate(
         flow_loader,
         flow_path,
@@ -72,10 +71,7 @@ def simulator(
         saturate_ranges_path=saturate_ranges_path,
         gen_postrpocessing_dict=gen_postprocessing_dict,
     )
-    # temporary fix to change charges
-    # if "MElectron_hoe" in reco_columns:
-    #     charges = ak.unflatten(to_flash.GenElectron_charge, reco_struct)
-    #     a_flash["MElectron_charge"] = charges
+
     pt_col = [col for col in a_flash.fields if col.endswith("_pt")][0]
     # sort by pt
     a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=1)]

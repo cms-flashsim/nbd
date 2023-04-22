@@ -12,11 +12,12 @@ from nbd.builder.objs_dicts import objs_dicts
 from nbd.utils.reco_full import get_reco_columns
 
 
-def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=None):
+def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None):
+    print(f"Processing file {input_file}")
     if limit is not None:
-        full = ROOT.RDataFrame("Events", file_path).Range(limit)
+        full = ROOT.RDataFrame("Events", input_file).Range(limit)
     else:
-        full = ROOT.RDataFrame("Events", file_path)
+        full = ROOT.RDataFrame("Events", output_file)
 
     # Getting the list of columns
     full_columns_list = full.GetColumnNames()
@@ -32,13 +33,14 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
 
     # Selecting the other variables
 
-    remaining_columns = [var for var in full_columns if var not in old_reco_columns]  
-    
+    remaining_columns = [var for var in full_columns if var not in old_reco_columns]
+
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
     # Flash simulation
 
     flash_list = []
     for obj in objects_keys:
+        print(f"Simulating {obj} collection")
         a_flash = object_simulator.simulator(full, device=device, **objs_dicts[obj])
         flash_list.append(a_flash)
 
@@ -48,7 +50,7 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
     for i in range(len(objects_keys)):
         dict_2 = dict(
             zip(
-                flash_list[i].fields, # TODO check if fields are the same
+                flash_list[i].fields,  # TODO check if fields are the same
                 [flash_list[i][field] for field in flash_list[i].fields],
             )
         )
@@ -56,7 +58,8 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
         dict_1 = total
 
     to_file = ak.to_rdataframe(total)
-    to_file.Snapshot("Events", "~/test_TTJets.root")
+    to_file.Snapshot("Events", output_file)
+
     # add a new ttrees to the output file
     a_full = ak.from_rdataframe(full, columns=old_reco_columns)
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
@@ -64,4 +67,4 @@ def nanomaker(file_path, new_file_path, objects_keys=None, device="cpu", limit=N
 
     opts = ROOT.RDF.RSnapshotOptions()
     opts.fMode = "Update"
-    old_reco.Snapshot("FullSim", "~/test_TTJets.root", "", opts)
+    old_reco.Snapshot("FullSim", output_file, "", opts)
