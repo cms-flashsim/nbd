@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # Get FullSim path
     root_nano = os.path.join(mc_dir, prod_camp, sample, nano)
     # FlashSim path
-    new_dir = os.path.join(flash_dir, sample, nano)
+    new_dir = os.path.join(flash_dir, prod_camp, sample, nano)
 
     # Make FlashSim directory
     if os.path.isdir(new_dir) is False:
