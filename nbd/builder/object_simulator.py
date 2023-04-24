@@ -72,6 +72,7 @@ def simulator(
         gen_postrpocessing_dict=gen_postprocessing_dict,
     )
 
+    a_flash.show(limit_cols=1000)
     pt_col = [col for col in a_flash.fields if col.endswith("_pt")][0]
     print(pt_col)
     # sort by pt
