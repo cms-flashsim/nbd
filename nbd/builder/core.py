@@ -163,6 +163,9 @@ def flash_simulate(
     d = dict(zip(total.columns, total.values.T))
 
     a_flash = ak.zip(d)
-    a_flash = ak.unflatten(a_flash, reco_struct)
+    # a_flash = ak.unflatten(a_flash, reco_struct) # old
+
+    for col in a_flash.fields:
+        a_flash[col] = ak.unflatten(a_flash[col], reco_struct)
 
     return a_flash
