@@ -5,9 +5,6 @@ import awkward as ak
 import numpy as np
 import pandas as pd
 import uproot
-from nbd.utils.collections import collections
-
-ROOT.gInterpreter.ProcessLine('#include "save.h"')
 
 awk = ak.Array(
     [
@@ -25,21 +22,35 @@ awk = ak.Array(
     ]
 )
 
-ele = {"Electron_pt": awk.Electron_pt, "Electron_eta": awk.Electron_eta}
-muo = {"Muon_pt": awk.Muon_pt}
 
-df_ele = ak.to_rdataframe(ele)
+awk = ak.Array(
+    [
+        {"Electron_pt": [21.6, 53, 9], "Electron_eta": [0.108, 0.3, 0.1]},
+        {"Electron_pt": [], "Electron_eta": []},
+        {"Electron_pt": [12], "Electron_eta": [0.6]},
+    ]
+)
 
-df_ele.Snapshot("ele", "test.root")
+awk = awk[ak.argsort(awk.Electron_pt, axis=1, ascending=False)]
 
-del df_ele
+awk.show(limit_cols=1000)
 
-df_muo = ak.to_rdataframe(muo)
 
-opts = ROOT.RDF.RSnapshotOptions()
-opts.fMode = "UPDATE"
+# ele = {"Electron_pt": awk.Electron_pt, "Electron_eta": awk.Electron_eta}
+# muo = {"Muon_pt": awk.Muon_pt}
 
-df_muo.Snapshot("muo", "test.root", "", opts)
+# df_ele = ak.to_rdataframe(ele)
+
+# df_ele.Snapshot("ele", "test.root")
+
+# del df_ele
+
+# df_muo = ak.to_rdataframe(muo)
+
+# opts = ROOT.RDF.RSnapshotOptions()
+# opts.fMode = "UPDATE"
+
+# df_muo.Snapshot("muo", "test.root", "", opts)
 
 # path = os.path.join(
 #     ".",

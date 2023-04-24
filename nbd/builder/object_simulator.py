@@ -73,8 +73,8 @@ def simulator(
     )
 
     pt_col = [col for col in a_flash.fields if col.endswith("_pt")][0]
+    print(pt_col)
     # sort by pt
-    # a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=1)]
-
+    a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=1)]
 
     return a_flash
