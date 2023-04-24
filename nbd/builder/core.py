@@ -160,12 +160,14 @@ def flash_simulate(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
 
-    d = dict(zip(total.columns, total.values.T))
-    print(d)
+    # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
+    d_out = dict(zip(total.columns, total.values.T))
+    a_out = ak.zip(d_out)
 
-    a_flash = ak.zip(d)
-    # a_flash = ak.unflatten(a_flash, reco_struct) # old
-    for col in a_flash.fields:
-        a_flash[col] = ak.unflatten(a_flash[col], reco_struct, axis=0)
+    final_dict = {}
+    for col in a_out.fields:
+        final_dict[col] = ak.unflatten(a_out[col], reco_struct, axis=0)
+
+    a_flash = ak.Array(final_dict)
 
     return a_flash

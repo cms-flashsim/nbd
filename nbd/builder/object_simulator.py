@@ -72,12 +72,8 @@ def simulator(
         gen_postrpocessing_dict=gen_postprocessing_dict,
     )
 
-    a_flash.show(limit_cols=1000)
     pt_col = [col for col in a_flash.fields if col.endswith("_pt")][0]
-    print(pt_col)
     # sort by pt
     a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=-1, ascending=False)]
-    a_flash[pt_col].show(limit_cols=1000)
-    a_flash.show(limit_cols=1000)
 
     return a_flash
