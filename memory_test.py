@@ -31,17 +31,17 @@ awk = ak.Array(
     ]
 )
 
-awk = awk[ak.argsort(awk.Electron_pt, axis=1, ascending=False)]
+awk = awk[ak.argsort(awk["Electron_pt"], axis=1, ascending=False)]
 
 awk.show(limit_cols=1000)
 
 
-# ele = {"Electron_pt": awk.Electron_pt, "Electron_eta": awk.Electron_eta}
+ele = {"Electron_pt": awk.Electron_pt, "Electron_eta": awk.Electron_eta}
 # muo = {"Muon_pt": awk.Muon_pt}
 
-# df_ele = ak.to_rdataframe(ele)
+df_ele = ak.to_rdataframe(ele)
 
-# df_ele.Snapshot("ele", "test.root")
+df_ele.Snapshot("ele", "test.root")
 
 # del df_ele
 

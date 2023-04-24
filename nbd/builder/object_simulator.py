@@ -76,5 +76,6 @@ def simulator(
     print(pt_col)
     # sort by pt
     a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=1)]
+    a_flash[pt_col].show(limit_cols=1000)
 
     return a_flash
