@@ -61,5 +61,5 @@ if __name__ == "__main__":
     # generation loop
     for input, output in zip(input_files, output_files):
         nanomaker(
-            input, output, ["Electron", "Jet", "Muon"], device="cuda:0", limit=None
+            input, output, ["Muon"], device="cuda:0", limit=1000
         )
