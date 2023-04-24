@@ -76,7 +76,7 @@ def simulator(
     obj_name = pt_col.replace("_pt", "", 1)
     counter_col = f"n{obj_name}"
     # sort by pt
-    a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=-1)]
+    a_flash = a_flash[ak.argsort(a_flash[pt_col], axis=-1, ascending=False)]
     a_flash[counter_col] = reco_struct
 
     return a_flash
