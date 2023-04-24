@@ -3,8 +3,6 @@ import json
 import ROOT
 import awkward as ak
 import numpy as np
-import pandas as pd
-import uproot
 
 awk = ak.Array(
     [
@@ -31,7 +29,7 @@ awk = ak.Array(
     ]
 )
 
-awk = awk[ak.argsort(awk["Electron_pt"], axis=1, ascending=False)]
+awk = awk[ak.argsort(awk["Electron_pt"], axis=1, ascending=False, highlevel=False)]
 
 awk.show(limit_cols=1000)
 
