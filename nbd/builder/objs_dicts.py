@@ -61,7 +61,7 @@ objs_dicts = {
         "saturate_ranges_path": None,
         "eff": False,
         "preprocess_dict": None,
-        "gen_postprocessing_dict": None
+        "gen_postprocessing_dict": None,
     },
     "Muon": {
         "derived_vars_func": muons.extractGenMuonFeatures,
@@ -75,9 +75,9 @@ objs_dicts = {
         "vars_dictionary": target_dictionary_muons,
         "scale_file_path": None,
         "batch_size": 10000,
-        "saturate_ranges_path": None,
+        "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/muons/saturate_ranges_muon.json",
         "eff": False,
         "preprocess_dict": gen_dictionary_muons,
-        "gen_postprocessing_dict": cond_dictionary_muons
+        "gen_postprocessing_dict": cond_dictionary_muons,
     },
 }
