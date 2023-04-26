@@ -55,7 +55,6 @@ def simulator(
     )
 
     if preprocess_dict is not None:
-        print("Preprocessing")
         to_flash = preprocessing(to_flash, preprocess_dict)
 
     a_flash = core.flash_simulate(
