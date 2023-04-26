@@ -15,10 +15,7 @@ def process_column_var(column_name, operations, df):
         if op[0] == "t":
             function = op[1]
             p = op[2]
-            print(op)
-            print(df[column_name])
             df[column_name] = transform(df, column_name, function, p)
-            print(df[column_name])
         else:
             pass
     return df[column_name]
