@@ -1,16 +1,17 @@
-import ROOT
+import sys
 import os
+import ROOT
 
 module = os.path.join(os.path.dirname(__file__), "extraction.h")
-
 ROOT.gInterpreter.ProcessLine(f'#include "{module}"')
-
 ROOT.EnableImplicitMT()
 
-d = ROOT.RDataFrame("Events", "~/test_TTJets.root")
+path = str(sys.argv[1])
 
-cleaned = (
-    d.Define("TMPGenElectronMask", "abs(GenPart_pdgId) == 11")
+full = ROOT.RDataFrame("FullSim", path)
+
+full = (
+    full.Define("TMPGenElectronMask", "abs(GenPart_pdgId) == 11")
     .Define("TMPGenElectron_pt", "GenPart_pt[TMPGenElectronMask]")
     .Define("TMPGenElectron_eta", "GenPart_eta[TMPGenElectronMask]")
     .Define("TMPGenElectron_phi", "GenPart_phi[TMPGenElectronMask]")
@@ -40,43 +41,25 @@ cleaned = (
 )
 
 
-matched = (
-    cleaned.Define("GenPart_ElectronIdx_empty", "Electron_genObjMatchMaker(GenPart_pt)")
+full = (
+    full.Define("GenPart_ElectronIdx_empty", "Electron_genObjMatchMaker(GenPart_pt)")
     .Define(
         "GenPart_genElectron_ElectronIdx",
         "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge, GenPart_ElectronIdx_empty, 0)",
     )
-    .Define("GenPart_MElectronIdx_empty", "Electron_genObjMatchMaker(GenPart_pt)")
-    .Define(
-        "GenPart_genElectron_MElectronIdx",
-        "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, MElectron_ptRatio, MElectron_etaMinusGen, MElectron_phiMinusGen, MElectron_charge, GenPart_MElectronIdx_empty, 0)",
-    )
-    .Define(
-        "GenElectronMask",
-        "abs(GenPart_pdgId) == 11",
-    )
-    .Define("GenElectron_pt", "GenPart_pt[GenElectronMask]")
     .Define(
         "GenElectron_FullMatched",
         "GenPart_genElectron_ElectronIdx[GenElectronMask] >= 0",
     )
     .Define("FullMatched", "GenElectron_pt[GenElectron_FullMatched]")
-    .Define(
-        "GenElectron_FlashMatched",
-        "GenPart_genElectron_MElectronIdx[GenElectronMask] >= 0",
-    )
-    .Define("FlashMatched", "GenElectron_pt[GenElectron_FlashMatched]")
 )
 
 
-n_full = matched.Histo1D("FullMatched").GetEntries()
+n_full = full.Histo1D("FullMatched").GetEntries()
 
-n_flash = d.Histo1D("MElectron_ptRatio").GetEntries()
+flash = ROOT.RDataFrame("Events", path)
 
-# n_flash = (
-#     matched.Histo1D("FlashMatched").GetEntries()
-#     / matched.Histo1D("GenElectron_pt").GetEntries()
-# )
+n_flash = flash.Histo1D("Electron_pt").GetEntries()
 
 print(f"Flash: {n_flash}")
 print(f"Full: {n_full}")
