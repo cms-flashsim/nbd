@@ -23,6 +23,7 @@ rdf = (
         "GenPart_genElectron_ElectronIdx",
         "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, FullSim.Electron_pt, FullSim.Electron_eta, FullSim.Electron_phi, FullSim.Electron_charge, GenPart_ElectronIdx_empty, 0)",
     )
+    .Define("GenElectronMask", "abs(GenPart_pdgId) == 11")
     .Define(
         "GenElectron_FullMatched",
         "GenPart_genElectron_ElectronIdx[GenElectronMask] >= 0",
