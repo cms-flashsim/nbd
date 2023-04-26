@@ -33,11 +33,9 @@ rdf = (
 )
 
 
-n_full = full.Histo1D("FullMatched").GetEntries()
+n_full = rdf.Histo1D("FullMatched").GetEntries()
 
-flash = ROOT.RDataFrame("Events", path)
-
-n_flash = flash.Histo1D("Electron_pt").GetEntries()
+n_flash = rdf.Histo1D("Electron_pt").GetEntries()
 
 print(f"Flash: {n_flash}")
 print(f"Full: {n_full}")
