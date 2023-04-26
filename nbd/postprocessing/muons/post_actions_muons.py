@@ -19,18 +19,21 @@ In the case of multiple operations, order follows the operation list indexing.
 target_dictionary_muons = {
     "Muon_etaMinusGen": [
         ["i", np.tan, [100, 0]],
-        ["s"]["a", "MGenMuon_eta"],
+        ["s"],
+        ["a", "MGenMuon_eta"],
         ["rename", "Muon_eta"],
     ],
     "Muon_phiMinusGen": [
         ["i", np.tan, [80, 0]],
-        ["s"]["a", "MGenMuon_phi"],
+        ["s"],
+        ["a", "MGenMuon_phi"],
         ["pmp"],
         ["rename", "Muon_phi"],
     ],
     "Muon_ptRatio": [
         ["i", np.tan, [10, -10]],
-        ["s"]["m", "MGenMuon_pt"],
+        ["s"],
+        ["m", "MGenMuon_pt"],
         ["rename", "Muon_pt"],
     ],
     "Muon_dxy": [["i", np.tan, [150, 0]], ["s"]],
