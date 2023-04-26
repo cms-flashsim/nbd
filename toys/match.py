@@ -2,7 +2,7 @@ import sys
 import os
 import ROOT
 
-module = os.path.join(os.path.dirname(__file__), "extraction.h")
+module = os.path.join(os.path.abspath(os.path.dirname(__file__)), "extraction.h")
 ROOT.gInterpreter.ProcessLine(f'#include "{module}"')
 ROOT.EnableImplicitMT()
 
