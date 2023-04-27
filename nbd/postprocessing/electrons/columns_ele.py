@@ -33,6 +33,8 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
+eff_ele = ele_cond.copy()
+
 pu = [
     "Pileup_gpudensity",
     "Pileup_nPU",

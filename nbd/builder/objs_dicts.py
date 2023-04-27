@@ -4,8 +4,14 @@
 from nbd.models.electrons.geneleeff import ElectronClassifier
 from nbd.models.electrons.fromgenele import load_mixture_model
 from nbd.extraction.electrons import electrons
-from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns, eff_ele
-from nbd.postprocessing.electrons.post_actions_ele_old import (
+
+# old model imports
+# from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns, eff_ele
+# from nbd.postprocessing.electrons.post_actions_ele_old import (
+#     target_dictionary as target_dictionary_ele,
+# )
+from nbd.postprocessing.electrons.columns_ele import ele_cond, reco_columns, eff_ele
+from nbd.postprocessing.electrons.post_actions_ele import (
     target_dictionary as target_dictionary_ele,
 )
 
@@ -34,7 +40,7 @@ objs_dicts = {
         "eff_model": ElectronClassifier,
         "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
         "flow_loader": load_mixture_model,
-        "flow_path": "/home/users/cattafe/wipfs/generation/electrons/EM1/checkpoint-latest.pt",
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_@epoch_90.pt",
         "eff_columns": eff_ele,
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
