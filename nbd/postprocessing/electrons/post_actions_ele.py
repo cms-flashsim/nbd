@@ -52,7 +52,7 @@ target_dictionary = {
         ["a", "GenElectron_eta"],
         ["rename", "Electron_eta"],
     ],
-    "Electron_hoe": [["d", [-np.inf, -6]], ["i", np.exp, [1, 1e-3]], ["s"]],
+    "Electron_hoe": [["d", [-np.inf, -6], np.log(1e-3)], ["i", np.exp, [1, 1e-3]], ["s"]],
     "Electron_ip3d": [["i", np.exp, [1, 1e-3]], ["s"]],
     "Electron_isPFcand": [["d", None, None], ["s"]],
     "Electron_jetPtRelv2": [["i", np.expm1, [1, 0]], ["s"]],
