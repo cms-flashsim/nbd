@@ -153,6 +153,10 @@ def extractGenElectronFeatures(df):
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{0})",
         )
     )
+
+    total = extracted.Histo1D("GenElectron_pt").GetEntries()
+    print("total: ", total)
+
     return extracted
 
 
