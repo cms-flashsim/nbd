@@ -4,7 +4,7 @@ from nbd.builder.nanomaker import nanomaker
 
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
-mc_dir = "gpfs/ddn/cms/user/cattafe/"
+mc_dir = "/gpfs/ddn/cms/user/cattafe/"
 
 ### DrellYan
 # prod_camp = "RunIIAutumn18NanoAODv6"
