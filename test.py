@@ -20,7 +20,7 @@ nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 # sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
 # nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
 
-flash_dir = "/home/users/cattafe/FlashSim"
+flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
 
 
 if __name__ == "__main__":
