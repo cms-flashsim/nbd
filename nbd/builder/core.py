@@ -16,10 +16,10 @@ from torch.utils.data import DataLoader
 
 
 def isReco(y_pred):
-    # p = np.random.rand(y_pred.size)
+    p = np.random.rand(y_pred.size)
 
     # Temporary fix for efficiency model
-    p = np.random.uniform(0, 0.6, y_pred.size)
+    # p = np.random.uniform(0, 0.5, y_pred.size)
     return y_pred > p
 
 
