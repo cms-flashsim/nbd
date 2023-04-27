@@ -64,6 +64,10 @@ def select_gen(
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
 
+    print(
+        f"Selected: {ak.sum(a_eff_mask[a_eff_mask == True])} Total: {ak.sum(ev_struct)}"
+    )
+
     a_gen = a_gen_data[gen_columns]
     a_gen["Mask"] = a_eff_mask
 
@@ -79,6 +83,9 @@ def select_gen(
         masked_gen = a_gen[gen_columns][a_gen["Mask"]]
 
     reco_struct = ak.num(masked_gen[gen_columns[0]], axis=1)
+
+    print("Number of events after selection: ", ak.sum(reco_struct))
+
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
