@@ -15,7 +15,7 @@ nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 # nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1"
 
 ### TT training 
-# mc_dir = "/gpfs/ddn/cms/user/cattafe/"
+# mc_dir = "/gpfs/ddn/cms/user/cattafe/mc/"
 # prod_camp = "RunIIAutumn18NanoAODv6"
 # sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
 # nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
