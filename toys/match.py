@@ -33,10 +33,9 @@ rdf = (
     .Define("FullMatched", "GenElectron_pt[GenElectron_FullMatched]")
 )
 
-
-n_full = rdf.Histo1D("FullMatched").GetEntries() / rdf.Histo1D("GenElectron_pt").GetEntries()
-
-n_flash = rdf.Histo1D("Electron_pt").GetEntries() / rdf.Histo1D("GenElectron_pt").GetEntries()
-
+total = rdf.Histo1D("GenElectron_pt").GetEntries()  
+n_full = rdf.Histo1D("FullMatched").GetEntries() / total
+n_flash = rdf.Histo1D("Electron_pt").GetEntries() / total
 print(f"Flash: {n_flash}")
 print(f"Full: {n_full}")
+print(f"Total: {total}")
