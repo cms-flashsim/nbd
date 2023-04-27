@@ -154,9 +154,6 @@ def extractGenElectronFeatures(df):
         )
     )
 
-    total = extracted.Histo1D("GenElectron_pt").GetEntries()
-    print("total: ", total)
-
     return extracted
 
 
