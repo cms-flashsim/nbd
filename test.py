@@ -4,6 +4,8 @@ from nbd.builder.nanomaker import nanomaker
 
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
+mc_dir = "gpfs/ddn/cms/user/cattafe/"
+
 ### DrellYan
 # prod_camp = "RunIIAutumn18NanoAODv6"
 # sample = "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
