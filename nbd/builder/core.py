@@ -36,7 +36,7 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
             y_pred = np.concatenate((y_pred, out.cpu().numpy().flatten()))
 
     mask = isReco(y_pred)
-
+    print(len(mask[mask == True]) / len(mask) * 100, "% of events selected")
     return mask
 
 
