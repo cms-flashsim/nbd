@@ -67,8 +67,12 @@ def extractGenElectronFeatures(df):
     df = cleanGenJetCollection(df)
 
     extracted = (
-        df.Define("GenPart_isLastCopy", "BitwiseDecoder(GenPart_statusFlags, 13)")
-        .Define("GenElectronMask", "abs(GenPart_pdgId) == 11 && GenPart_isLastCopy")
+        df.Define(
+            "GenPart_ElectronIdx",
+            "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge)",
+        )
+        .Define("GenPart_isLastCopy", "BitwiseDecoder(GenPart_statusFlags, 13)")
+        .Define("GenElectronMask", "abs(GenPart_pdgId) == 11 && GenPart_isLastCopy && GenPart_ElectronIdx >= 0")
         .Define("GenElectron_pt", "GenPart_pt[GenElectronMask]")
         .Define("GenElectron_eta", "GenPart_eta[GenElectronMask]")
         .Define("GenElectron_phi", "GenPart_phi[GenElectronMask]")
