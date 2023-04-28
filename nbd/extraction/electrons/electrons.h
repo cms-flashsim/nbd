@@ -313,4 +313,41 @@ auto GenPart_ElectronIdx(
   return idx;
 }
 
+auto Electron_genPartIdx(
+    ROOT::VecOps::RVec<float> &gen_pt, ROOT::VecOps::RVec<float> &gen_eta,
+    ROOT::VecOps::RVec<float> &gen_phi, ROOT::VecOps::RVec<float> &ele_pt,
+    ROOT::VecOps::RVec<float> &ele_eta, ROOT::VecOps::RVec<float> &ele_phi,
+    ROOT::VecOps::RVec<int> &gen_pdgid, ROOT::VecOps::RVec<int> &gen_status,
+    ROOT::VecOps::RVec<int> &ele_chg) {
+
+  auto size_outer = ele_pt.size();
+  auto size_inner = gen_pt.size();
+
+  ROOT::VecOps::RVec<int> idx;
+  idx.reserve(size_outer);
+
+  for (auto i = 0; i < size_outer; i++) {
+    auto closest_dr = 0.3;
+    auto closest_pt_rel = 0.5;
+
+    idx.push_back(-1);
+
+    for (auto j = 0; j < size_inner; j++) {
+
+      auto dpt = abs(ele_pt[i] - gen_pt[j]);
+      auto deta = ele_eta[i] - gen_eta[j];
+      auto dphi = TVector2::Phi_mpi_pi(ele_phi[i] - gen_phi[j]);
+      auto dr = TMath::Sqrt(deta * deta + dphi * dphi);
+
+      if (GenEleMatch(dr, closest_dr, dpt / gen_pt[j], closest_pt_rel,
+                      gen_pdgid[j], gen_status[j], ele_chg[i]) == 1) {
+        closest_dr = dr;
+        closest_pt_rel = dpt / gen_pt[j];
+        idx[i] = j;
+      }
+    }
+  }
+  return idx;
+}
+
 #endif
