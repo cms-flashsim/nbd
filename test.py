@@ -5,9 +5,9 @@ from nbd.builder.nanomaker import nanomaker
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
 ### DrellYan
-prod_camp = "RunIIAutumn18NanoAODv6"
-sample = "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
-nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
+# prod_camp = "RunIIAutumn18NanoAODv6"
+# sample = "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
+# nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 
 ### TT
 # prod_camp = "RunIISummer20UL18NanoAODv9"
@@ -15,12 +15,15 @@ nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
 # nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1"
 
 ### TT training 
-# mc_dir = "/gpfs/ddn/cms/user/cattafe/mc/"
-# prod_camp = "RunIIAutumn18NanoAODv6"
-# sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
-# nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
+mc_dir = "/gpfs/ddn/cms/user/cattafe/mc/"
+prod_camp = "RunIIAutumn18NanoAODv6"
+sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
 
-flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
+# flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
+
+flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim/no_eff/" # no efficiency for electrons
+
 
 
 if __name__ == "__main__":
