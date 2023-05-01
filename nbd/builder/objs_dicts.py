@@ -40,7 +40,7 @@ objs_dicts = {
         "eff_model": ElectronClassifier,
         "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
         "flow_loader": load_mixture_model,
-        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_@epoch_90.pt",
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
         "eff_columns": eff_ele,
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
