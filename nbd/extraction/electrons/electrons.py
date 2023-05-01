@@ -67,17 +67,14 @@ def extractGenElectronFeatures(df):
     df = cleanGenJetCollection(df)
 
     extracted = (
-        df.Define(
-            "Electron_genPartIdx",
-            "Electron_genPartIdx(GenPart_pt, GenPart_eta, GenPart_phi, Electron_pt, Electron_eta, Electron_phi, GenPart_pdgId, GenPart_statusFlags, Electron_charge)",
-        )
-        .Define("GenElectronIdx", "Electron_genPartIdx[Electron_genPartIdx >= 0]")
-        .Define("GenElectron_pt", "Take(GenPart_pt, GenElectronIdx)")
-        .Define("GenElectron_eta", "Take(GenPart_eta, GenElectronIdx)")
-        .Define("GenElectron_phi", "Take(GenPart_phi, GenElectronIdx)")
-        .Define("GenElectron_pdgId", "Take(GenPart_pdgId, GenElectronIdx)")
-        .Define("GenElectron_charge", "Take(GenPart_charge, GenElectronIdx)")
-        .Define("GenElectron_statusFlags", "Take(GenPart_statusFlags, GenElectronIdx)")
+        df.Define("GenPart_isLastCopy", "BitwiseDecoder(GenPart_statusFlags, 13)")
+        .Define("GenElectronMask", "abs(GenPart_pdgId) == 11 && GenPart_isLastCopy")
+        .Define("GenElectron_pt", "GenPart_pt[GenElectronMask]")
+        .Define("GenElectron_eta", "GenPart_eta[GenElectronMask]")
+        .Define("GenElectron_phi", "GenPart_phi[GenElectronMask]")
+        .Define("GenElectron_pdgId", "GenPart_pdgId[GenElectronMask]")
+        .Define("GenElectron_charge", "charge(GenElectron_pdgId)")
+        .Define("GenElectron_statusFlags", "GenPart_statusFlags[GenElectronMask]")
         .Define("GenElectron_statusFlag0", "BitwiseDecoder(GenElectron_statusFlags, 0)")
         .Define("GenElectron_statusFlag1", "BitwiseDecoder(GenElectron_statusFlags, 1)")
         .Define("GenElectron_statusFlag2", "BitwiseDecoder(GenElectron_statusFlags, 2)")
