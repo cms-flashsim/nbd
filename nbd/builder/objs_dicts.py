@@ -48,7 +48,7 @@ objs_dicts = {
         "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele_old.json",
         "batch_size": 10000,
         "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
-        "eff": False,
+        "eff": True,
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,
     },
