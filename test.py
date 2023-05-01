@@ -20,9 +20,9 @@ prod_camp = "RunIIAutumn18NanoAODv6"
 sample = "TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"
 nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1"
 
-# flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
+flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
 
-flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim/no_eff/" # no efficiency for electrons
+# flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim/no_eff/" # no efficiency for electrons
 
 
 
