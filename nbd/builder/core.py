@@ -160,25 +160,23 @@ def flash_simulate(
     if gen_postrpocessing_dict is not None:
         to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
     total = pd.DataFrame(total, columns=reco_columns)
-    
+
     plt.hist(total["Electron_ptRatio"], histtype="step", bins=100, range=(0.5, 1.5))
     plt.savefig("pt_ratio.pdf")
     plt.close()
-
 
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
 
-    # # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
-    # d_out = dict(zip(total.columns, total.values.T))
-    # a_out = ak.zip(d_out)
+    # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
+    d_out = dict(zip(total.columns, total.values.T))
+    a_out = ak.zip(d_out)
 
-    # final_dict = {}
-    # for col in a_out.fields:
-    #     final_dict[col] = ak.unflatten(a_out[col], reco_struct, axis=0)
+    final_dict = {}
+    for col in a_out.fields:
+        final_dict[col] = ak.unflatten(a_out[col], reco_struct, axis=0)
 
-    # a_flash = ak.Array(final_dict)
+    a_flash = ak.Array(final_dict)
 
-    # return a_flash
-    return total
+    return a_flash
