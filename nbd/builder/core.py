@@ -161,10 +161,6 @@ def flash_simulate(
         to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
     total = pd.DataFrame(total, columns=reco_columns)
 
-    plt.hist(total["Electron_ptRatio"].values * 1.499998688697815, histtype="step", bins=100, range=(0.5, 1.5))
-    plt.savefig("pt_ratio.pdf")
-    plt.close()
-
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )

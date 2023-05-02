@@ -45,7 +45,7 @@ objs_dicts = {
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
         "vars_dictionary": target_dictionary_ele,
-        "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele_old.json",
+        "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
         "batch_size": 10000,
         "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "eff": True,
