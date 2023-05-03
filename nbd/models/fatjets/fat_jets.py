@@ -13,8 +13,6 @@ from pathlib import Path
 import sys
 import os
 
-sys.path.insert(0, os.path.join("..", "utils"))
-
 from nflows.transforms.autoregressive import (AutoregressiveTransform)
 
 from nflows.transforms.base import CompositeTransform
