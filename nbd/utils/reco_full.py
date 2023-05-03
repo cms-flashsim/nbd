@@ -1,6 +1,6 @@
 import numpy as np
 
-reco_objects = ["Electron", "Muon", "Jet"]
+reco_objects = ["Electron", "Muon", "Jet", "FatJets"]
 
 
 def get_reco_columns(fields):
