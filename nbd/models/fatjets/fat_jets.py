@@ -14,7 +14,6 @@ import sys
 import os
 
 sys.path.insert(0, os.path.join("..", "utils"))
-from masks import create_block_binary_mask, create_identity_mask
 from permutations import BlockPermutation, IdentityPermutation
 
 from nflows.transforms.autoregressive import (AutoregressiveTransform)
@@ -418,12 +417,6 @@ def create_base_transform(
         print("Invalid activation function specified. Using ReLU.")
 
     if mask_type == "block-binary":
-        mask = create_block_binary_mask(param_dim, block_size)
-    elif mask_type == "alternating-binary":
-        mask = utils.create_alternating_binary_mask(param_dim, even=(i % 2 == 0))
-    elif mask_type == "identity":
-        mask = create_identity_mask(param_dim)
-    else:
         raise ValueError
 
     if base_transform_type == "rq-coupling":
