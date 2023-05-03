@@ -133,9 +133,9 @@ class MaskedPiecewiseRationalQuadraticAutoregressiveTransformM(AutoregressiveTra
         dropout_probability=0.0,
         use_batch_norm=False,
         init_identity=True,
-        min_bin_width=modded_splines.DEFAULT_MIN_BIN_WIDTH,
-        min_bin_height=modded_splines.DEFAULT_MIN_BIN_HEIGHT,
-        min_derivative=modded_splines.DEFAULT_MIN_DERIVATIVE,
+        min_bin_width=modded_spline.DEFAULT_MIN_BIN_WIDTH,
+        min_bin_height=modded_spline.DEFAULT_MIN_BIN_HEIGHT,
+        min_derivative=modded_spline.DEFAULT_MIN_DERIVATIVE,
     ):
         self.num_bins = num_bins
         self.min_bin_width = min_bin_width
