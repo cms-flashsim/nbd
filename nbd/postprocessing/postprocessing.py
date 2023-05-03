@@ -95,6 +95,12 @@ def cut_unsmearing(df, column_name, cut, x1, x2):
     return df[column_name]
 
 
+def set_lower_bound(df, column_name, cut, bound):
+    val = df[column_name].values
+    df[column_name] = np.where(val < cut, bound, df[column_name].values)
+    return df[column_name]
+
+
 def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path=None):
     for i, op in enumerate(operations):
         if op[0] == "d":
@@ -131,6 +137,10 @@ def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path
             df[column_name] = overwrite_with_gen(
                 df, gen_df, column_name, gen_column_name
             )
+        elif op[0] == "lower_b":
+            cut = op[1]
+            bound = op[2]
+            df[column_name] = set_lower_bound(df, column_name, cut, bound)
         elif op[0] == "rename":
             if i != len(operations) - 1:
                 raise ValueError(

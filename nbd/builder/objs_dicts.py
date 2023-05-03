@@ -34,6 +34,15 @@ from nbd.postprocessing.muons.post_actions_muons import target_dictionary_muons
 from nbd.preprocessing.gen_muons.pre_actions_gen_muons import gen_dictionary_muons
 from nbd.postprocessing.gen_muons.post_actions_gen_muons import cond_dictionary_muons
 
+# fat jets imports
+from nbd.extraction.fatjets import fatjets
+from nbd.models.fatjets.fat_jets import load_mixture_model as load_model_fatjets
+from nbd.postprocessing.fatjets.columns_fatjets import (
+    reco_columns as reco_columns_fatjets,
+    fatjet_cond,
+)
+from nbd.postprocessing.fatjets.post_actions_fatjets import target_dictionary_fatjets
+
 objs_dicts = {
     "Electron": {
         "derived_vars_func": electrons.extractGenElectronFeatures,
@@ -85,5 +94,22 @@ objs_dicts = {
         "eff": False,
         "preprocess_dict": gen_dictionary_muons,
         "gen_postprocessing_dict": cond_dictionary_muons,
+    },
+    "FatJets": {
+        "derived_vars_func": fatjets.extractGenFatJetsFeatures,
+        "eff_model": None,
+        "eff_model_path": None,
+        "flow_loader": load_model_fatjets,
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_muons_final_@epoch_580.pt",
+        "eff_columns": None,
+        "gen_columns": fatjet_cond,
+        "reco_columns": reco_columns_fatjets,
+        "vars_dictionary": target_dictionary_fatjets,
+        "scale_file_path": None,
+        "batch_size": 10000,
+        "saturate_ranges_path": None,
+        "eff": False,
+        "preprocess_dict": None,
+        "gen_postprocessing_dict": None,
     },
 }
