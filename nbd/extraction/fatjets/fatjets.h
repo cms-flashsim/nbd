@@ -16,7 +16,7 @@ auto count_nHadrons(ROOT::VecOps::RVec<float> &genh_eta,
   count_h.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
     count_h.emplace_back(0);
-    if (size_inner == 0) continue;
+    if (size_inner == 0 | size_outer == 0) continue;
     for (size_t j = 0; j < size_inner; j++) {
       Double_t deta = genh_eta[i] - AK8_eta[j];
       Double_t dphi = TVector2::Phi_mpi_pi(genh_phi[i] - AK8_phi[j]);
