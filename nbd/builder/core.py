@@ -52,6 +52,7 @@ def select_gen(
 ):
     a_gen = a_gen_data[gen_columns]
     ev_struct = ak.num(a_gen[gen_columns[0]])
+    print(ev_struct)
 
     if eff:
         a_eff = a_gen_data[eff_columns]
@@ -64,7 +65,7 @@ def select_gen(
 
     a_eff_mask = ak.unflatten(eff_mask, ev_struct)
 
-    a_gen = a_gen_data[gen_columns]
+    # a_gen = a_gen_data[gen_columns]
     a_gen["Mask"] = a_eff_mask
 
     if set(pu) <= set(gen_columns):
@@ -121,7 +122,7 @@ def flash_simulate(
     print(f"Batch size: {batch_size}")
     with torch.no_grad():
         for batch_idx, y in enumerate(data_loader):
-            # print(f"Batch: {batch_idx}/{len(data_loader)}    ", end="")
+            print(f"Batch: {batch_idx}/{len(data_loader)}    ", end="")
 
             y = y.float().to(device, non_blocking=True)
             if len(y) == batch_size:
