@@ -12,6 +12,8 @@ auto count_nHadrons(ROOT::VecOps::RVec<float> &genh_eta,
 
   auto size_outer = AK8_eta.size();
   auto size_inner = genh_eta.size();
+  std::cout << "size_outer: " << size_outer << std::endl;
+  std::cout << "size_inner: " << size_inner << std::endl;
   ROOT::VecOps::RVec<int> count_h;
   count_h.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
