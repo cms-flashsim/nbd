@@ -31,6 +31,7 @@ def simulator(
     gen_postprocessing_dict=None,
 ):
     # extract
+    print("Extracting new variables")
     rdf_ass = derived_vars_func(rdf)
     if eff == True:
         a_gen_data = ak.from_rdataframe(
