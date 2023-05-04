@@ -4,7 +4,6 @@ import ROOT
 module_path = os.path.join(os.path.dirname(__file__), "fatjets.h")
 
 ROOT.gInterpreter.ProcessLine(f'#include "{module_path}"')
-ROOT.EnableImplicitMT()
 
 def extractGenFatJetsFeatures(df):
     """for going from GenJetAK8 to reco ak8jet

@@ -1,7 +1,7 @@
 #ifndef UTILS_FATJETS
 #define UTILS_FATJETS
 
-ROOT::VecOps::RVec<int> count_nHadrons(ROOT::VecOps::RVec<float> &genh_eta,
+auto count_nHadrons(ROOT::VecOps::RVec<float> &genh_eta,
                     ROOT::VecOps::RVec<float> &genh_phi,
                     ROOT::VecOps::RVec<float> &AK8_eta,
                     ROOT::VecOps::RVec<float> &AK8_phi) {
