@@ -108,9 +108,11 @@ def flash_simulate(
     dataset = GenDataset(to_flash, gen_columns)
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
-    flow, _, _, _, _, _ = flow_loader(
+    flow_tuple = flow_loader(
         device=device, model_dir=os.path.dirname(__file__), filename=model_path
     )
+    # assumes flow is always the frist element of the tuple
+    flow = flow_tuple[0]
     flow = flow.to(device)
 
     flow.eval()
