@@ -753,5 +753,4 @@ def load_mixture_model(device, model_dir=None, filename=None):
         epoch,
         train_history,
         test_history,
-        optimizer_state_dict,
     )
