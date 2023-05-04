@@ -100,7 +100,7 @@ objs_dicts = {
         "eff_model": None,
         "eff_model_path": None,
         "flow_loader": load_model_fatjets,
-        "flow_path": "/gpfs/ddn/cms/user/fvaselli/fat_jets_weights/model_\@epoch_999.pt",
+        "flow_path": "/gpfs/ddn/cms/user/fvaselli/fat_jets_weights/model_@epoch_999.pt",
         "eff_columns": None,
         "gen_columns": fatjet_cond,
         "reco_columns": reco_columns_fatjets,
