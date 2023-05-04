@@ -1,0 +1,22 @@
+{
+    "FatJet_pt": [
+        0,
+        3000
+    ],
+    "FatJet_eta": [
+        -4,
+        4
+    ],
+    "FatJet_phi": [
+        -3.5,
+        3.5
+    ],
+    "FatJet_msoftdrop": [
+        -10,
+        1000
+    ],
+    "FatJet_particleNetMD_XbbvsQCD": [
+        -0.1,
+        1
+    ]
+}
