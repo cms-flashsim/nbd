@@ -30,7 +30,7 @@ def extractGenFatJetsFeatures(df):
         .Define("GenPart_phi_goodb", "GenPart_phi[GenPart_IsGoodB]")
         .Define(
             "GenJetAK8_nbFlavour",
-            "count_nHadrons(GenPart_eta_goodb, GenPart_phi_goodb, FatJet_eta, FatJet_phi)",
+            "count_nHadrons(GenPart_eta_goodb, GenPart_phi_goodb, GenJetAK8_eta, GenJetAK8_phi)",
         )
         .Define("GenPart_IsLastC", "(GenPart_pdgId >=400 && GenPart_pdgId < 500) | (GenPart_pdgId >=4000 && GenPart_pdgId < 5000) && (GenPart_statusFlags &(1<<13))!=0")
         .Define("GenPart_IsLastC_m", "Take(GenPart_IsLastC, GenPart_genPartIdxMother)")
@@ -38,7 +38,7 @@ def extractGenFatJetsFeatures(df):
         .Define("GenPart_IsGoodC", "GenPart_IsLastC && GenPart_parent_IsNotLastC")
         .Define("GenPart_eta_goodc", "GenPart_eta[GenPart_IsGoodC]")
         .Define("GenPart_phi_goodc", "GenPart_phi[GenPart_IsGoodC]")
-        .Define("GenJetAK8_ncFlavour", "count_nHadrons(GenPart_eta_goodc, GenPart_phi_goodc, FatJet_eta, FatJet_phi)")
+        .Define("GenJetAK8_ncFlavour", "count_nHadrons(GenPart_eta_goodc, GenPart_phi_goodc, GenJetAK8_eta, GenJetAK8_phi)")
     )
 
     return extracted

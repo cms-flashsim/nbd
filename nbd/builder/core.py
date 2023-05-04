@@ -77,10 +77,10 @@ def select_gen(
         for col in pu:
             masked_gen[col] = a_gen[col]
     else:
-        if eff:
-            masked_gen = a_gen[gen_columns][a_gen["Mask"]]
-        else:
-            masked_gen = a_gen[gen_columns]
+        # if eff:
+        masked_gen = a_gen[gen_columns][a_gen["Mask"]]
+        # else:
+        #     masked_gen = a_gen[gen_columns]
 
     reco_struct = ak.num(masked_gen[gen_columns[0]], axis=1)
 
