@@ -166,11 +166,11 @@ def flash_simulate(
     if gen_postrpocessing_dict is not None:
         to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
     total = pd.DataFrame(total, columns=reco_columns)
-
+    print(reco_columns)
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
-
+    print(total.columns)
     # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
     d_out = dict(zip(total.columns, total.values.T))
     a_out = ak.zip(d_out)
