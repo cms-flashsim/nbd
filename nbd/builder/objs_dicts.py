@@ -42,7 +42,7 @@ from nbd.postprocessing.fatjets.columns_fatjets import (
     fatjet_cond,
 )
 from nbd.postprocessing.fatjets.post_actions_fatjets import target_dictionary_fatjets
-scale_file_path_fatjets = os.path.join(os.path.dirname(__file__), "../postprocessing/fatjets/scale_factors_fatjets.json")
+scale_file_path_fatjets = os.path.join(os.path.dirname(__file__),'..', "postprocessing/fatjets/scale_factors_fatjets.json")
 
 objs_dicts = {
     "Electron": {
