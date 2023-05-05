@@ -17,12 +17,12 @@ transformation: ["i", func, [a, b]]  # func(x) - b / a
 In the case of multiple operations, order follows the operation list indexing.
 """
 
-keys = ["eta", "phi", "pt", "msoftdrop", "particleNetMD_XbbvsQCD"]
+keys = ["pt", "eta", "phi", "msoftdrop", "particleNetMD_XbbvsQCD"]
 full_keys = [f"FatJet_{key}" for key in keys]
 post_actions = [
+    [["m", "GenJetAK8_pt"], ["s"]],
     [["a", "GenJetAK8_eta"], ["s"]],
     [["a", "GenJetAK8_phi"], ["pmp"], ["s"]],
-    [["m", "GenJetAK8_pt"], ["s"]],
     [["m", "GenJetAK8_mass"], ["lower_b", 0, -10], ["s"]],
     [["s"]],
 ]

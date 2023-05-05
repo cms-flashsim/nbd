@@ -97,7 +97,7 @@ def cut_unsmearing(df, column_name, cut, x1, x2):
 
 def set_lower_bound(df, column_name, cut, bound):
     val = df[column_name].values
-    df[column_name] = np.where(val < cut, bound, df[column_name].values)
+    df[column_name] = np.where(val < cut, bound, val)
     return df[column_name]
 
 
