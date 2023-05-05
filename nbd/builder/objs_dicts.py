@@ -105,7 +105,7 @@ objs_dicts = {
         "gen_columns": fatjet_cond,
         "reco_columns": reco_columns_fatjets,
         "vars_dictionary": target_dictionary_fatjets,
-        "scale_file_path": None,
+        "scale_file_path": "../../nbd/postprocessing/fatjets/saturate_ranges_fatjets.json",
         "batch_size": 10000,
         "saturate_ranges_path": None,
         "eff": False,

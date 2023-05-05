@@ -20,11 +20,11 @@ In the case of multiple operations, order follows the operation list indexing.
 keys = ["eta", "phi", "pt", "msoftdrop", "particleNetMD_XbbvsQCD"]
 full_keys = [f"FatJet_{key}" for key in keys]
 post_actions = [
-    [["a", "GenJetAK8_eta"]],
-    [["a", "GenJetAK8_phi"], ["pmp"]],
-    [["m", "GenJetAK8_pt"]],
-    [["m", "GenJetAK8_mass"]], [["lower_b", 0, -10]],
-    [["d", None, None]],
+    [["a", "GenJetAK8_eta"], ["s"]],
+    [["a", "GenJetAK8_phi"], ["pmp"], ["s"]],
+    [["m", "GenJetAK8_pt"], ["s"]],
+    [["m", "GenJetAK8_mass"]], [["lower_b", 0, -10], ["s"]],
+    [["d", None, None], ["s"]],
 ]
 
 target_dictionary_fatjets = dict(zip(full_keys, post_actions))
