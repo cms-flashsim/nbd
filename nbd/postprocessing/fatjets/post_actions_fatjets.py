@@ -23,7 +23,7 @@ post_actions = [
     [["a", "GenJetAK8_eta"], ["s"]],
     [["a", "GenJetAK8_phi"], ["pmp"], ["s"]],
     [["m", "GenJetAK8_pt"], ["s"]],
-    [["m", "GenJetAK8_mass"]], [["lower_b", 0, -10], ["s"]],
+    [["m", "GenJetAK8_mass"], ["lower_b", 0, -10], ["s"]],
     [["s"]],
 ]
 
