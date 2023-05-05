@@ -14,10 +14,17 @@ from nbd.utils.reco_full import get_reco_columns
 
 def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None):
     print(f"Processing file {input_file}")
+
+    file = ROOT.TFile.Open(input_file)
+    events = file.Events
+    lumi = file.LuminosityBlocks
+    runs = file.Runs
+    meta = file.MetaData
+
     if limit is not None:
-        full = ROOT.RDataFrame("Events", input_file).Range(limit)
+        full = ROOT.RDataFrame(events).Range(limit)
     else:
-        full = ROOT.RDataFrame("Events", input_file)
+        full = ROOT.RDataFrame(events)
 
     # Getting the list of columns
     full_columns_list = full.GetColumnNames()
@@ -45,7 +52,6 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         print(f"Done")
         flash_list.append(a_flash)
 
-
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
     dict_1 = dict(zip(a_rest.fields, [a_rest[field] for field in a_rest.fields]))
@@ -59,6 +65,7 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         total = {**dict_1, **dict_2}
         dict_1 = total
 
+
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", output_file)
 
@@ -70,3 +77,11 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     opts = ROOT.RDF.RSnapshotOptions()
     opts.fMode = "Update"
     old_reco.Snapshot("FullSim", output_file, "", opts)
+
+    outfile = ROOT.TFile.Open(output_file, "UPDATE")
+    outfile.cd()
+    lumi.Write()
+    runs.Write()
+    meta.Write()
+    outfile.Close()
+
