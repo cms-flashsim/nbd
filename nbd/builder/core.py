@@ -163,12 +163,6 @@ def flash_simulate(
     leftover_sample = np.reshape(leftover_sample, (leftover_shape, reco_dim))
     total = np.concatenate((tot_sample, leftover_sample), axis=0)
 
-    # save hist of all 5 variables
-    ranges = [[0.4, 1.5], [-0.10, 0.10], [-0.10, 0.10], [-2, 4], [-1, 1.1]]
-    for i in range(5):
-        plt.figure()
-        plt.hist(total[:, i], bins=100, range=ranges[i])
-        plt.savefig(f"hist_{i}pre.png")
     
     if gen_postrpocessing_dict is not None:
         to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
@@ -178,11 +172,6 @@ def flash_simulate(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
 
-        # save hist of all 5 variables
-    for j in total.columns:
-        plt.figure()
-        plt.hist(total[j].values, bins=100)
-        plt.savefig(f"hist_{j}post.png")
     # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
     d_out = dict(zip(total.columns, total.values.T))
     a_out = ak.zip(d_out)
