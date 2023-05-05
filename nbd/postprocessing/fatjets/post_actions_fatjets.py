@@ -24,7 +24,7 @@ post_actions = [
     [["a", "GenJetAK8_phi"], ["pmp"], ["s"]],
     [["m", "GenJetAK8_pt"], ["s"]],
     [["m", "GenJetAK8_mass"]], [["lower_b", 0, -10], ["s"]],
-    [["d", None, None], ["s"]],
+    [["s"]],
 ]
 
 target_dictionary_fatjets = dict(zip(full_keys, post_actions))
