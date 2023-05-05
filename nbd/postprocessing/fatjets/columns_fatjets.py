@@ -10,10 +10,10 @@ fatjet_cond = [
 ]
 
 jet_names = [
-    "msoftdrop",
+    "pt",
     "eta",
     "phi",
-    "pt",
+    "msoftdrop",
     "particleNetMD_XbbvsQCD",
 ]
 
