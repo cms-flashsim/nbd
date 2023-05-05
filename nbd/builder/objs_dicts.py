@@ -42,7 +42,7 @@ from nbd.postprocessing.fatjets.columns_fatjets import (
     fatjet_cond,
 )
 from nbd.postprocessing.fatjets.post_actions_fatjets import target_dictionary_fatjets
-scale_file_path_fatjets = os.path.join(os.path.dirname(os.path.dirname(__file__)), "postprocessing/fatjets/saturate_ranges_fatjets.json")
+saturate_file_path_fatjets = os.path.join(os.path.dirname(os.path.dirname(__file__)), "postprocessing/fatjets/saturate_ranges_fatjets.json")
 
 objs_dicts = {
     "Electron": {
@@ -106,9 +106,9 @@ objs_dicts = {
         "gen_columns": fatjet_cond,
         "reco_columns": reco_columns_fatjets,
         "vars_dictionary": target_dictionary_fatjets,
-        "scale_file_path": scale_file_path_fatjets,
+        "scale_file_path": None,
         "batch_size": 10000,
-        "saturate_ranges_path": None,
+        "saturate_ranges_path": saturate_file_path_fatjets,
         "eff": False,
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,
