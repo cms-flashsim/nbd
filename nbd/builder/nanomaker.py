@@ -80,8 +80,8 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
 
     outfile = ROOT.TFile.Open(output_file, "UPDATE")
     outfile.cd()
-    lumi.Write()
-    runs.Write()
-    meta.Write()
+    lumi.CloneTree().Write()
+    runs.CloneTree().Write()
+    meta.CloneTree().Write()
     outfile.Close()
 
