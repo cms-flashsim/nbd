@@ -1,5 +1,6 @@
 # define the dictionaries of objects to be simulated and their parameters
 import os
+
 # electrons imports
 from nbd.models.electrons.geneleeff import ElectronClassifier
 from nbd.models.electrons.fromgenele import load_mixture_model
@@ -42,7 +43,11 @@ from nbd.postprocessing.fatjets.columns_fatjets import (
     fatjet_cond,
 )
 from nbd.postprocessing.fatjets.post_actions_fatjets import target_dictionary_fatjets
-saturate_file_path_fatjets = os.path.join(os.path.dirname(os.path.dirname(__file__)), "postprocessing/fatjets/saturate_ranges_fatjets.json")
+
+saturate_file_path_fatjets = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)),
+    "postprocessing/fatjets/saturate_ranges_fatjets.json",
+)
 
 objs_dicts = {
     "Electron": {
@@ -50,14 +55,17 @@ objs_dicts = {
         "eff_model": ElectronClassifier,
         "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
         "flow_loader": load_mixture_model,
-        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
+        # "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_maf_electrons_@epoch_120.pt",
         "eff_columns": eff_ele,
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
         "vars_dictionary": target_dictionary_ele,
-        "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
+        # "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
+        "scale_file_path": "/home/users/cattafe/FlashSim-Electrons/ppreprocessing/electrons/scale_factors_ele.json",
         "batch_size": 10000,
-        "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
+        # "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
+        "saturate_ranges_path": "/home/users/cattafe/FlashSim-Electrons/ppreprocessing/electrons/saturate_ranges_ele.json",
         "eff": True,
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,
