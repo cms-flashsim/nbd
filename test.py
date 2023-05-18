@@ -3,6 +3,8 @@ import os
 from nbd.builder.nanomaker import nanomaker
 import ROOT
 
+ROOT.EnableImplicitMT()
+
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
 
