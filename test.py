@@ -1,10 +1,18 @@
 # the loop for generating new events starting from gen-level information in the files
 import os
 from nbd.builder.nanomaker import nanomaker
+import ROOT
 
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
-### DrellYan
+
+### DrellYan new
+prod_camp = "RunIISummer20UL18NanoAODv9"
+sample = "DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2"
+
+
+### DrellYan old
 prod_camp = "RunIIAutumn18NanoAODv6"
 sample = "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
 nano = "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1"
