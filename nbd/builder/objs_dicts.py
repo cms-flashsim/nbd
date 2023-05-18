@@ -62,7 +62,7 @@ objs_dicts = {
         "reco_columns": reco_columns,
         "vars_dictionary": target_dictionary_ele,
         # "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
-        "scale_file_path": "/home/users/cattafe/FlashSim-Electrons/preprocessing/electrons/scale_factors_ele.json",
+        "scale_file_path": "/home/users/cattafe/FlashSim-Electrons/preprocessing/scale_factors_ele.json",
         "batch_size": 10000,
         # "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "saturate_ranges_path": "/home/users/cattafe/FlashSim-Electrons/training/electrons/range_dict.json",
