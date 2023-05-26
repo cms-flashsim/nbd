@@ -16,7 +16,13 @@ def extractGenFatJetsFeatures(df):
         rdataframe: rdataframe with new features
     """
     extracted = (
-        df.Define("GenJetAK8Mask", "GenJetAK8_pt > 300")
+        df.Define("GenJetAK8Mask", "GenJetAK8_pt >= 250")
+        .Define("MGenJetAK8_pt", "GenJetAK8_pt[GenJetAK8Mask]")
+        .Define("MGenJetAK8_phi", "GenJetAK8_phi[GenJetAK8Mask]")
+        .Define("MGenJetAK8_eta", "GenJetAK8_eta[GenJetAK8Mask]")
+        .Define("MGenJetAK8_hadronFlavour", "GenJetAK8_hadronFlavour[GenJetAK8Mask]")
+        .Define("MGenJetAK8_partonFlavour", "GenJetAK8_partonFlavour[GenJetAK8Mask]")
+        .Define("MGenJetAK8_mass", "GenJetAK8_mass[GenJetAK8Mask]")
         .Define(
             "GenPart_IsLastB",
             "(GenPart_pdgId >=500 && GenPart_pdgId < 600) | (GenPart_pdgId >=5000 && GenPart_pdgId < 6000) && (GenPart_statusFlags &(1<<13))!=0",
@@ -30,8 +36,8 @@ def extractGenFatJetsFeatures(df):
         .Define("GenPart_eta_goodb", "GenPart_eta[GenPart_IsGoodB]")
         .Define("GenPart_phi_goodb", "GenPart_phi[GenPart_IsGoodB]")
         .Define(
-            "GenJetAK8_nbFlavour",
-            "count_nHadrons(GenPart_eta_goodb, GenPart_phi_goodb, GenJetAK8_eta, GenJetAK8_phi)",
+            "MGenJetAK8_nbFlavour",
+            "count_nHadrons(GenPart_eta_goodb, GenPart_phi_goodb, MGenJetAK8_eta, MGenJetAK8_phi)",
         )
         .Define(
             "GenPart_IsLastC",
@@ -46,8 +52,8 @@ def extractGenFatJetsFeatures(df):
         .Define("GenPart_eta_goodc", "GenPart_eta[GenPart_IsGoodC]")
         .Define("GenPart_phi_goodc", "GenPart_phi[GenPart_IsGoodC]")
         .Define(
-            "GenJetAK8_ncFlavour",
-            "count_nHadrons(GenPart_eta_goodc, GenPart_phi_goodc, GenJetAK8_eta, GenJetAK8_phi)",
+            "MGenJetAK8_ncFlavour",
+            "count_nHadrons(GenPart_eta_goodc, GenPart_phi_goodc, MGenJetAK8_eta, MGenJetAK8_phi)",
         )
     )
 

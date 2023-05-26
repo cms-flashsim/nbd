@@ -1,12 +1,12 @@
 fatjet_cond = [
-    "GenJetAK8_pt",
-    "GenJetAK8_phi",
-    "GenJetAK8_eta",
-    "GenJetAK8_hadronFlavour",
-    "GenJetAK8_partonFlavour",
-    "GenJetAK8_mass",
-    "GenJetAK8_ncFlavour",
-    "GenJetAK8_nbFlavour",
+    "MGenJetAK8_pt",
+    "MGenJetAK8_phi",
+    "MGenJetAK8_eta",
+    "MGenJetAK8_hadronFlavour",
+    "MGenJetAK8_partonFlavour",
+    "MGenJetAK8_mass",
+    "MGenJetAK8_ncFlavour",
+    "MGenJetAK8_nbFlavour",
 ]
 
 jet_names = [
