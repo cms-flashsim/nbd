@@ -43,10 +43,12 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
 
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
+    a_rest["ev_idx"] = ak.Array(np.arange(len(a_rest)))
 
     # repeat for oversampling
     if oversampling_factor > 1:
         a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
+        a_rest = a_rest[ak.argsort(a_rest["ev_idx"], axis=0, ascending=True)]
 
     # Flash simulation
 
@@ -59,7 +61,7 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
 
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
-    dict_1 = dict(zip(a_rest.fields, [a_rest[field] for field in a_rest.fields]))
+    dict_1 = dict(zip(a_rest.fields, [a_rest[field] for field in a_rest.fields if field != "ev_idx"]))
     for i in range(len(objects_keys)):
         dict_2 = dict(
             zip(
@@ -69,8 +71,6 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         )
         total = {**dict_1, **dict_2}
         dict_1 = total
-    
-
 
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", output_file)
