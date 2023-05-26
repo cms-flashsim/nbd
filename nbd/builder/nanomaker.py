@@ -12,9 +12,7 @@ from nbd.builder.objs_dicts import objs_dicts, reco_objects
 from nbd.utils.reco_full import get_reco_columns
 
 
-def nanomaker(
-    input_file, output_file, objects_keys=None, device="cpu", limit=None, filter=False
-):
+def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None):
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
@@ -68,21 +66,12 @@ def nanomaker(
         dict_1 = total
 
     to_file = ak.to_rdataframe(total)
-
-    if filter:
-        to_file = to_file.Filter("Sum(GenJetAK8_pt > 300) > 0")
-
     to_file.Snapshot("Events", output_file)
 
     # add a new ttrees to the output file
-    if filter:
-        old_reco_columns.append("GenJetAK8_pt")
     a_full = ak.from_rdataframe(full, columns=old_reco_columns)
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     old_reco = ak.to_rdataframe(d_full)
-
-    if filter:
-        old_reco = old_reco.Filter("Sum(GenJetAK8_pt > 300) > 0")
 
     opts = ROOT.RDF.RSnapshotOptions()
     opts.fMode = "Update"
