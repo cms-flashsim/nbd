@@ -12,7 +12,7 @@ from nbd.builder.objs_dicts import objs_dicts, reco_objects
 from nbd.utils.reco_full import get_reco_columns
 
 
-def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None, oversampling_factor=1):
+def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None, filter_ak8=False, oversampling_factor=1):
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
@@ -25,6 +25,9 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         full = ROOT.RDataFrame(events).Range(limit)
     else:
         full = ROOT.RDataFrame(events)
+
+    if filter_ak8:
+        full = full.Filter("nFatJet >= 2").Filter("Sum(GenJetAK8_pt > 250) > 0")
 
     # Getting the list of columns
     full_columns_list = full.GetColumnNames()
@@ -43,10 +46,10 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
 
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
-    a_rest["ev_idx"] = ak.Array(np.arange(len(a_rest)))
 
     # repeat for oversampling
     if oversampling_factor > 1:
+        a_rest["ev_idx"] = ak.Array(np.arange(len(a_rest)))
         a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
         a_rest = a_rest[ak.argsort(a_rest["ev_idx"], axis=0, ascending=True)]
 

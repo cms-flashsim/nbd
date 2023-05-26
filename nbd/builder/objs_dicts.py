@@ -124,8 +124,5 @@ objs_dicts = {
 }
 
 reco_objects = [
-    "Electron",
-    "Muon",
-    "Jet",
     "FatJet",
-]  # list of FullSim branches to be discarded and saved in the dedicated tree
+]  # list of FullSim branches to be copied and saved in the dedicated tree
