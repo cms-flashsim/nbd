@@ -27,7 +27,7 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         full = ROOT.RDataFrame(events)
 
     if filter_ak8:
-        full = full.Filter("nFatJet >= 2").Filter("Sum(GenJetAK8_pt > 250) > 0")
+        full = full.Filter("nFatJet >= 2").Filter("GenJetAK8_pt[0] > 250 && GenJetAK8_pt[1] > 250")
 
     # Getting the list of columns
     full_columns_list = full.GetColumnNames()
