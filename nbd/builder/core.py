@@ -49,6 +49,7 @@ def select_gen(
     device="cpu",
     eff=True,
     batch_size=10000,
+    oversampling_factor=1,
 ):
     a_gen = a_gen_data[gen_columns]
     ev_struct = ak.num(a_gen[gen_columns[0]])
@@ -83,6 +84,9 @@ def select_gen(
         #     masked_gen = a_gen[gen_columns]
 
     reco_struct = ak.num(masked_gen[gen_columns[0]], axis=1)
+    # add np.repeat for oversampling here if needed
+    if oversampling_factor > 1:
+        reco_struct = np.repeat(reco_struct, oversampling_factor, axis=0)
 
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
@@ -104,8 +108,9 @@ def flash_simulate(
     batch_size=10000,
     saturate_ranges_path=None,
     gen_postrpocessing_dict=None,
+    oversampling_factor=1,
 ):
-    dataset = GenDataset(to_flash, gen_columns)
+    dataset = GenDataset(to_flash, gen_columns, oversampling_factor)
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
     flow_tuple = flow_loader(
@@ -120,7 +125,7 @@ def flash_simulate(
     tot_sample = []
     leftover_sample = []
     times = []
-
+    leftover_shape = 0
     print(f"Batch size: {batch_size}")
     with torch.no_grad():
         for batch_idx, y in enumerate(data_loader):
@@ -160,10 +165,12 @@ def flash_simulate(
     tot_sample = np.array(tot_sample)
     tot_sample = np.reshape(tot_sample, ((len(data_loader) - 1) * batch_size, reco_dim))
     leftover_sample = np.array(leftover_sample)
-    leftover_sample = np.reshape(leftover_sample, (leftover_shape, reco_dim))
-    total = np.concatenate((tot_sample, leftover_sample), axis=0)
+    if leftover_shape > 0:
+        leftover_sample = np.reshape(leftover_sample, (leftover_shape, reco_dim))
+        total = np.concatenate((tot_sample, leftover_sample), axis=0)
+    else:
+        total = tot_sample
 
-    
     if gen_postrpocessing_dict is not None:
         to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
     total = pd.DataFrame(total, columns=reco_columns)

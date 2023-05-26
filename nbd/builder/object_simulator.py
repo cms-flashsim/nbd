@@ -29,6 +29,7 @@ def simulator(
     eff=True,
     preprocess_dict=None,
     gen_postprocessing_dict=None,
+    oversampling_factor=1,
 ):
     # extract
     print("Extracting new variables")
@@ -53,6 +54,7 @@ def simulator(
         device=device,
         eff=eff,
         batch_size=batch_size,
+        oversampling_factor=oversampling_factor
     )
 
     if preprocess_dict is not None:
@@ -71,6 +73,7 @@ def simulator(
         batch_size=10000,
         saturate_ranges_path=saturate_ranges_path,
         gen_postrpocessing_dict=gen_postprocessing_dict,
+        oversampling_factor=oversampling_factor
     )
 
     pt_col = [col for col in a_flash.fields if col.endswith("_pt")][0]
