@@ -12,7 +12,7 @@ from nbd.builder.objs_dicts import objs_dicts, reco_objects
 from nbd.utils.reco_full import get_reco_columns
 
 
-def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None):
+def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None, oversampling_factor=1):
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
@@ -43,6 +43,11 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
 
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
+
+    # repeat for oversampling
+    if oversampling_factor > 1:
+        a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
+
     # Flash simulation
 
     flash_list = []
@@ -64,12 +69,14 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         )
         total = {**dict_1, **dict_2}
         dict_1 = total
+    
+
 
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", output_file)
 
     # add a new ttrees to the output file
-    a_full = ak.from_rdataframe(full, columns=old_reco_columns)
+    a_full = ak.from_rdataframe(full, columns=old_reco_columns+["run", "event"])
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     old_reco = ak.to_rdataframe(d_full)
 
