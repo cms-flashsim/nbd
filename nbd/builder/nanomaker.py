@@ -8,11 +8,13 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import nbd.builder.object_simulator as object_simulator
-from nbd.builder.objs_dicts import objs_dicts
+from nbd.builder.objs_dicts import objs_dicts, reco_objects
 from nbd.utils.reco_full import get_reco_columns
 
 
-def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None):
+def nanomaker(
+    input_file, output_file, objects_keys=None, device="cpu", limit=None, filter=False
+):
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
@@ -36,7 +38,7 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     # Selecting FullSim reco variables to copy in the FullSim tree
     # Reco objects are defined in reco_full.py
 
-    old_reco_columns = get_reco_columns(full_columns)
+    old_reco_columns = get_reco_columns(full_columns, reco_objects)
 
     # Selecting the other variables
 
@@ -65,14 +67,22 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         total = {**dict_1, **dict_2}
         dict_1 = total
 
-
     to_file = ak.to_rdataframe(total)
+
+    if filter:
+        to_file = to_file.Filter("Sum(GenJetAK8_pt > 300) > 0")
+
     to_file.Snapshot("Events", output_file)
 
     # add a new ttrees to the output file
+    if filter:
+        old_reco_columns.append("GenJetAK8_pt")
     a_full = ak.from_rdataframe(full, columns=old_reco_columns)
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     old_reco = ak.to_rdataframe(d_full)
+
+    if filter:
+        old_reco = old_reco.Filter("Sum(GenJetAK8_pt > 300) > 0")
 
     opts = ROOT.RDF.RSnapshotOptions()
     opts.fMode = "Update"
@@ -84,4 +94,3 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     runs.CloneTree().Write()
     meta.CloneTree().Write()
     outfile.Close()
-

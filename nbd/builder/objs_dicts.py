@@ -122,3 +122,10 @@ objs_dicts = {
         "gen_postprocessing_dict": None,
     },
 }
+
+reco_objects = [
+    "Electron",
+    "Muon",
+    "Jet",
+    "FatJet",
+]  # list of FullSim branches to be discarded and saved in the dedicated tree
