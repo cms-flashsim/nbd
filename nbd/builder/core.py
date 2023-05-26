@@ -87,6 +87,7 @@ def select_gen(
     # add np.repeat for oversampling here if needed
     if oversampling_factor > 1:
         reco_struct = np.repeat(reco_struct, oversampling_factor, axis=0)
+    print(len(reco_struct))
 
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
