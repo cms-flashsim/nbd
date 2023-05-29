@@ -96,6 +96,23 @@ def select_gen(
     return to_flash, reco_struct
 
 
+def nan_resampling(total, to_flash, flow, device):
+    total = torch.tensor(total).to(device)
+    gen = torch.tensor(to_flash).to(device)
+    nan_mask = torch.isnan(total).any(axis=1)
+    if nan_mask.any():
+        nan_idx = torch.argwhere(nan_mask)
+        # Generate new samples
+        flow.eval()
+        while True:
+            with torch.no_grad():
+                total[nan_idx] = flow.sample(1, context=gen[nan_mask])
+                if not torch.isnan(total[nan_idx]).any():
+                    break
+    total = total.detach().cpu().numpy()
+    return total
+
+
 def flash_simulate(
     flow_loader,
     model_path,
@@ -172,8 +189,11 @@ def flash_simulate(
     else:
         total = tot_sample
 
+    total = nan_resampling(total, to_flash, flow, device)
+
     if gen_postrpocessing_dict is not None:
         to_flash = postprocessing(to_flash, None, gen_postrpocessing_dict, None, None)
+
     total = pd.DataFrame(total, columns=reco_columns)
 
     total = postprocessing(
