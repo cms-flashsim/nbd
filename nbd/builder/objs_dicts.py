@@ -87,7 +87,7 @@ objs_dicts = {
         "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_jets.pt",
         "flow_loader": load_mixture_model,
         # "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
-        "flow_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/checkpoints/EJMAF/checkpoint-latest.pt",
+        "flow_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/checkpoints/EJMAF/model_@epoch_205.pt",
         "eff_columns": eff_ele_jet,
         "gen_columns": ele_jet_cond,
         "reco_columns": reco_columns,
