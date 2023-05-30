@@ -111,9 +111,9 @@ def nan_resampling(total, to_flash, flow, device):
             with torch.no_grad():
                 total[nan_idx] = flow.sample(1, context=gen[nan_mask])
                 if not torch.isnan(total[nan_idx]).any():
+                    print("Resampling done")
                     break
     total = total.detach().cpu().numpy()
-    print("Resampling done")
     return total
 
 
@@ -214,7 +214,6 @@ def flash_simulate(
 
     final_dict = {}
     for col in a_out.fields:
-        print(col)
         final_dict[col] = ak.unflatten(a_out[col], reco_struct, axis=0)
 
     a_flash = ak.Array(final_dict)
