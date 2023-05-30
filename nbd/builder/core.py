@@ -25,6 +25,7 @@ def isReco(y_pred):
 
 
 def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
+    print(f"Computing efficiency using {model}")
     model.load_state_dict(torch.load(model_path))
     model = model.to(device)
     model.eval()
@@ -53,7 +54,7 @@ def select_gen(
 ):
     a_gen = a_gen_data[gen_columns]
     ev_struct = ak.num(a_gen[gen_columns[0]])
-    print(ev_struct)
+    print(f"Number of objects: {sum(ev_struct)}")
 
     if eff:
         a_eff = a_gen_data[eff_columns]
@@ -87,7 +88,8 @@ def select_gen(
     # add np.repeat for oversampling here if needed
     if oversampling_factor > 1:
         reco_struct = np.repeat(reco_struct, oversampling_factor, axis=0)
-    print(len(reco_struct), sum(reco_struct))
+
+    print(f"Number of objects after selection: {sum(reco_struct)}")
 
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     # drop mask column
@@ -101,6 +103,7 @@ def nan_resampling(total, to_flash, flow, device):
     gen = torch.tensor(to_flash.values, dtype=torch.float32).to(device)
     nan_mask = torch.isnan(total).any(axis=1)
     if nan_mask.any():
+        print("Resampling nan values")
         nan_idx = torch.argwhere(nan_mask)
         # Generate new samples
         flow.eval()
@@ -110,6 +113,7 @@ def nan_resampling(total, to_flash, flow, device):
                 if not torch.isnan(total[nan_idx]).any():
                     break
     total = total.detach().cpu().numpy()
+    print("Resampling done")
     return total
 
 
@@ -159,7 +163,7 @@ def flash_simulate(
                     except AssertionError:
                         print("Error, retrying")
                 taken = time.time() - start
-                # print(f"{(batch_size / taken):.0f} Hz")
+                print(f"{(batch_size / taken):.0f} Hz")
                 times.append(taken)
                 sample = sample.detach().cpu().numpy()
                 sample = np.squeeze(sample, axis=1)
@@ -167,17 +171,21 @@ def flash_simulate(
 
             else:
                 leftover_shape = len(y)
+                start = time.time()
                 while True:
                     try:
                         sample = flow.sample(1, context=y)
                         break
                     except AssertionError:
                         print("Error, retrying")
+                taken = time.time() - start
+                print(f"{(leftover_shape / taken):.0f} Hz")
+                times.append(taken)
                 sample = sample.detach().cpu().numpy()
                 sample = np.squeeze(sample, axis=1)
                 leftover_sample.append(sample)
 
-    print(f"Mean rate: {batch_size / np.mean(times)} Hz")
+    print(f"Main sampling done with mean rate: {batch_size / np.mean(times)} Hz")
 
     reco_dim = len(reco_columns)
     tot_sample = np.array(tot_sample)

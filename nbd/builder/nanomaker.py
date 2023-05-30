@@ -6,7 +6,6 @@ import uproot
 import awkward as ak
 import pandas as pd
 import torch
-from torch.utils.data import DataLoader
 import nbd.builder.object_simulator as object_simulator
 from nbd.builder.objs_dicts import objs_dicts, reco_objects, merge_dict
 from nbd.utils.reco_full import get_reco_columns
@@ -67,7 +66,7 @@ def nanomaker(
 
     flash_dict = {}
     for obj in objects_keys:
-        print(f"Simulating {obj} collection")
+        print(f"Simulating {obj} collection...")
         a_flash = object_simulator.simulator(
             full,
             device=device,
@@ -81,7 +80,7 @@ def nanomaker(
 
     if merge_dict:
         for key in merge_dict.keys():
-            print(f"Merging {key} collections")
+            print(f"Merging {key} collections...")
             # Get pt column name and nObject
             pt_col = [
                 col
@@ -114,8 +113,11 @@ def nanomaker(
             # Add counter column
             flash_dict[key][counter_col] = ak.num(flash_dict[key][pt_col], axis=-1)
 
+        print("Done")
+
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
+    print("Making the final dictionary...")
     dict_1 = dict(
         zip(
             a_rest.fields,
@@ -132,10 +134,18 @@ def nanomaker(
         total = {**dict_1, **dict_2}
         dict_1 = total
 
+    print("Done")
+
+    print("Writing the FlashSim tree...")
+
     to_file = ak.to_rdataframe(total)
     to_file.Snapshot("Events", output_file)
 
+    print("Done")
+
     # add a new ttrees to the output file
+
+    print("Writing the FullSim tree...")
     a_full = ak.from_rdataframe(full, columns=old_reco_columns + ["run", "event"])
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     old_reco = ak.to_rdataframe(d_full)
@@ -144,9 +154,14 @@ def nanomaker(
     opts.fMode = "Update"
     old_reco.Snapshot("FullSim", output_file, "", opts)
 
+    print("Done")
+
+    print("Writing others trees...")
     outfile = ROOT.TFile.Open(output_file, "UPDATE")
     outfile.cd()
     lumi.CloneTree().Write()
     runs.CloneTree().Write()
     meta.CloneTree().Write()
     outfile.Close()
+
+    print("Done")
