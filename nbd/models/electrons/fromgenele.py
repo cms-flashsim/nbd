@@ -323,7 +323,7 @@ def create_NDE_model(
         "num_flow_steps": num_flow_steps,
         "context_dim": context_dim,
         "base_transform_kwargs": base_transform_kwargs,
-        "transform_type": transform_type,
+        # "transform_type": transform_type,
     }
 
     return flow
@@ -393,7 +393,7 @@ def create_mixture_flow_model(input_dim, context_dim, base_kwargs, transform_typ
         "input_dim": input_dim,
         "context_dim": context_dim,
         "base_kwargs": base_kwargs,
-        "transform_type": transform_type,
+        # "transform_type": transform_type,
     }
 
     return flow
