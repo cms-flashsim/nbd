@@ -8,11 +8,19 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import nbd.builder.object_simulator as object_simulator
-from nbd.builder.objs_dicts import objs_dicts, reco_objects
+from nbd.builder.objs_dicts import objs_dicts, reco_objects, merge_dict
 from nbd.utils.reco_full import get_reco_columns
 
 
-def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=None, filter_ak8=False, oversampling_factor=1):
+def nanomaker(
+    input_file,
+    output_file,
+    objects_keys=None,
+    device="cpu",
+    limit=None,
+    filter_ak8=False,
+    oversampling_factor=1,
+):
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
@@ -27,7 +35,9 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
         full = ROOT.RDataFrame(events)
 
     if filter_ak8:
-        full = full.Filter("nFatJet >= 2").Filter("GenJetAK8_pt[0] > 250 && GenJetAK8_pt[1] > 250")
+        full = full.Filter("nFatJet >= 2").Filter(
+            "GenJetAK8_pt[0] > 250 && GenJetAK8_pt[1] > 250"
+        )
 
     # Getting the list of columns
     full_columns_list = full.GetColumnNames()
@@ -55,21 +65,68 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
 
     # Flash simulation
 
-    flash_list = []
+    flash_dict = {}
     for obj in objects_keys:
         print(f"Simulating {obj} collection")
-        a_flash = object_simulator.simulator(full, device=device, oversampling_factor=oversampling_factor, **objs_dicts[obj])
+        a_flash = object_simulator.simulator(
+            full,
+            device=device,
+            oversampling_factor=oversampling_factor,
+            **objs_dicts[obj],
+        )
         print(f"Done")
-        flash_list.append(a_flash)
+        flash_dict[obj] = a_flash
+
+    # Merge
+
+    if merge_dict:
+        for key in merge_dict.keys():
+            print(f"Merging {key} collections")
+            # Get pt column name and nObject
+            pt_col = [
+                col
+                for col in flash_dict[merge_dict[key][0]].fields
+                if col.endswith("_pt")
+            ][0]
+            obj_name = pt_col.replace("_pt", "", 1)
+            counter_col = f"n{obj_name}"
+
+            input_list = []
+            for subkey in merge_dict[key]:
+                if subkey not in flash_dict.keys():
+                    raise ValueError(f"Object {subkey} not found in flash_dict")
+                # remove counter column (it breaks ak.concatenate)
+                flash_dict[subkey] = flash_dict[subkey][
+                    [x for x in (flash_dict[subkey]).fields if x != counter_col]
+                ]
+                input_list.append(flash_dict[subkey])
+                # remove all subcollections from the main dictionary
+                del flash_dict[subkey]
+
+            # Merge all subcollections
+            merged = ak.concatenate(input_list, axis=1)
+            # Add the merged collection to the main dictionary
+            flash_dict[key] = merged
+            # Pt sort
+            flash_dict[key] = flash_dict[key][
+                ak.argsort(flash_dict[key][pt_col], axis=-1, ascending=False)
+            ]
+            # Add counter column
+            flash_dict[key][counter_col] = ak.num(flash_dict[key][pt_col], axis=-1)
 
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
-    dict_1 = dict(zip(a_rest.fields, [a_rest[field] for field in a_rest.fields if field != "ev_idx"]))
-    for i in range(len(objects_keys)):
+    dict_1 = dict(
+        zip(
+            a_rest.fields,
+            [a_rest[field] for field in a_rest.fields if field != "ev_idx"],
+        )
+    )
+    for key in flash_dict.keys():
         dict_2 = dict(
             zip(
-                flash_list[i].fields,  # TODO check if fields are the same
-                [flash_list[i][field] for field in flash_list[i].fields],
+                flash_dict[key].fields,  # TODO check if fields are the same
+                [flash_dict[key][field] for field in flash_dict[key].fields],
             )
         )
         total = {**dict_1, **dict_2}
@@ -79,7 +136,7 @@ def nanomaker(input_file, output_file, objects_keys=None, device="cpu", limit=No
     to_file.Snapshot("Events", output_file)
 
     # add a new ttrees to the output file
-    a_full = ak.from_rdataframe(full, columns=old_reco_columns+["run", "event"])
+    a_full = ak.from_rdataframe(full, columns=old_reco_columns + ["run", "event"])
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     old_reco = ak.to_rdataframe(d_full)
 

@@ -155,5 +155,8 @@ objs_dicts = {
 }
 
 reco_objects = [
-    "FatJet",
+    "Electron",
+    # "FatJet",
 ]  # list of FullSim branches to be copied and saved in the dedicated tree
+
+merge_dict = {"Electron": ["Electron", "Electron_fromJets"]}
