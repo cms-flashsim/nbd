@@ -46,6 +46,25 @@ pu = [
 
 ele_cond = ele_cond + pu
 
+jet_cond = [
+    "GenJet_eta",
+    "GenJet_phi",
+    "GenJet_pt",
+    "GenJet_mass",
+    "GenJet_EncodedPartonFlavour_light",
+    "GenJet_EncodedPartonFlavour_gluon",
+    "GenJet_EncodedPartonFlavour_c",
+    "GenJet_EncodedPartonFlavour_b",
+    "GenJet_EncodedPartonFlavour_undefined",
+    "GenJet_EncodedHadronFlavour_b",
+    "GenJet_EncodedHadronFlavour_c",
+    "GenJet_EncodedHadronFlavour_light",
+]
+
+eff_ele_jet = jet_cond.copy()
+
+ele_jet_cond = jet_cond + pu
+
 ele_names = [
     "convVeto",
     "deltaEtaSC",
@@ -68,14 +87,6 @@ ele_names = [
     "lostHits",
     "miniPFRelIso_all",
     "miniPFRelIso_chg",
-    # "mvaFall17V1Iso",
-    # "mvaFall17V1Iso_WP80",
-    # "mvaFall17V1Iso_WP90",
-    # "mvaFall17V1Iso_WPL",
-    # "mvaFall17V1noIso",
-    # "mvaFall17V1noIso_WP80",
-    # "mvaFall17V1noIso_WP90",
-    # "mvaFall17V1noIso_WPL",
     "mvaFall17V2Iso",
     "mvaFall17V2Iso_WP80",
     "mvaFall17V2Iso_WP90",

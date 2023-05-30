@@ -6,14 +6,25 @@ from nbd.models.electrons.geneleeff import ElectronClassifier
 from nbd.models.electrons.fromgenele import load_mixture_model
 from nbd.extraction.electrons import electrons
 
+from nbd.models.electrons.geneleeff import JetClassifier as Electron_JetClassifier
+
 # old model imports
 # from nbd.postprocessing.electrons.columns_ele_old import ele_cond, reco_columns, eff_ele
 # from nbd.postprocessing.electrons.post_actions_ele_old import (
 #     target_dictionary as target_dictionary_ele,
 # )
-from nbd.postprocessing.electrons.columns_ele import ele_cond, reco_columns, eff_ele
+from nbd.postprocessing.electrons.columns_ele import (
+    ele_cond,
+    ele_jet_cond,
+    reco_columns,
+    eff_ele,
+    eff_ele_jet,
+)
 from nbd.postprocessing.electrons.post_actions_ele import (
     target_dictionary as target_dictionary_ele,
+)
+from nbd.postprocessing.electrons.post_actions_ele_jet import (
+    target_dictionary as target_dictionary_ele_jet,
 )
 
 # jets imports
@@ -66,6 +77,26 @@ objs_dicts = {
         "batch_size": 10000,
         # "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "saturate_ranges_path": "/home/users/cattafe/FlashSim-Electrons/training/electrons/range_dict_noname.json",
+        "eff": True,
+        "preprocess_dict": None,
+        "gen_postprocessing_dict": None,
+    },
+    "Electron_fromJets": {
+        "derived_vars_func": electrons.extractGenJetFeatures,
+        "eff_model": Electron_JetClassifier,
+        "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_jets.pt",
+        "flow_loader": load_mixture_model,
+        # "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
+        "flow_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/checkpoints/EJMAF/checkpoint-latest.pt",
+        "eff_columns": eff_ele_jet,
+        "gen_columns": ele_jet_cond,
+        "reco_columns": reco_columns,
+        "vars_dictionary": target_dictionary_ele_jet,
+        # "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
+        "scale_file_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/scale_factors_ele_jet.json",
+        "batch_size": 10000,
+        # "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
+        "saturate_ranges_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/ranges_ele_jet.json",
         "eff": True,
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,

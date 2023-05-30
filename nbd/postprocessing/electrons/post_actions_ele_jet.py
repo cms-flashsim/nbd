@@ -1,6 +1,5 @@
 import numpy as np
 
-# NOTE need to fix unsmearing ops
 """
 Dictionary of postprocessing operations for conditioning and target variables.
 It is generated make_dataset function. Values of dictionary are list objects in which
@@ -11,7 +10,7 @@ sepcify preprocessing operation. Every operation has the following template
 where "string" tells which operation to perform and *pars its parameters. Such operations are
 
 unsmearing: ["d", [inf, sup]]
-transformation: ["i", func, [a, b]]  # func(x) - b / a
+transformation: ["i", func, [a, b]]  # func(x - b) / a
 
 In the case of multiple operations, order follows the operation list indexing.
 """
@@ -40,14 +39,14 @@ target_dictionary = {
         ["i", np.exp, [1, 1e-3]],
         ["s"],
     ],
-    "Electron_dxy": [["i", np.tan, [20, 0]], ["s"]],
+    "Electron_dxy": [["i", np.tan, [10, 0]], ["s"]],
     "Electron_dxyErr": [["i", np.exp, [1, 1e-3]], ["s"]],
     "Electron_dz": [["i", np.tan, [10, 0]], ["s"]],
     "Electron_dzErr": [["i", np.exp, [1, 1e-3]], ["s"]],
     "Electron_eInvMinusPInv": [["i", np.tan, [10, 0]], ["s"]],
     "Electron_energyErr": [["i", np.expm1, [1, 0]], ["s"]],
     "Electron_etaMinusGen": [
-        ["i", np.tan, [20, 0]],
+        ["i", np.tan, [10, 0]],
         ["s"],
         ["a", "GenElectron_eta"],
         ["rename", "Electron_eta"],
@@ -72,14 +71,6 @@ target_dictionary = {
         ["i", np.exp, [1, 1e-3]],
         ["s"],
     ],
-    # "Electron_mvaFall17V1Iso": [["s"]],
-    # "Electron_mvaFall17V1Iso_WP80": [["d", None, None], ["s"]],
-    # "Electron_mvaFall17V1Iso_WP90": [["d", None, None], ["s"]],
-    # "Electron_mvaFall17V1Iso_WPL": [["d", None, None], ["s"]],
-    # "Electron_mvaFall17V1noIso": [["s"]],
-    # "Electron_mvaFall17V1noIso_WP80": [["d", None, None], ["s"]],
-    # "Electron_mvaFall17V1noIso_WP90": [["d", None, None], ["s"]],
-    # "Electron_mvaFall17V1noIso_WPL": [["d", None, None], ["s"]],
     "Electron_mvaFall17V2Iso": [["s"]],
     "Electron_mvaFall17V2Iso_WP80": [["d", None, None], ["s"]],
     "Electron_mvaFall17V2Iso_WP90": [["d", None, None], ["s"]],
@@ -100,12 +91,17 @@ target_dictionary = {
         ["s"],
     ],
     "Electron_phiMinusGen": [
-        ["i", np.tan, [20, 0]],
+        ["i", np.tan, [10, 0]],
         ["s"],
         ["a", "GenElectron_phi"],
         ["rename", "Electron_phi"],
     ],
-    "Electron_ptRatio": [["s"], ["m", "GenElectron_pt"], ["rename", "Electron_pt"]],
+    "Electron_ptRatio": [
+        ["i", np.expm1, [1, 0]],
+        ["s"],
+        ["m", "GenElectron_pt"],
+        ["rename", "Electron_pt"],
+    ],
     "Electron_r9": [["i", np.exp, [1, 1e-2]], ["s"]],
     "Electron_seedGain": [["d", None, None], ["s"]],
     "Electron_sieie": [["i", np.exp, [10, 1e-1]], ["s"]],
