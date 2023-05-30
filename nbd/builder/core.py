@@ -97,8 +97,8 @@ def select_gen(
 
 
 def nan_resampling(total, to_flash, flow, device):
-    total = torch.tensor(total).to(device)
-    gen = torch.tensor(to_flash.values).to(device)
+    total = torch.tensor(total, dtype=torch.float32).to(device)
+    gen = torch.tensor(to_flash.values, dtype=torch.float32).to(device)
     nan_mask = torch.isnan(total).any(axis=1)
     if nan_mask.any():
         nan_idx = torch.argwhere(nan_mask)
