@@ -329,7 +329,7 @@ def create_NDE_model(
     return flow
 
 
-def create_mixture_flow_model(input_dim, context_dim, base_kwargs, transform_type):
+def create_mixture_flow_model(input_dim, context_dim, base_kwargs, transform_type=None):
     """Build NSF (neural spline flow) model. This uses the nsf module
     available at https://github.com/bayesiains/nsf.
     This models the posterior distribution p(x|y).
