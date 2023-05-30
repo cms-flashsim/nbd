@@ -47,12 +47,11 @@ def pi_minuspi_periodicity(df, column_name):
 def multiply_by_gen(df, gen_df, column_name, gen_column_name):
     print(f"Multiplying {column_name} by {gen_column_name}")
     print(df[column_name])
+    plt.hist(df[column_name], bins=100, histtype="step")
+    plt.savefig(f"ptRatio_debug.png")
     print(gen_df[gen_column_name])
     df[column_name] = df[column_name] * gen_df[gen_column_name]
     print(df[column_name])
-
-    plt.hist(df[column_name], bins=100, histtype="step")
-    plt.savefig(f"ptRatio_debug.png")
 
     return df[column_name]
 
