@@ -64,7 +64,12 @@ def restore_range(column_name, scale_dict, df):
     Restore data range to the original value before dividing by max
     """
     scale = scale_dict[column_name]
+    if column_name == "Electron_ptRatio":
+        print(scale)
+        print(df[column_name])
     df[column_name] = df[column_name] * scale
+    if column_name == "Electron_ptRatio":
+        print(df[column_name])
     return df[column_name]
 
 
