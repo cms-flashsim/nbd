@@ -29,7 +29,7 @@ from nbd.postprocessing.electrons.post_actions_ele_jet import (
 
 # jets imports
 from nbd.extraction.jets import jets
-from nbd.models.jets.jets_muons import load_model
+from nbd.models.jets.jets_muons import load_mixture_model as load_model_jets
 from nbd.postprocessing.jets.columns_jets import (
     reco_columns as reco_columns_jets,
     jet_cond,
@@ -42,6 +42,7 @@ from nbd.postprocessing.muons.columns_muons import (
     muon_cond,
     reco_columns as reco_columns_muons,
 )
+from nbd.models.jets.jets_muons import load_mixture_model as load_model_muons
 from nbd.postprocessing.muons.post_actions_muons import target_dictionary_muons
 from nbd.preprocessing.gen_muons.pre_actions_gen_muons import gen_dictionary_muons
 from nbd.postprocessing.gen_muons.post_actions_gen_muons import cond_dictionary_muons
@@ -105,7 +106,7 @@ objs_dicts = {
         "derived_vars_func": jets.extractGenJetFeatures,
         "eff_model": None,
         "eff_model_path": None,
-        "flow_loader": load_model,
+        "flow_loader": load_model_jets,
         "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_jets_final_@epoch_420.pt",
         "eff_columns": None,
         "gen_columns": jet_cond,
@@ -122,7 +123,7 @@ objs_dicts = {
         "derived_vars_func": muons.extractGenMuonFeatures,
         "eff_model": None,
         "eff_model_path": None,
-        "flow_loader": load_model,
+        "flow_loader": load_model_muons,
         "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_muons_final_@epoch_580.pt",
         "eff_columns": None,
         "gen_columns": muon_cond,

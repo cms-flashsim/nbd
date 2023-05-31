@@ -282,4 +282,27 @@ auto second_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
   return dphis;
 }
 
+auto gen_jet_flavour_encoder(ROOT::VecOps::RVec<int> &fj,
+                                 ROOT::VecOps::RVec<int> flavours) {
+
+  /* General function to encode the hadron and parton flavour of the closest GenJet
+     object. To be used for flavour one-hot encoding for training.
+  */
+
+  auto size = fj.size();
+  auto n_flavours = flavours.size();
+  ROOT::VecOps::RVec<int> fenc;
+  fenc.reserve(size);
+  for (size_t i = 0; i < size; i++) {
+    fenc.emplace_back(0);
+    for (size_t k = 0; k < n_flavours; k++) {
+        if (abs(fj[i]) == flavours[k]) {
+        fenc[i] = 1;
+        }
+    }
+    }
+    
+  return fenc;
+}
+
 #endif

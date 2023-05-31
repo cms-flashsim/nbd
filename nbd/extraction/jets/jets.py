@@ -15,12 +15,53 @@ def extractGenJetFeatures(df):
     Returns:
         rdataframe: rdataframe with new features
     """
+    # NOTE: we are not using the full sim information here, but only the gen jet
     extracted = (
         df.Define("buffer", "Muon_genPartIdx")
         .Define("MuonMaskJet", "buffer >=0")
         .Define("MatchedGenMuons", "Muon_genPartIdx[MuonMaskJet]")
-        .Define("JetMask", "Jet_genJetIdx >=0  && Jet_genJetIdx < nGenJet")
-        .Define("MatchedGenJets", "Jet_genJetIdx[JetMask]")
+        # .Define("JetMask", "Jet_genJetIdx >=0  && Jet_genJetIdx < nGenJet")
+        # .Define("MatchedGenJets", "Jet_genJetIdx[JetMask]")
+        .Define(
+            "MGenJet_hadronFlavourUChar", "GenJet_hadronFlavour,"
+        )
+        .Define(
+            "MGenJet_hadronFlavour",
+            "static_cast<ROOT::VecOps::RVec<int>>(MGenJet_hadronFlavourUChar)",
+        )
+        .Define("MGenJet_partonFlavour", "GenJet_partonFlavour")
+        .Define(
+            "MGenJet_EncodedPartonFlavour_light",
+            "gen_jet_flavour_encoder(MGenJet_partonFlavour, ROOT::VecOps::RVec<int>{1,2,3})",
+        )
+        .Define(
+            "MGenJet_EncodedPartonFlavour_gluon",
+            "gen_jet_flavour_encoder(MGenJet_partonFlavour, ROOT::VecOps::RVec<int>{21})",
+        )
+        .Define(
+            "MGenJet_EncodedPartonFlavour_c",
+            "gen_jet_flavour_encoder(MGenJet_partonFlavour, ROOT::VecOps::RVec<int>{4})",
+        )
+        .Define(
+            "MGenJet_EncodedPartonFlavour_b",
+            "gen_jet_flavour_encoder(MGenJet_partonFlavour, ROOT::VecOps::RVec<int>{5})",
+        )
+        .Define(
+            "MGenJet_EncodedPartonFlavour_undefined",
+            "gen_jet_flavour_encoder(MGenJet_partonFlavour, ROOT::VecOps::RVec<int>{0})",
+        )
+        .Define(
+            "MGenJet_EncodedHadronFlavour_b",
+            "gen_jet_flavour_encoder(MGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{5})",
+        )
+        .Define(
+            "MGenJet_EncodedHadronFlavour_c",
+            "gen_jet_flavour_encoder(MGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{4})",
+        )
+        .Define(
+            "MGenJet_EncodedHadronFlavour_light",
+            "gen_jet_flavour_encoder(MGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{0})",
+        )
         .Define(
             "MuonMaskJ",
             "(GenPart_pdgId == 13 | GenPart_pdgId == -13)&&((GenPart_statusFlags & 8192) > 0)",

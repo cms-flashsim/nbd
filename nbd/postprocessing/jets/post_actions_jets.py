@@ -17,15 +17,49 @@ transformation: ["i", func, [a, b]]  # func(x) - b / a
 In the case of multiple operations, order follows the operation list indexing.
 """
 
-keys = ["eta", "mass", "phi", "pt", "puId", "jetId"]
-full_keys = [f"Jet_{key}" for key in keys]
-post_actions = [
-    [["a", "GenJet_eta"]],
-    [["m", "GenJet_mass"]],
-    [["a", "GenJet_phi"], ["pmp"]],
-    [["m", "GenJet_pt"]],
-    [["d", None, None]],
-    [["d", None, None]],
-]
+target_dictionary = {
+    "area": [["s"]],
+    "bRegCorr": [["s"]],
+    "bRegRes": [["s"]],
+    "btagDeepFlavB": [["s"]],
+    "btagDeepFlavCvB": [["s"]],
+    "btagDeepFlavCvL": [["s"]],
+    "btagDeepFlavQG": [["s"]],
+    "cRegCorr": [["s"]],
+    "cRegRes": [["s"]],
+    "chFPV0EF": [["s"]],
+    "neEmEF": [["s"]],
+    "neHEF": [["s"]],
+    "puIdDisc": [["s"]],
+    "qgl": [["s"]],
+    "rawFactor": [["s"]],
+    "btagCSVV2": [["d", [-np.inf, -0.01], -1], ["s"]],
+    "btagDeepB": [["d", [-np.inf, -0.01], -1], ["s"]],
+    "btagDeepCvB": [["d", [-np.inf, -0.01], -1], ["s"]],
+    "btagDeepCvL": [["d", [-np.inf, -0.01], -1], ["s"]],
+    "chEmEF": [["d", [-np.inf, 0], 0], ["s"]],
+    "chHEF": [["i", np.tan, [50, -50]], ["s"]],
+    "cleanmask": [["c", 0.5, [0, 1]], ["s"]],
+    "etaMinusGen": [["s"], ["a", "GenJet_eta"], ["rename", "eta"]],
+    "hadronFlavour": [["uhf"]],
+    "hfadjacentEtaStripsSize": [["c", 0.5, [0, 1]]],
+    "hfcentralEtaStripSize": [["c", 0.5, [0, 1]]],
+    "hfsigmaEtaEta": [["d", [-np.inf, 0], -1], ["s"]],
+    "hfsigmaPhiPhi": [["d", [-np.inf, 0], -1], ["s"]],
+    "jetId": [["uj"]],
+    "mass": [["s"]],
+    "muEF": [["d", [-np.inf, 0], 0], ["s"]],
+    "muonSubtrFactor": [["d", [-np.inf, 0], 0], ["s"]],
+    "nConstituents": [["d", None, None], ["s"]],
+    "nElectrons": [["d", None, None], ["s"]],
+    "nMuons": [["d", None, None], ["s"]],
+    "partonFlavour": [["upf"]],
+    "phiMinusGen": [["s"], ["a", "GenJet_phi"], ["pmp"], ["rename", "phi"]],
+    "ptRatio": [["s"], ["m", "GenJet_pt"], ["rename", "pt"]],
+    "puId": [["upu"]],
+}
 
-target_dictionary_jets = dict(zip(full_keys, post_actions))
+# overwrite the dict adding Jet_ prefix
+target_dictionary_jets = {}
+for key, value in target_dictionary.items():
+    target_dictionary_jets["Jet_" + key] = value

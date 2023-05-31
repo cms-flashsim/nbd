@@ -100,6 +100,53 @@ def unsmearing(df, column_name, interval, value):
     return df[column_name]
 
 
+def unsmear_hadronflavour(df, column_name):
+    """Unsmear the hadron flavour setting values to 0, 4, 5"""
+    val = df[column_name].values
+    val = np.rint(val)
+    val = np.where(val <= 2, 0, val)
+    val = np.where(val == 3, 4, val)
+    val = np.where(val >= 5, 5, val)
+    df[column_name] = val
+    return df[column_name]
+
+
+def unsmear_partonflavour(df, column_name):
+    """Unsmear the parton flavour setting values to 0, 1, 2, 3, 4, 5, 21"""
+    val = df[column_name].values
+    val = np.rint(val)
+    val = np.where(val <= 0, 0, val)
+    mask_condition = np.logical_and(val >= 5, val <= 15)
+    val[mask_condition] = 5
+    val = np.where(val >= 16, 21, val)
+    df[column_name] = val
+    return df[column_name]
+
+
+def unsmear_puId(df, column_name):
+    """Unsmear the puId setting values to 0, 4, 6, 7"""
+    val = df[column_name].values
+    val = np.rint(val)
+    val = np.where(val <= 2, 0, val)
+    val = np.where(val == 3, 4, val)
+    val = np.where(val == 5, 6, val)
+    val = np.where(val >= 7, 7, val)
+    df[column_name] = val
+    return df[column_name]
+
+
+def unsmear_jetId(df, column_name):
+    """Unsmear the jetId setting values to 1, 2, 3, 6, 7"""
+    val = df[column_name].values
+    val = np.rint(val)
+    val = np.where(val <= 0, 1, val)
+    val = np.where(val == 4, 3, val)
+    val = np.where(val == 5, 6, val)
+    val = np.where(val >= 7, 7, val)
+    df[column_name] = val
+    return df[column_name]
+
+
 def cut_unsmearing(df, column_name, cut, x1, x2):
     val = df[column_name].values
     df[column_name] = np.where(val < cut, x1, x2)
@@ -118,6 +165,18 @@ def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path
             mask_condition = op[1]
             value = op[2]
             df[column_name] = unsmearing(df, column_name, mask_condition, value)
+
+        elif op[0] == "uhf":
+            df[column_name] = unsmear_hadronflavour(df, column_name)
+
+        elif op[0] == "upf":
+            df[column_name] = unsmear_partonflavour(df, column_name)
+
+        elif op[0] == "upu":
+            df[column_name] = unsmear_puId(df, column_name)
+
+        elif op[0] == "uj":
+            df[column_name] = unsmear_jetId(df, column_name)
 
         elif op[0] == "c":
             cut = op[1]
