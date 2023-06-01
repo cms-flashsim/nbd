@@ -2,6 +2,10 @@
 #ifndef UTILS_JET_H
 #define UTILS_JET_H
 
+#include "ROOT/RVec.hxx"
+#include "TMath.h"
+#include "TVector2.h"
+
 auto DeltaPhi(ROOT::VecOps::RVec<float> &Phi1,
               ROOT::VecOps::RVec<float> &Phi2) {
 
@@ -245,10 +249,10 @@ auto second_muon_deta(ROOT::VecOps::RVec<float> &etaj,
   return detas;
 }
 
-auto second_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
-                      ROOT::VecOps::RVec<float> &phij,
-                      ROOT::VecOps::RVec<float> &etam,
-                      ROOT::VecOps::RVec<float> &phim) {
+auto second_muon_dphi(const ROOT::VecOps::RVec<float> &etaj,
+                      const ROOT::VecOps::RVec<float> &phij,
+                      const ROOT::VecOps::RVec<float> &etam,
+                      const ROOT::VecOps::RVec<float> &phim) {
 
   /* Calculates the DeltaPhi of the second closest muon object,
           if none present within 0.4, sets DR to 0.4 and DeltaPhi to 0.5
@@ -280,7 +284,7 @@ auto second_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
     }
   }
   return dphis;
-}
+};
 
 auto gen_jet_flavour_encoder(ROOT::VecOps::RVec<int> &fj,
                                  ROOT::VecOps::RVec<int> flavours) {
