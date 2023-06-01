@@ -67,17 +67,14 @@ objs_dicts = {
         "eff_model": ElectronClassifier,
         "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_electrons.pt",
         "flow_loader": load_mixture_model,
-        # "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
         "flow_path": "/home/users/cattafe/FlashSim-Electrons/training/electrons/checkpoints/EEMAF/model_@epoch_335.pt",
         "eff_columns": eff_ele,
         "gen_columns": ele_cond,
         "reco_columns": reco_columns,
         "vars_dictionary": target_dictionary_ele,
-        # "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
-        "scale_file_path": "/home/users/cattafe/FlashSim-Electrons/preprocessing/scale_factors_ele_noname.json",
+        "scale_file_path": "/home/users/cattafe/trainer/trainer/training/electrons/electrons/scale_factors_ele_ele.json",
         "batch_size": 10000,
-        # "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
-        "saturate_ranges_path": "/home/users/cattafe/FlashSim-Electrons/training/electrons/range_dict_noname.json",
+        "saturate_ranges_path": "/home/users/cattafe/trainer/trainer/training/electrons/electrons/ranges_ele_ele.json",
         "eff": True,
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,
@@ -87,16 +84,13 @@ objs_dicts = {
         "eff_model": Electron_JetClassifier,
         "eff_model_path": "/home/users/cattafe/FlashSim-Electrons/efficiencies/models/efficiency_jets.pt",
         "flow_loader": load_mixture_model,
-        # "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_electrons_@epoch_120.pt",
         "flow_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/checkpoints/EJMAF/model_@epoch_205.pt",
         "eff_columns": eff_ele_jet,
         "gen_columns": ele_jet_cond,
         "reco_columns": reco_columns,
         "vars_dictionary": target_dictionary_ele_jet,
-        # "scale_file_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/scale_factors_ele.json",
         "scale_file_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/scale_factors_ele_jet.json",
         "batch_size": 10000,
-        # "saturate_ranges_path": "/home/users/cattafe/nbd/nbd/postprocessing/electrons/saturate_ranges_ele.json",
         "saturate_ranges_path": "/home/users/cattafe/trainer/trainer/training/electrons/jets/ranges_ele_jet.json",
         "eff": True,
         "preprocess_dict": None,
@@ -107,7 +101,7 @@ objs_dicts = {
         "eff_model": None,
         "eff_model_path": None,
         "flow_loader": load_model_jets,
-        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_jets_final_@epoch_420.pt",
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/Jets_MAF1_@epoch470.pt",
         "eff_columns": None,
         "gen_columns": jet_cond,
         "reco_columns": reco_columns_jets,
@@ -124,7 +118,7 @@ objs_dicts = {
         "eff_model": None,
         "eff_model_path": None,
         "flow_loader": load_model_muons,
-        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/model_muons_final_@epoch_580.pt",
+        "flow_path": "/gpfs/ddn/cms/user/cattafe/FlashSim-Models/Muons_MAF_@epoch750.pt",
         "eff_columns": None,
         "gen_columns": muon_cond,
         "reco_columns": reco_columns_muons,
@@ -157,9 +151,11 @@ objs_dicts = {
 
 reco_objects = [
     "Electron",
+    "Muon",
+    "Jet",
     # "FatJet",
 ]  # list of FullSim branches to be copied and saved in the dedicated tree
 
-# merge_dict = {"Electron": ["Electron", "Electron_fromJets"]}
+merge_dict = {"Electron": ["Electron", "Electron_fromJets"]}
 
-merge_dict = {}
+# merge_dict = {}

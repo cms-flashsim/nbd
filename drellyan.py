@@ -1,10 +1,19 @@
 import os
-import os
+from nbd.builder.nanomaker import nanomaker
+
+import ROOT
+
+# ROOT::EnableImplicitMT()
+
+obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
 
 # processes = ["DYM50", "DYZpt-0To50", "DYZpt-50To100", "DYZpt-100To250", "DYZpt-250To400", "DYZpt-400To650", "DYZpt-650ToInf"]
 # "106X_upgrade2018_realistic_v16_L1v1-v1"  "106X_upgrade2018_realistic_v16_L1v1-v2"
 process = "DYM50"
-nano = "106X_upgrade2018_realistic_v16_L1v1-v1"
+if process == "DYM50":
+    nano = "106X_upgrade2018_realistic_v16_L1v1-v2"
+else:
+    nano = "106X_upgrade2018_realistic_v16_L1v1-v1"
 
 full_dir = os.path.join("/scratchnvme/malucchi/hbb_samples", process, nano)
 
@@ -34,5 +43,5 @@ print(f"Output files: {output_files}")
 
 print(f"We will process a total of {len(input_files)} files")
 
-# for input, output in zip(input_files, output_files):
-#     nanomaker(input, output, ["Electron"], device="cuda:0", limit=None)
+for input, output in zip(input_files, output_files):
+    nanomaker(input, output, obj_list, device="cuda:0", limit=None)
