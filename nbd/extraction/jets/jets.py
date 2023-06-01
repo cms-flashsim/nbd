@@ -23,7 +23,7 @@ def extractGenJetFeatures(df):
         .Define("MatchedGenMuons", "Muon_genPartIdx[MuonMaskJet]")
         # .Define("JetMask", "Jet_genJetIdx >=0  && Jet_genJetIdx < nGenJet")
         # .Define("MatchedGenJets", "Jet_genJetIdx[JetMask]")
-        .Define("MGenJet_hadronFlavourUChar", "GenJet_hadronFlavour,")
+        .Define("MGenJet_hadronFlavourUChar", "GenJet_hadronFlavour")
         .Define(
             "MGenJet_hadronFlavour",
             "static_cast<ROOT::VecOps::RVec<int>>(MGenJet_hadronFlavourUChar)",
