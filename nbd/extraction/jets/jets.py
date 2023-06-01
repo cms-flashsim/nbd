@@ -17,8 +17,6 @@ def extractGenJetFeatures(df):
     """
     # NOTE: we are not using the full sim information here, but only the gen jet
     extracted = (
-        # df.Define("buffer", "Muon_genPartIdx")
-        # .Define("MuonMaskJet", "buffer >=0")
         df.Define("MuonMaskJet", "Muon_genPartIdx >=0")
         .Define("MatchedGenMuons", "Muon_genPartIdx[MuonMaskJet]")
         # .Define("JetMask", "Jet_genJetIdx >=0  && Jet_genJetIdx < nGenJet")
