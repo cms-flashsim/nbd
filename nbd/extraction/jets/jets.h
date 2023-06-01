@@ -2,6 +2,10 @@
 #ifndef UTILS_JET_H
 #define UTILS_JET_H
 
+#include "ROOT/RVec.hxx"
+#include "TMath.h"
+#include "TVector2.h"
+
 auto DeltaPhi(ROOT::VecOps::RVec<float> &Phi1,
               ROOT::VecOps::RVec<float> &Phi2) {
 
@@ -256,7 +260,8 @@ auto second_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
 
   auto size_outer = etaj.size();
   auto size_inner = etam.size();
-  ROOT::VecOps::RVec<float> dphis (size_outer);
+  ROOT::VecOps::RVec<float> dphis;
+  dphis.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
     dphis.emplace_back(10);
     float closest = 1;
