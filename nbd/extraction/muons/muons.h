@@ -187,7 +187,7 @@ auto match_reco_to_gen(
   return indexes;
 }
 
-auto clean_genjet_mask(ROOT::VecOps::RVec<float> &jet_pt,
+auto muon_clean_genjet_mask(ROOT::VecOps::RVec<float> &jet_pt,
                        ROOT::VecOps::RVec<float> &jet_eta,
                        ROOT::VecOps::RVec<float> &jet_phi,
                        ROOT::VecOps::RVec<float> &lep_pt,
@@ -216,7 +216,7 @@ auto clean_genjet_mask(ROOT::VecOps::RVec<float> &jet_pt,
   return clean_jet_mask;
 }
 
-auto closest_jet_flavour_encoder(ROOT::VecOps::RVec<float> &etaj,
+auto muon_closest_jet_flavour_encoder(ROOT::VecOps::RVec<float> &etaj,
                                  ROOT::VecOps::RVec<float> &phij,
                                  ROOT::VecOps::RVec<float> &etae,
                                  ROOT::VecOps::RVec<float> &phie,
