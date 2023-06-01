@@ -40,7 +40,7 @@ target_dictionary = {
     "chEmEF": [["d", [-np.inf, 0], 0], ["s"]],
     "chHEF": [["i", np.tan, [50, -50]], ["s"]],
     "cleanmask": [["c", 0.5, [0, 1]], ["s"]],
-    "etaMinusGen": [["s"], ["a", "GenJet_eta"], ["rename", "eta"]],
+    "etaMinusGen": [["s"], ["a", "GenJet_eta"], ["rename", "Jet_eta"]],
     "hadronFlavour": [["uhf"]],
     "hfadjacentEtaStripsSize": [["c", 0.5, [0, 1]]],
     "hfcentralEtaStripSize": [["c", 0.5, [0, 1]]],
@@ -54,8 +54,8 @@ target_dictionary = {
     "nElectrons": [["d", None, None], ["s"]],
     "nMuons": [["d", None, None], ["s"]],
     "partonFlavour": [["upf"]],
-    "phiMinusGen": [["s"], ["a", "GenJet_phi"], ["pmp"], ["rename", "phi"]],
-    "ptRatio": [["s"], ["m", "GenJet_pt"], ["rename", "pt"]],
+    "phiMinusGen": [["s"], ["a", "GenJet_phi"], ["pmp"], ["rename", "Jet_phi"]],
+    "ptRatio": [["s"], ["m", "GenJet_pt"], ["rename", "Jet_pt"]],
     "puId": [["upu"]],
 }
 
