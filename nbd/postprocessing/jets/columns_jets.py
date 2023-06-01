@@ -65,7 +65,7 @@ jet_names = [
     "rawFactor",
 ]
 
-reco_columns = [f"MJet_{name}" for name in jet_names]
+reco_columns = [f"Jet_{name}" for name in jet_names]
 
 
 # NOTE we are calling the ratio/minus variables with the same name as the original
