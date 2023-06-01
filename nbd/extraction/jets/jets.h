@@ -32,8 +32,8 @@ auto closest_muon_dr(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> distances;
   distances.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    distances.emplace_back(0.5);
-    float closest = 0.4;
+    distances.emplace_back(10);
+    float closest = 1;
     for (size_t j = 0; j < size_inner; j++) {
       Double_t deta = etaj[i] - etam[j];
       Double_t dphi = TVector2::Phi_mpi_pi(phij[i] - phim[j]);
@@ -42,7 +42,7 @@ auto closest_muon_dr(ROOT::VecOps::RVec<float> &etaj,
         closest = dr;
       }
     }
-    if (closest < 0.4) {
+    if (closest < 1) {
       distances[i] = closest;
     }
   }
@@ -64,8 +64,8 @@ auto closest_muon_pt(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> pts;
   pts.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    pts.emplace_back(0.0);
-    float closest = 0.4;
+    pts.emplace_back(-1);
+    float closest = 1;
     for (size_t j = 0; j < size_inner; j++) {
       Double_t deta = etaj[i] - etam[j];
       Double_t dphi = TVector2::Phi_mpi_pi(phij[i] - phim[j]);
@@ -93,8 +93,8 @@ auto closest_muon_deta(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> detas;
   detas.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    detas.emplace_back(0.5);
-    float closest = 0.4;
+    detas.emplace_back(10);
+    float closest = 1;
     for (size_t j = 0; j < size_inner; j++) {
       Double_t deta = etaj[i] - etam[j];
       Double_t dphi = TVector2::Phi_mpi_pi(phij[i] - phim[j]);
@@ -122,8 +122,8 @@ auto closest_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> dphis;
   dphis.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    dphis.emplace_back(0.5);
-    float closest = 0.4;
+    dphis.emplace_back(10);
+    float closest = 1;
     for (size_t j = 0; j < size_inner; j++) {
       Double_t deta = etaj[i] - etam[j];
       Double_t dphi = TVector2::Phi_mpi_pi(phij[i] - phim[j]);
@@ -151,9 +151,9 @@ auto second_muon_dr(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> distances;
   distances.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    distances.emplace_back(0.5);
-    float closest = 0.4;
-    float second_closest = 0.5;
+    distances.emplace_back(10);
+    float closest = 1;
+    float second_closest = 1;
     for (size_t j = 0; j < size_inner; j++) {
       Double_t deta = etaj[i] - etam[j];
       Double_t dphi = TVector2::Phi_mpi_pi(phij[i] - phim[j]);
@@ -163,7 +163,7 @@ auto second_muon_dr(ROOT::VecOps::RVec<float> &etaj,
         closest = dr;
       }
     }
-    if (second_closest < 0.4) {
+    if (second_closest < 1) {
       distances[i] = second_closest;
     }
   }
@@ -185,9 +185,9 @@ auto second_muon_pt(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> pts;
   pts.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    pts.emplace_back(0.0);
-    float closest = 0.4;
-    float second_closest = 0.5;
+    pts.emplace_back(-1);
+    float closest = 1;
+    float second_closest = 1;
     float closest_pt = 0.0;
     float second_pt = 0.0;
     for (size_t j = 0; j < size_inner; j++) {
@@ -200,7 +200,7 @@ auto second_muon_pt(ROOT::VecOps::RVec<float> &etaj,
         closest = dr;
         closest_pt = ptm[j];
       }
-      if (second_closest < 0.4) {
+      if (second_closest < 1) {
         pts[i] = second_pt;
       }
     }
@@ -222,9 +222,9 @@ auto second_muon_deta(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> detas;
   detas.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    detas.emplace_back(0.5);
-    float closest = 0.4;
-    float second_closest = 0.5;
+    detas.emplace_back(10);
+    float closest = 1;
+    float second_closest = 1;
     float closest_deta = 0.0;
     float second_deta = 0.0;
     for (size_t j = 0; j < size_inner; j++) {
@@ -237,7 +237,7 @@ auto second_muon_deta(ROOT::VecOps::RVec<float> &etaj,
         closest = dr;
         closest_deta = deta;
       }
-      if (second_closest < 0.4) {
+      if (second_closest < 1) {
         detas[i] = second_deta;
       }
     }
@@ -259,9 +259,9 @@ auto second_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
   ROOT::VecOps::RVec<float> dphis;
   dphis.reserve(size_outer);
   for (size_t i = 0; i < size_outer; i++) {
-    dphis.emplace_back(0.5);
-    float closest = 0.4;
-    float second_closest = 0.5;
+    dphis.emplace_back(10);
+    float closest = 1;
+    float second_closest = 1;
     float closest_dphi = 0.0;
     float second_dphi = 0.0;
     for (size_t j = 0; j < size_inner; j++) {
@@ -274,7 +274,7 @@ auto second_muon_dphi(ROOT::VecOps::RVec<float> &etaj,
         closest = dr;
         closest_dphi = dphi;
       }
-      if (second_closest < 0.4) {
+      if (second_closest < 1) {
         dphis[i] = second_dphi;
       }
     }
