@@ -3,10 +3,11 @@ import os
 from nbd.builder.nanomaker import nanomaker
 import ROOT
 
+obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
+
 ROOT.EnableImplicitMT()
 
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
-
 
 ### DrellYan new
 prod_camp = "RunIISummer20UL18NanoAODv9"
@@ -78,4 +79,4 @@ if __name__ == "__main__":
 
     # generation loop
     for input, output in zip(input_files, output_files):
-        nanomaker(input, output, ["Electron"], device="cuda:0", limit=None)
+        nanomaker(input, output, obj_list, device="cuda:0", limit=None)
