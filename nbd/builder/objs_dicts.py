@@ -127,8 +127,10 @@ objs_dicts = {
         "batch_size": 10000,
         "saturate_ranges_path": "/home/users/cattafe/trainer/trainer/training/muons/ranges_muons.json",
         "eff": False,
-        "preprocess_dict": gen_dictionary_muons,
-        "gen_postprocessing_dict": cond_dictionary_muons,
+        # "preprocess_dict": gen_dictionary_muons,
+        # "gen_postprocessing_dict": cond_dictionary_muons,
+        "preprocess_dict": None,
+        "gen_postprocessing_dict": None,
     },
     "FatJets": {
         "derived_vars_func": fatjets.extractGenFatJetsFeatures,
