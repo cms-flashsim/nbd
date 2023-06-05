@@ -10,6 +10,7 @@ from matplotlib import pyplot as plt
 
 def rename_column(df, old_name, new_name):
     df.rename(columns={old_name: new_name}, inplace=True)
+    del df[old_name]
     return df[new_name]
 
 
