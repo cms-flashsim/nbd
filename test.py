@@ -72,8 +72,8 @@ if __name__ == "__main__":
     # files = ["~/43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"]  # DY
     # files = ["~/151B72D8-0233-8D4E-AE8A-6611942542C0.root"]  # TTJets
 
-    input_files = input_files[:1]
-    output_files = output_files[:1]
+    # input_files = input_files[:1]
+    # output_files = output_files[:1]
 
     print(f"We will process a total of {len(input_files)} files")
 
