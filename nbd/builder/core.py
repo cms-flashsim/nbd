@@ -151,7 +151,7 @@ def flash_simulate(
     leftover_shape = 0
     print(f"Batch size: {batch_size}")
     with torch.no_grad():
-        for batch_idx, y in tqdm(enumerate(data_loader), ascii=True):
+        for batch_idx, y in enumerate(tqdm(data_loader, ascii=True)):
             print(f"Batch: {batch_idx}/{len(data_loader)}")
 
             y = y.float().to(device, non_blocking=True)
