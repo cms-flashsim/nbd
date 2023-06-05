@@ -52,6 +52,11 @@ def nanomaker(
 
     old_reco_columns = get_reco_columns(full_columns, reco_objects)
 
+    # Create a type dictionary for the right casting
+    type_dict = dict(
+        zip(old_reco_columns, [full.GetColumnType(name) for name in old_reco_columns])
+    )
+
     # Selecting the other variables
 
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
@@ -141,6 +146,13 @@ def nanomaker(
     print("Writing the FlashSim tree...")
 
     to_file = ak.to_rdataframe(total)
+
+    # Cast the reco variables to the right type
+
+    for name, type in type_dict.items():
+        if name in total.keys():
+            to_file = to_file.Redefine(name, f"({type}) {name}")
+
     to_file.Snapshot("Events", output_file)
 
     print("Done")
