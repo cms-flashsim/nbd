@@ -179,4 +179,4 @@ def nanomaker(
     outfile.Close()
 
     print("Done")
-    print(f"Time: {(time.time() - start):d} s | {(time.time() - start) / 60:d} min")
+    print(f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min")
