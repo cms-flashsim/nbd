@@ -22,6 +22,8 @@ def nanomaker(
 ):
     print(f"Processing file {input_file}")
 
+    start = time.time()
+
     file = ROOT.TFile.Open(input_file)
     events = file.Events
     lumi = file.LuminosityBlocks
@@ -165,3 +167,4 @@ def nanomaker(
     outfile.Close()
 
     print("Done")
+    print(f"Time: {time.time() - start}")
