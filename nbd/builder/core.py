@@ -1,5 +1,6 @@
 # core functions for the nano builder
 import os
+from tqdm import tqdm
 import time
 import numpy as np
 import ROOT
@@ -150,7 +151,7 @@ def flash_simulate(
     leftover_shape = 0
     print(f"Batch size: {batch_size}")
     with torch.no_grad():
-        for batch_idx, y in enumerate(data_loader):
+        for batch_idx, y in tqdm(enumerate(data_loader), ascii=True):
             print(f"Batch: {batch_idx}/{len(data_loader)}")
 
             y = y.float().to(device, non_blocking=True)
@@ -163,7 +164,7 @@ def flash_simulate(
                     except AssertionError:
                         print("Error, retrying")
                 taken = time.time() - start
-                print(f"{(batch_size / taken):.0f} Hz")
+                # print(f"{(batch_size / taken):.0f} Hz")
                 times.append(taken)
                 sample = sample.detach().cpu().numpy()
                 sample = np.squeeze(sample, axis=1)
@@ -179,13 +180,13 @@ def flash_simulate(
                     except AssertionError:
                         print("Error, retrying")
                 taken = time.time() - start
-                print(f"{(leftover_shape / taken):.0f} Hz")
+                # print(f"{(leftover_shape / taken):.0f} Hz")
                 times.append(taken)
                 sample = sample.detach().cpu().numpy()
                 sample = np.squeeze(sample, axis=1)
                 leftover_sample.append(sample)
 
-    print(f"Main sampling done with mean rate: {batch_size / np.mean(times)} Hz")
+    print(f"Main sampling done with mean rate: {(batch_size / np.mean(times)):.0f} Hz")
 
     reco_dim = len(reco_columns)
     tot_sample = np.array(tot_sample)
