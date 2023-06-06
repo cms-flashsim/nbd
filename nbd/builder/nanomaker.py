@@ -44,15 +44,19 @@ def nanomaker(
         )
 
     # Getting the list of columns
+    print("Getting the list of columns...")
     full_columns_list = full.GetColumnNames()
 
     full_columns = []
     for name in full_columns_list:
         full_columns.append(str(name))
 
+    print("Done")
+
     # Selecting FullSim reco variables to copy in the FullSim tree
     # Reco objects are defined in reco_full.py
 
+    print("Processing of FullSim variables...")
     old_reco_columns = get_reco_columns(full_columns, reco_objects)
 
     # Create a type dictionary for the right casting
@@ -66,11 +70,15 @@ def nanomaker(
 
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
 
+    print("Done")
+
     # repeat for oversampling
     if oversampling_factor > 1:
+        print(f"Oversampling of factor {oversampling_factor}...")
         a_rest["ev_idx"] = ak.Array(np.arange(len(a_rest)))
         a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
         a_rest = a_rest[ak.argsort(a_rest["ev_idx"], axis=0, ascending=True)]
+        print("Done")
 
     # Flash simulation
 
