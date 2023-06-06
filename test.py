@@ -12,6 +12,7 @@ parser.add_argument(
     default=1,
     help="Resume from file number (starts from 1)",
 )
+parser.add_argument("--device", type=str, default="cuda:0", help="Device to use")
 args = parser.parse_args()
 
 obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
@@ -93,4 +94,4 @@ if __name__ == "__main__":
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
         print(f"File {args.resume + i}/{original_len}")
-        nanomaker(input, output, obj_list, device="cuda:0", limit=None)
+        nanomaker(input, output, obj_list, device=args.device, limit=None)
