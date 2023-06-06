@@ -66,6 +66,9 @@ def nanomaker(
 
     print("Getting variables not to be simulated...")
 
+    full.Snapshot("Events", "prova.root", remaining_columns)
+    exit(0)
+
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
 
     print("Done")
