@@ -44,19 +44,15 @@ def nanomaker(
         )
 
     # Getting the list of columns
-    print("Getting the list of columns...")
     full_columns_list = full.GetColumnNames()
 
     full_columns = []
     for name in full_columns_list:
         full_columns.append(str(name))
 
-    print("Done")
-
     # Selecting FullSim reco variables to copy in the FullSim tree
     # Reco objects are defined in reco_full.py
 
-    print("Processing of FullSim variables...")
     old_reco_columns = get_reco_columns(full_columns, reco_objects)
 
     # Create a type dictionary for the right casting
@@ -67,6 +63,8 @@ def nanomaker(
     # Selecting the other variables
 
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
+
+    print("Getting variables not to be simulated...")
 
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
 
