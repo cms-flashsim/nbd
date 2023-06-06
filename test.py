@@ -76,6 +76,8 @@ if __name__ == "__main__":
 
     # Get paths to FullSim files
     input_files = [os.path.join(root_nano, file) for file in files]
+    original_len = len(input_files)
+
     # Get paths to FlashSim files
     output_files = [os.path.join(new_dir, file) for file in files]
 
@@ -90,5 +92,5 @@ if __name__ == "__main__":
 
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
-        print(f"File {args.resume + i}/{len(input_files)}")
+        print(f"File {args.resume + i}/{original_len}")
         nanomaker(input, output, obj_list, device="cuda:0", limit=None)
