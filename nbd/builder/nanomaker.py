@@ -22,6 +22,7 @@ def nanomaker(
 ):
     print(f"Processing file {input_file}")
 
+    print("Reading the file...")
     start = time.time()
 
     file = ROOT.TFile.Open(input_file)
@@ -34,6 +35,8 @@ def nanomaker(
         full = ROOT.RDataFrame(events).Range(limit)
     else:
         full = ROOT.RDataFrame(events)
+
+    print("Done")
 
     if filter_ak8:
         full = full.Filter("nFatJet >= 2").Filter(
