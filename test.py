@@ -78,5 +78,6 @@ if __name__ == "__main__":
     print(f"We will process a total of {len(input_files)} files")
 
     # generation loop
-    for input, output in zip(input_files, output_files):
+    for i, (input, output) in enumerate(zip(input_files, output_files)):
+        print(f"File {i+1}/{len(input_files)}")
         nanomaker(input, output, obj_list, device="cuda:0", limit=None)
