@@ -2,6 +2,17 @@
 import os
 from nbd.builder.nanomaker import nanomaker
 import ROOT
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-r",
+    "--resume",
+    type=int,
+    default=1,
+    help="Resume from file number (starts from 1)",
+)
+args = parser.parse_args()
 
 obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
 
@@ -72,12 +83,12 @@ if __name__ == "__main__":
     # files = ["~/43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"]  # DY
     # files = ["~/151B72D8-0233-8D4E-AE8A-6611942542C0.root"]  # TTJets
 
-    # input_files = input_files[:1]
-    # output_files = output_files[:1]
+    input_files = input_files[(args.resume - 1) :]
+    output_files = output_files[(args.resume - 1) :]
 
     print(f"We will process a total of {len(input_files)} files")
 
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
-        print(f"File {i+1}/{len(input_files)}")
+        print(f"File {args.resume + i}/{len(input_files)}")
         nanomaker(input, output, obj_list, device="cuda:0", limit=None)
