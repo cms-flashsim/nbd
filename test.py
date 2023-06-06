@@ -12,7 +12,6 @@ parser.add_argument(
     default=1,
     help="Resume from file number (starts from 1)",
 )
-parser.add_argument("-m", "--memory", action="store_true", help="Profile the code")
 args = parser.parse_args()
 
 obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
@@ -89,15 +88,9 @@ if __name__ == "__main__":
     input_files = input_files[(args.resume - 1) :]
     output_files = output_files[(args.resume - 1) :]
 
-    print(f"We will process a total of {len(input_files)} files")
+    print(f"We will process a total of {len(input_files)} files out of {original_len}")
 
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
         print(f"File {args.resume + i}/{original_len}")
-        if args.memory:
-            import psutil
-
-            print("RAM memory % used:", psutil.virtual_memory()[2])
-            print("RAM Used (GB):", psutil.virtual_memory()[3] / 1000000000)
-
         nanomaker(input, output, obj_list, device="cuda:0", limit=None)
