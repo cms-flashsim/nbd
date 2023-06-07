@@ -48,6 +48,9 @@ def nanomaker(
 
     full_columns = []
     for name in full_columns_list:
+        # Temporary fix: LHEPdfWeight leads to a segmentation fault when calling ak.from_rdataframe
+        if name == "LHEPdfWeight":
+            pass
         full_columns.append(str(name))
 
     # Selecting FullSim reco variables to copy in the FullSim tree
@@ -65,9 +68,6 @@ def nanomaker(
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
 
     print("Getting variables not to be simulated...")
-
-    full.Snapshot("Events", "prova.root", remaining_columns)
-    exit(0)
 
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
 
