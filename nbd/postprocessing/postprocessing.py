@@ -13,6 +13,12 @@ def rename_column(df, old_name, new_name):
     return df[new_name]
 
 
+def create_column(df, column_name, value):
+    # Create a new column with a constant value (e.g. for particle masses)
+    df[column_name] = value
+    return df[column_name]
+
+
 def overwrite_with_gen(df, gen_df, column_name, gen_column_name):
     df[column_name] = gen_df[gen_column_name]
     return df[column_name]
@@ -206,6 +212,9 @@ def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path
                 )
             new_name = op[1]
             df[column_name] = rename_column(df, column_name, new_name)
+        elif op[0] == "create":
+            value = op[1]
+            df[column_name] = create_column(df, column_name, value)
         else:
             pass
     return df[column_name]
