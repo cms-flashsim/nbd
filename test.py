@@ -105,5 +105,5 @@ if __name__ == "__main__":
         print(f"File {args.resume + i}/{original_len}", end=" ")
         if args.nfiles > 0:
             print(f"[{i+1}/{args.nfiles} of the requested files]", end="")
-        print("\n")
+        print("\n", end="")
         nanomaker(input, output, obj_list, device=args.device, limit=limit)
