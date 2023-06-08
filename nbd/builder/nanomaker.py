@@ -22,7 +22,6 @@ def nanomaker(
 ):
     print(f"Processing file {input_file}")
 
-    print("Reading the file...")
     start = time.time()
 
     file = ROOT.TFile.Open(input_file)
@@ -35,8 +34,6 @@ def nanomaker(
         full = ROOT.RDataFrame(events).Range(limit)
     else:
         full = ROOT.RDataFrame(events)
-
-    print("Done")
 
     if filter_ak8:
         full = full.Filter("nFatJet >= 2").Filter(
@@ -67,11 +64,7 @@ def nanomaker(
 
     remaining_columns = [var for var in full_columns if var not in old_reco_columns]
 
-    print("Getting variables not to be simulated...")
-
     a_rest = ak.from_rdataframe(full, columns=remaining_columns)
-
-    print("Done")
 
     # repeat for oversampling
     if oversampling_factor > 1:
