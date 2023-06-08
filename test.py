@@ -5,6 +5,7 @@ import ROOT
 import argparse
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-n", "--nfiles", type=int, default=-1, help="Number of files")
 parser.add_argument(
     "-r",
     "--resume",
@@ -86,12 +87,19 @@ if __name__ == "__main__":
     # files = ["~/43C42694-5B0A-7D47-B7E8-59249FFD69CD.root"]  # DY
     # files = ["~/151B72D8-0233-8D4E-AE8A-6611942542C0.root"]  # TTJets
 
-    input_files = input_files[(args.resume - 1) :]
-    output_files = output_files[(args.resume - 1) :]
+    if args.nfiles > 0:
+        input_files = input_files[(args.resume - 1) : (args.resume - 1 + args.nfiles)]
+        output_files = output_files[(args.resume - 1) : (args.resume - 1 + args.nfiles)]
+    else:
+        input_files = input_files[(args.resume - 1) :]
+        output_files = output_files[(args.resume - 1) :]
 
     print(f"We will process a total of {len(input_files)} files out of {original_len}")
 
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
-        print(f"File {args.resume + i}/{original_len}")
+        print(f"File {args.resume + i}/{original_len}", end=" ")
+        if args.nfiles > 0:
+            print(f"[{i+1}/{args.nfiles} of the requested files]")
+        print("\n")
         nanomaker(input, output, obj_list, device=args.device, limit=None)
