@@ -110,6 +110,7 @@ target_dictionary = {
     "softId": [["c", 0.5, [0, 1]]],
     "softMvaId": [["c", 0.5, [0, 1]]],
     "charge": [["c", 0.0, [-1, 1]]],
+    "mass": [["create", 0.1057128]],
 }
 
 target_dictionary_muons = {}

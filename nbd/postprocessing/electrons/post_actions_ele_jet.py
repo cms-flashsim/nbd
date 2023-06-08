@@ -107,4 +107,5 @@ target_dictionary = {
     "Electron_sieie": [["i", np.exp, [10, 1e-1]], ["s"]],
     "Electron_sip3d": [["i", np.expm1, [1, 0]], ["s"]],
     "Electron_tightCharge": [["d", None, None], ["s"]],
+    "Electron_mass": [["create", 0.5109989e-3]],
 }
