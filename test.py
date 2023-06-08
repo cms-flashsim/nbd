@@ -1,5 +1,6 @@
 # the loop for generating new events starting from gen-level information in the files
 import os
+import time
 from nbd.builder.nanomaker import nanomaker
 import ROOT
 import argparse
@@ -106,4 +107,8 @@ if __name__ == "__main__":
         if args.nfiles > 0:
             print(f"[{i+1}/{args.nfiles} of the requested files]", end="")
         print("\n", end="")
+        start = time.time()
         nanomaker(input, output, obj_list, device=args.device, limit=limit)
+        print(
+            f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min"
+        )
