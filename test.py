@@ -18,8 +18,6 @@ args = parser.parse_args()
 
 obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
 
-ROOT.EnableImplicitMT()
-
 mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
 ### DrellYan new
@@ -100,6 +98,7 @@ if __name__ == "__main__":
         limit = args.range
     else:
         limit = None
+        ROOT.EnableImplicitMT()
 
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
