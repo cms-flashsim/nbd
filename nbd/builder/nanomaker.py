@@ -43,12 +43,12 @@ def nanomaker(
     # Getting the list of columns
     full_columns_list = full.GetColumnNames()
 
-    full_columns = []
+    full_columns_ = []
     for name in full_columns_list:
-        # Temporary fix: LHEPdfWeight leads to a segmentation fault when calling ak.from_rdataframe
-        if name == "LHEPdfWeight":
-            pass
-        full_columns.append(str(name))
+        full_columns_.append(str(name))
+
+    # Temporary fix: LHEPdfWeight leads to a segmentation fault when calling ak.from_rdataframe
+    full_columns = [name for name in full_columns_ if name != "LHEPdfWeight"]
 
     # Selecting FullSim reco variables to copy in the FullSim tree
     # Reco objects are defined in reco_full.py
