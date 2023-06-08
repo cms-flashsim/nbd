@@ -5,14 +5,14 @@ import ROOT
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-n", "--nfiles", type=int, default=-1, help="Number of files")
+parser.add_argument("--nfiles", type=int, default=-1, help="Number of files")
 parser.add_argument(
-    "-r",
     "--resume",
     type=int,
     default=1,
     help="Resume from file number (starts from 1)",
 )
+parser.add_argument("--range", type=int, default=-1, help="Number of events per file")
 parser.add_argument("--device", type=str, default="cuda:0", help="Device to use")
 args = parser.parse_args()
 
@@ -96,10 +96,15 @@ if __name__ == "__main__":
 
     print(f"We will process a total of {len(input_files)} files out of {original_len}")
 
+    if args.range > 0:
+        limit = args.range
+    else:
+        limit = None
+
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
         print(f"File {args.resume + i}/{original_len}", end=" ")
         if args.nfiles > 0:
             print(f"[{i+1}/{args.nfiles} of the requested files]")
         print("\n")
-        nanomaker(input, output, obj_list, device=args.device, limit=None)
+        nanomaker(input, output, obj_list, device=args.device, limit=limit)
