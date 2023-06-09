@@ -54,6 +54,9 @@ nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2"
 
 flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
 
+if args.device == "cpu":
+    flash_dir = "scratchnvme/cattafe/FlashSim"
+
 # flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim/no_eff/" # no efficiency for electrons
 
 
@@ -121,4 +124,5 @@ if __name__ == "__main__":
         print(
             f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min"
         )
-        scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
+        if args.device != "cpu":
+            scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
