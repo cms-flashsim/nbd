@@ -121,4 +121,4 @@ if __name__ == "__main__":
         print(
             f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min"
         )
-        scp(output, output.replace(flash_dir, "scratchnvme/cattafe/FlashSim/"))
+        scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
