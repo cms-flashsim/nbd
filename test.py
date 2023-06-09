@@ -4,6 +4,15 @@ import time
 from nbd.builder.nanomaker import nanomaker
 import ROOT
 import argparse
+import subprocess
+
+
+def scp(source_path, destination_path, private_key_path="~/.ssh/id_rsa"):
+    scp_command = f"scp -i {private_key_path} {source_path} cattafe@cmsanalysis:{destination_path}"
+    rm_command = f"rm {source_path}"
+    subprocess.call(scp_command, shell=True)
+    subprocess.call(rm_command, shell=True)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--nfiles", type=int, default=-1, help="Number of files")
@@ -112,3 +121,4 @@ if __name__ == "__main__":
         print(
             f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min"
         )
+        scp(output, output.replace(flash_dir, "scratchnvme/cattafe/FlashSim/"))
