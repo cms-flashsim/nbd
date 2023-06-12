@@ -111,7 +111,7 @@ if __name__ == "__main__":
         limit = args.range
     else:
         limit = None
-        ROOT.EnableImplicitMT()
+        # ROOT.EnableImplicitMT()
 
     # generation loop
     for i, (input, output) in enumerate(zip(input_files, output_files)):
