@@ -1,5 +1,6 @@
 import os
 import psutil
+import gc
 import time
 import numpy as np
 import ROOT
@@ -31,7 +32,7 @@ def nanomaker(
     meta = file.MetaData
 
     print(
-        f"Memory usage before processing: {(process.memory_info().rss / 1024 / 1024):0f} MB"
+        f"Memory usage before processing: {(process.memory_info().rss / 1024 / 1024):.0f} MB"
     )
 
     if limit is not None:
@@ -139,7 +140,7 @@ def nanomaker(
         print("Done")
 
     print(
-        f"Memory after all object simulation: {(process.memory_info().rss / 1024/ 1024):0f} MB"
+        f"Memory after all object simulation: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
     )
 
     # explicit check on dict keys
@@ -164,7 +165,7 @@ def nanomaker(
     print("Done")
 
     print(
-        f"Memory after merging all collections: {(process.memory_info().rss / 1024/ 1024):0f} MB"
+        f"Memory after merging all collections: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
     )
 
     print("Writing the FlashSim tree...")
@@ -203,9 +204,10 @@ def nanomaker(
     outfile.Close()
 
     print(
-        f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):0f} MB"
+        f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
     )
     file.Close()
+
     del (
         file,
         full,
@@ -226,4 +228,6 @@ def nanomaker(
         type_dict,
         opts,
     )
+    gc.collect()
+
     print("Done")
