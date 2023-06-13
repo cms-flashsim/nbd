@@ -1,4 +1,5 @@
 import os
+import psutil
 import time
 import numpy as np
 import ROOT
@@ -20,6 +21,7 @@ def nanomaker(
     filter_ak8=False,
     oversampling_factor=1,
 ):
+    process = psutil.Process(os.getpid())
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
@@ -27,6 +29,10 @@ def nanomaker(
     lumi = file.LuminosityBlocks
     runs = file.Runs
     meta = file.MetaData
+
+    print(
+        f"Memory usage before processing: {(process.memory_info().rss / 1024 / 1024):0f} MB"
+    )
 
     if limit is not None:
         full = ROOT.RDataFrame(events).Range(limit)
@@ -76,12 +82,19 @@ def nanomaker(
 
     flash_dict = {}
     for obj in objects_keys:
+        # memory usage
+        print(
+            f"Memory usage before simulating {obj}: {(process.memory_info().rss / 1024 / 1024):.0f} MB"
+        )
         print(f"Simulating {obj} collection...")
         a_flash = object_simulator.simulator(
             full,
             device=device,
             oversampling_factor=oversampling_factor,
             **objs_dicts[obj],
+        )
+        print(
+            f"Memory usage after simulating {obj}: {(process.memory_info().rss / 1024 / 1024):.0f} MB"
         )
         print(f"Done")
         flash_dict[obj] = a_flash
@@ -125,6 +138,10 @@ def nanomaker(
 
         print("Done")
 
+    print(
+        f"Memory after all object simulation: {(process.memory_info().rss / 1024/ 1024):0f} MB"
+    )
+
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
     print("Making the final dictionary...")
@@ -145,6 +162,10 @@ def nanomaker(
         dict_1 = total
 
     print("Done")
+
+    print(
+        f"Memory after merging all collections: {(process.memory_info().rss / 1024/ 1024):0f} MB"
+    )
 
     print("Writing the FlashSim tree...")
 
@@ -180,5 +201,9 @@ def nanomaker(
     runs.CloneTree().Write()
     meta.CloneTree().Write()
     outfile.Close()
+
+    print(
+        f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):0f} MB"
+    )
 
     print("Done")
