@@ -157,3 +157,5 @@ if __name__ == "__main__":
         )
         # if args.device != "cpu":
         #     scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
+    pool.close()
+    pool.join()
