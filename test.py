@@ -39,7 +39,8 @@ def nanomaker_wrapped(input, output, obj_list, device, limit):
         filter_ak8=False,
         oversampling_factor=1,
     )
-    scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
+    # scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
+    scp(output, output.replace(new_dir, "/scratchnvme/cattafe/flashsim_test/"))
 
 
 # Define variables
