@@ -6,6 +6,7 @@ import ROOT
 import argparse
 import subprocess
 import multiprocessing as mp
+import psutil
 
 # Parse arguments
 parser = argparse.ArgumentParser()
@@ -160,3 +161,8 @@ if __name__ == "__main__":
         #     scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
     pool.close()
     pool.join()
+
+    # memory usage in MB
+    print(
+        f"Memory usage: {psutil.Process((os.getpid()).memory_info().rss / 1024 ** 2):.0f} MB"
+    )
