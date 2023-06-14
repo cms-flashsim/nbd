@@ -5,15 +5,9 @@ from nbd.builder.nanomaker import nanomaker
 import ROOT
 import argparse
 import subprocess
+import multiprocessing as mp
 
-
-def scp(source_path, destination_path, private_key_path="~/.ssh/id_rsa"):
-    scp_command = f"scp -i {private_key_path} {source_path} cattafe@cmsanalysis:{destination_path}"
-    rm_command = f"rm {source_path}"
-    subprocess.call(scp_command, shell=True)
-    subprocess.call(rm_command, shell=True)
-
-
+# Parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--nfiles", type=int, default=-1, help="Number of files")
 parser.add_argument(
@@ -25,6 +19,30 @@ parser.add_argument(
 parser.add_argument("--range", type=int, default=-1, help="Number of events per file")
 parser.add_argument("--device", type=str, default="cuda:0", help="Device to use")
 args = parser.parse_args()
+
+
+# Define functions
+def scp(source_path, destination_path, private_key_path="~/.ssh/id_rsa"):
+    scp_command = f"scp -i {private_key_path} {source_path} cattafe@cmsanalysis:{destination_path}"
+    rm_command = f"rm {source_path}"
+    subprocess.call(scp_command, shell=True)
+    subprocess.call(rm_command, shell=True)
+
+
+def nanomaker_wrapped(input, output, obj_list, device, limit):
+    nanomaker(
+        input_file=input,
+        output_file=output,
+        objects_keys=obj_list,
+        device=device,
+        limit=limit,
+        filter_ak8=False,
+        oversampling_factor=1,
+    )
+    scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
+
+
+# Define variables
 
 obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
 
@@ -61,6 +79,10 @@ if args.device == "cpu":
 
 
 if __name__ == "__main__":
+    num_processes = mp.cpu_count()
+    print(f"Number of processes: {num_processes}")
+    pool = mp.Pool(num_processes)
+
     print("Starting the generation of new events")
 
     # Get FullSim path
@@ -120,9 +142,18 @@ if __name__ == "__main__":
             print(f"[{i+1}/{args.nfiles} of the requested files]", end="")
         print("\n", end="")
         start = time.time()
-        nanomaker(input, output, obj_list, device=args.device, limit=limit)
+        pool.apply_async(
+            nanomaker_wrapped,
+            args=(
+                input,
+                output,
+                obj_list,
+                args.device,
+                limit,
+            ),
+        )
         print(
             f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min"
         )
-        if args.device != "cpu":
-            scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
+        # if args.device != "cpu":
+        #     scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
