@@ -164,5 +164,5 @@ if __name__ == "__main__":
 
     # memory usage in MB
     print(
-        f"Memory usage: {psutil.Process((os.getpid()).memory_info().rss / 1024 ** 2):.0f} MB"
+        f"Memory usage: {(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2):.0f} MB"
     )
