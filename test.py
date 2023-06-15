@@ -5,10 +5,15 @@ from nbd.builder.nanomaker import nanomaker
 import ROOT
 import argparse
 import subprocess
-import multiprocessing as mp
-import psutil
 
-# Parse arguments
+
+def scp(source_path, destination_path, private_key_path="~/.ssh/id_rsa"):
+    scp_command = f"scp -i {private_key_path} {source_path} cattafe@cmsanalysis:{destination_path}"
+    rm_command = f"rm {source_path}"
+    subprocess.call(scp_command, shell=True)
+    subprocess.call(rm_command, shell=True)
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--nfiles", type=int, default=-1, help="Number of files")
 parser.add_argument(
@@ -20,31 +25,6 @@ parser.add_argument(
 parser.add_argument("--range", type=int, default=-1, help="Number of events per file")
 parser.add_argument("--device", type=str, default="cuda:0", help="Device to use")
 args = parser.parse_args()
-
-
-# Define functions
-def scp(source_path, destination_path, private_key_path="~/.ssh/id_rsa"):
-    scp_command = f"scp -i {private_key_path} {source_path} cattafe@cmsanalysis:{destination_path}"
-    rm_command = f"rm {source_path}"
-    subprocess.call(scp_command, shell=True)
-    subprocess.call(rm_command, shell=True)
-
-
-def nanomaker_wrapped(input, output, obj_list, device, limit):
-    nanomaker(
-        input_file=input,
-        output_file=output,
-        objects_keys=obj_list,
-        device=device,
-        limit=limit,
-        filter_ak8=False,
-        oversampling_factor=1,
-    )
-    # scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
-    scp(output, output.replace(new_dir, "/scratchnvme/cattafe/flashsim_test/"))
-
-
-# Define variables
 
 obj_list = ["Electron", "Electron_fromJets", "Muon", "Jet"]
 
@@ -75,16 +55,12 @@ nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2"
 flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
 
 if args.device == "cpu":
-    flash_dir = "scratchnvme/cattafe/FlashSim"
+    flash_dir = "scratchnvme/cattafe/flashsim_test"
 
 # flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim/no_eff/" # no efficiency for electrons
 
 
 if __name__ == "__main__":
-    num_processes = mp.cpu_count()
-    print(f"Number of processes: {num_processes}")
-    pool = mp.Pool(num_processes)
-
     print("Starting the generation of new events")
 
     # Get FullSim path
@@ -144,25 +120,16 @@ if __name__ == "__main__":
             print(f"[{i+1}/{args.nfiles} of the requested files]", end="")
         print("\n", end="")
         start = time.time()
-        pool.apply_async(
-            nanomaker_wrapped,
-            args=(
-                input,
-                output,
-                obj_list,
-                args.device,
-                limit,
-            ),
+        nanomaker(
+            input,
+            output,
+            obj_list,
+            device=args.device,
+            limit=limit,
+            oversampling_factor=4,
         )
         print(
             f"Time: {(time.time() - start):.0f} s | {(time.time() - start) / 60:.0f} min"
         )
-        # if args.device != "cpu":
-        #     scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
-    pool.close()
-    pool.join()
-
-    # memory usage in MB
-    print(
-        f"Memory usage: {(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2):.0f} MB"
-    )
+        if args.device != "cpu":
+            scp(output, output.replace(flash_dir, "/scratchnvme/cattafe/FlashSim/"))
