@@ -74,9 +74,11 @@ def nanomaker(
     # repeat for oversampling
     if oversampling_factor > 1:
         print(f"Oversampling of factor {oversampling_factor}...")
-        a_rest["ev_idx"] = ak.Array(np.arange(len(a_rest)))
+        a_rest["EventProgressiveNumber"] = ak.Array(np.arange(len(a_rest)))
         a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
-        a_rest = a_rest[ak.argsort(a_rest["ev_idx"], axis=0, ascending=True)]
+        a_rest = a_rest[
+            ak.argsort(a_rest["EventProgressiveNumber"], axis=0, ascending=True)
+        ]
         print("Done")
 
     # Flash simulation
@@ -149,7 +151,7 @@ def nanomaker(
     dict_1 = dict(
         zip(
             a_rest.fields,
-            [a_rest[field] for field in a_rest.fields if field != "ev_idx"],
+            [a_rest[field] for field in a_rest.fields],
         )
     )
     for key in flash_dict.keys():
