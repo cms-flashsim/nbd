@@ -219,6 +219,8 @@ def flash_simulate(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
 
+    print(total)
+
     # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
     d_out = dict(zip(total.columns, total.values.T))
     a_out = ak.zip(d_out)
