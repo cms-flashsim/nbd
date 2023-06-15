@@ -86,22 +86,13 @@ def select_gen(
         #     masked_gen = a_gen[gen_columns]
 
     reco_struct = ak.num(masked_gen[gen_columns[0]], axis=1)
-    print(reco_struct)
     # add np.repeat for oversampling here if needed
     if oversampling_factor > 1:
         reco_struct = np.repeat(reco_struct, oversampling_factor, axis=0)
-        print(reco_struct)
 
     print(f"Number of objects after selection: {sum(reco_struct)}")
 
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
-    print(to_flash)
-    if oversampling_factor > 1:
-        to_flash = pd.DataFrame(
-            np.repeat(to_flash.values, oversampling_factor, axis=0),
-            columns=to_flash.columns,
-        )
-        print(to_flash)
 
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
