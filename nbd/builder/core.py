@@ -142,6 +142,7 @@ def flash_simulate(
             np.repeat(to_flash.values, oversampling_factor, axis=0),
             columns=to_flash.columns,
         )
+        print(to_flash)
 
     flow_tuple = flow_loader(
         device=device, model_dir=os.path.dirname(__file__), filename=model_path
