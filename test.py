@@ -55,7 +55,7 @@ nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2"
 flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim"
 
 if args.device == "cpu":
-    flash_dir = "scratchnvme/cattafe/flashsim_test"
+    flash_dir = "/scratchnvme/cattafe/flashsim_test"
 
 # flash_dir = "/gpfs/ddn/cms/user/cattafe/FlashSim/no_eff/" # no efficiency for electrons
 
