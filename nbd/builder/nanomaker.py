@@ -74,10 +74,10 @@ def nanomaker(
     # repeat for oversampling
     if oversampling_factor > 1:
         print(f"Oversampling of factor {oversampling_factor}...")
-        a_rest["EventProgressiveNumber"] = ak.Array(np.arange(len(a_rest)))
+        a_rest["genEventProgressiveNumber"] = ak.Array(np.arange(len(a_rest)))
         a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
         a_rest = a_rest[
-            ak.argsort(a_rest["EventProgressiveNumber"], axis=0, ascending=True)
+            ak.argsort(a_rest["genEventProgressiveNumber"], axis=0, ascending=True)
         ]
         print("Done")
 
