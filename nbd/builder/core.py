@@ -89,10 +89,19 @@ def select_gen(
     # add np.repeat for oversampling here if needed
     if oversampling_factor > 1:
         reco_struct = np.repeat(reco_struct, oversampling_factor, axis=0)
+        masked_gen["genEventProgressiveNumber"] = ak.Array(np.arange(len(masked_gen)))
+        masked_gen = ak.concatenate(
+            [masked_gen for _ in range(oversampling_factor)], axis=0
+        )
+        masked_gen = masked_gen[
+            ak.argsort(masked_gen["genEventProgressiveNumber"], axis=0, ascending=True)
+        ]
 
     print(f"Number of objects after selection: {sum(reco_struct)}")
 
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
+    if oversampling_factor > 1:
+        to_flash = to_flash.drop(columns=["genEventProgressiveNumber"])
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
 
