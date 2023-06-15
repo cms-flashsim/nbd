@@ -99,6 +99,7 @@ def select_gen(
             np.repeat(to_flash.values, oversampling_factor, axis=0),
             columns=to_flash.columns,
         )
+        print(to_flash)
 
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
