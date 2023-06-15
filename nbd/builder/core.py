@@ -95,7 +95,10 @@ def select_gen(
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
     print(to_flash)
     if oversampling_factor > 1:
-        to_flash = pd.DataFrame(np.repeat(to_flash.values, oversampling_factor, axis=0))
+        to_flash = pd.DataFrame(
+            np.repeat(to_flash.values, oversampling_factor, axis=0),
+            columns=to_flash.columns,
+        )
 
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
