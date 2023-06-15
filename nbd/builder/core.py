@@ -137,6 +137,12 @@ def flash_simulate(
     dataset = GenDataset(to_flash, gen_columns, oversampling_factor)
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
+    if oversampling_factor > 1:
+        to_flash = pd.DataFrame(
+            np.repeat(to_flash.values, oversampling_factor, axis=0),
+            columns=to_flash.columns,
+        )
+
     flow_tuple = flow_loader(
         device=device, model_dir=os.path.dirname(__file__), filename=model_path
     )
@@ -209,9 +215,6 @@ def flash_simulate(
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
-
-    print(total)
-
     # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
     d_out = dict(zip(total.columns, total.values.T))
     a_out = ak.zip(d_out)
