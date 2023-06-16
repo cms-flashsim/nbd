@@ -5,10 +5,8 @@ from torch.utils.data import Dataset
 
 
 class GenDataset(Dataset):
-    def __init__(self, df, columns, oversampling_factor=1):
+    def __init__(self, df, columns):
         data = df.loc[:, columns].values
-        if oversampling_factor > 1:
-            data = np.repeat(data, oversampling_factor, axis=0)
         self.train_data = torch.tensor(data, dtype=torch.float32)
 
     def __len__(self):

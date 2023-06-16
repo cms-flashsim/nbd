@@ -89,10 +89,22 @@ def select_gen(
     # add np.repeat for oversampling here if needed
     if oversampling_factor > 1:
         reco_struct = np.repeat(reco_struct, oversampling_factor, axis=0)
+        masked_gen["evt_idx"] = ak.Array(np.arange(len(masked_gen)))
+        masked_gen = ak.concatenate(
+            [masked_gen for _ in range(oversampling_factor)], axis=0
+        )
+        masked_gen = masked_gen[
+            ak.argsort(masked_gen["evt_idx"], axis=0, ascending=True)
+        ]
 
     print(f"Number of objects after selection: {sum(reco_struct)}")
 
     to_flash = ak.to_dataframe(masked_gen).reset_index(drop=True)
+
+    if oversampling_factor > 1:
+        to_flash = to_flash.drop(columns=["evt_idx"])
+
+    print(to_flash)
 
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
@@ -134,14 +146,8 @@ def flash_simulate(
     gen_postrpocessing_dict=None,
     oversampling_factor=1,
 ):
-    dataset = GenDataset(to_flash, gen_columns, oversampling_factor)
+    dataset = GenDataset(to_flash, gen_columns)
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
-
-    if oversampling_factor > 1:
-        to_flash = pd.DataFrame(
-            np.repeat(to_flash.values, oversampling_factor, axis=0),
-            columns=to_flash.columns,
-        )
 
     flow_tuple = flow_loader(
         device=device, model_dir=os.path.dirname(__file__), filename=model_path
@@ -215,6 +221,8 @@ def flash_simulate(
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
+
+    print(total)
 
     # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
     d_out = dict(zip(total.columns, total.values.T))
