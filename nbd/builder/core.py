@@ -104,8 +104,6 @@ def select_gen(
     if oversampling_factor > 1:
         to_flash = to_flash.drop(columns=["evt_idx"])
 
-    print(to_flash)
-
     # drop mask column
     # to_flash = to_flash.drop(columns=["Mask"])
 
@@ -221,8 +219,6 @@ def flash_simulate(
     total = postprocessing(
         total, to_flash, vars_dictionary, scale_file_path, saturate_ranges_path
     )
-
-    print(total)
 
     # These lines are needed to avoid TStreamerInfo warnings when writing FlashSim tree
     d_out = dict(zip(total.columns, total.values.T))
