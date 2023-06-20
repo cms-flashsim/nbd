@@ -9,7 +9,7 @@ import awkward as ak
 import pandas as pd
 import torch
 import nbd.builder.object_simulator as object_simulator
-from nbd.builder.objs_dicts import objs_dicts, reco_objects, merge_dict
+from nbd.builder.objs_dicts import objs_dicts, reco_objects, merge_dict, needed_columns
 from nbd.utils.reco_full import get_reco_columns
 
 
@@ -36,9 +36,9 @@ def nanomaker(
     )
 
     if limit is not None:
-        full = ROOT.RDataFrame(events).Range(limit)
+        full = ROOT.RDataFrame(events, needed_columns).Range(limit)
     else:
-        full = ROOT.RDataFrame(events)
+        full = ROOT.RDataFrame(events, needed_columns)
 
     if filter_ak8:
         full = full.Filter("nFatJet >= 2").Filter(

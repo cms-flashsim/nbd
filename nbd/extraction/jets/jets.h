@@ -284,7 +284,7 @@ auto second_muon_dphi(const ROOT::VecOps::RVec<float> &etaj,
     }
   }
   return dphis;
-};
+}
 
 auto gen_jet_flavour_encoder(ROOT::VecOps::RVec<int> &fj,
                                  ROOT::VecOps::RVec<int> flavours) {
