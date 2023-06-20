@@ -180,4 +180,5 @@ needed_columns = [
     'GenJetAK8_mass',
     'GenJetAK8_partonFlavour',
     'GenJetAK8_hadronFlavour',
+    'nFatJet'
 ]

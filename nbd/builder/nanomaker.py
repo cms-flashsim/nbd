@@ -40,46 +40,18 @@ def nanomaker(
     else:
         full = ROOT.RDataFrame(events, needed_columns)
 
+    file.Close()
+
     if filter_ak8:
         full = full.Filter("nFatJet >= 2").Filter(
             "GenJetAK8_pt[0] > 250 && GenJetAK8_pt[1] > 250"
         )
 
-    # Getting the list of columns
-    full_columns_list = full.GetColumnNames()
-
-    full_columns_ = []
-    for name in full_columns_list:
-        full_columns_.append(str(name))
-
-    # Temporary fix: LHEPdfWeight leads to a segmentation fault when calling ak.from_rdataframe
-    full_columns = [name for name in full_columns_ if name != "LHEPdfWeight"]
-
-    # Selecting FullSim reco variables to copy in the FullSim tree
-    # Reco objects are defined in reco_full.py
-
-    old_reco_columns = get_reco_columns(full_columns, reco_objects)
-
     # Create a type dictionary for the right casting
+    # TODO to pass as external argument
     type_dict = dict(
         zip(old_reco_columns, [full.GetColumnType(name) for name in old_reco_columns])
     )
-
-    # Selecting the other variables
-
-    remaining_columns = [var for var in full_columns if var not in old_reco_columns]
-
-    a_rest = ak.from_rdataframe(full, columns=remaining_columns)
-
-    # repeat for oversampling
-    if oversampling_factor > 1:
-        print(f"Oversampling of factor {oversampling_factor}...")
-        a_rest["genEventProgressiveNumber"] = ak.Array(np.arange(len(a_rest)))
-        a_rest = ak.concatenate([a_rest for _ in range(oversampling_factor)], axis=0)
-        a_rest = a_rest[
-            ak.argsort(a_rest["genEventProgressiveNumber"], axis=0, ascending=True)
-        ]
-        print("Done")
 
     # Flash simulation
 
@@ -148,27 +120,25 @@ def nanomaker(
     # explicit check on dict keys
     # merge same type of reco on the evet with ak.concatenate (for flash)
     print("Making the final dictionary...")
-    dict_1 = dict(
-        zip(
-            a_rest.fields,
-            [a_rest[field] for field in a_rest.fields],
-        )
-    )
+
     for key in flash_dict.keys():
-        dict_2 = dict(
+        dict_1 = dict(
             zip(
                 flash_dict[key].fields,  # TODO check if fields are the same
                 [flash_dict[key][field] for field in flash_dict[key].fields],
             )
         )
-        total = {**dict_1, **dict_2}
-        dict_1 = total
+        total = dict_1
 
     print("Done")
 
     print(
         f"Memory after merging all collections: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
     )
+
+    # add oversampling factor genEventProgressiveNumber
+    if oversampling_factor > 1:
+        total["genEventProgressiveNumber"] = ak.Array(np.arange(len(total)/oversampling_factor).repeat(oversampling_factor))
 
     print("Writing the FlashSim tree...")
 
@@ -185,51 +155,8 @@ def nanomaker(
     print("Done")
 
     # add a new ttrees to the output file
-
-    print("Writing the FullSim tree...")
-    a_full = ak.from_rdataframe(full, columns=old_reco_columns + ["run", "event"])
-    d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
-    old_reco = ak.to_rdataframe(d_full)
-
-    opts = ROOT.RDF.RSnapshotOptions()
-    opts.fMode = "Update"
-    old_reco.Snapshot("FullSim", output_file, "", opts)
-
-    print("Done")
-
-    print("Writing others trees...")
-    outfile = ROOT.TFile.Open(output_file, "UPDATE")
-    outfile.cd()
-    lumi.CloneTree().Write()
-    runs.CloneTree().Write()
-    meta.CloneTree().Write()
-    outfile.Close()
-
-    print(
-        f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
-    )
-    file.Close()
-
-    del (
-        file,
-        full,
-        lumi,
-        runs,
-        meta,
-        old_reco,
-        to_file,
-        a_rest,
-        a_full,
-        total,
-        d_full,
-        dict_1,
-        dict_2,
-        flash_dict,
-        input_list,
-        merged,
-        type_dict,
-        opts,
-    )
-    gc.collect()
+    # NOTE: to be done in separate script or here but movin the branches to the new tree 
+    #       (to avoid to load the full tree in memory)
+    # directly with ROOT.gInterpreter.Declare
 
     print("Done")
