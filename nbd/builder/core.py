@@ -3,8 +3,6 @@ import os
 from tqdm import tqdm
 import time
 import numpy as np
-import ROOT
-import uproot
 import awkward as ak
 import pandas as pd
 import torch
@@ -26,7 +24,7 @@ def isReco(y_pred):
 
 
 def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
-    print(f"Computing efficiency using {model}")
+    print(f"Computing efficiency")
     model.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
     model = model.to(device)
     model.eval()
@@ -39,6 +37,7 @@ def compute_efficiency(model, model_path, data, device="cpu", batch_size=10000):
             y_pred = np.concatenate((y_pred, out.cpu().numpy().flatten()))
 
     mask = isReco(y_pred)
+    print("Done")
     return mask
 
 
