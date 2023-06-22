@@ -36,9 +36,9 @@ def nanomaker(
     )
 
     if limit is not None:
-        full = ROOT.RDataFrame(events, needed_columns).Range(limit)
+        full = ROOT.RDataFrame(events).Range(limit)
     else:
-        full = ROOT.RDataFrame(events, needed_columns)
+        full = ROOT.RDataFrame(events)
 
     if filter_ak8:
         full = full.Filter("nFatJet >= 2").Filter(
