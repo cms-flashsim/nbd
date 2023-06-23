@@ -201,12 +201,15 @@ def flash_simulate(
 
     reco_dim = len(reco_columns)
     tot_sample = np.array(tot_sample)
-    tot_sample = np.reshape(tot_sample, ((len(data_loader) - 1) * batch_size, reco_dim))
     leftover_sample = np.array(leftover_sample)
     if leftover_shape > 0:
+        tot_sample = np.reshape(
+            tot_sample, ((len(data_loader) - 1) * batch_size, reco_dim)
+        )
         leftover_sample = np.reshape(leftover_sample, (leftover_shape, reco_dim))
         total = np.concatenate((tot_sample, leftover_sample), axis=0)
     else:
+        tot_sample = np.reshape(tot_sample, (len(data_loader) * batch_size, reco_dim))
         total = tot_sample
 
     total = nan_resampling(total, to_flash, flow, device)
