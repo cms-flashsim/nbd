@@ -210,26 +210,4 @@ def nanomaker(
     )
     file.Close()
 
-    del (
-        file,
-        full,
-        lumi,
-        runs,
-        meta,
-        old_reco,
-        to_file,
-        a_rest,
-        a_full,
-        total,
-        d_full,
-        dict_1,
-        dict_2,
-        flash_dict,
-        input_list,
-        merged,
-        type_dict,
-        opts,
-    )
-    gc.collect()
-
     print("Done")
