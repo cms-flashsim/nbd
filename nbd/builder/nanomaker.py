@@ -104,7 +104,7 @@ def nanomaker(
 
     # Merge
 
-    if merge_dict:
+    if merge_dict and (key in objects_keys):
         for key in merge_dict.keys():
             print(f"Merging {key} collections...")
             # Get pt column name and nObject
