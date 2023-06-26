@@ -104,7 +104,7 @@ def nanomaker(
 
     # Merge
 
-    if merge_dict and (key in objects_keys):
+    if merge_dict and (merge_dict.keys().any() in objects_keys):
         for key in merge_dict.keys():
             print(f"Merging {key} collections...")
             # Get pt column name and nObject
@@ -139,7 +139,7 @@ def nanomaker(
             # Add counter column
             flash_dict[key][counter_col] = ak.num(flash_dict[key][pt_col], axis=-1)
 
-        print("Done")
+    print("Done")
 
     print(
         f"Memory after all object simulation: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
