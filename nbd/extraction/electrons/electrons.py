@@ -166,6 +166,17 @@ def extractGenJetFeatures(df):
     Returns:
         rdataframe: rdataframe with new features
     """
+    df = cleanGenJetCollection(df)
+
+    df = (
+        df.Redefine("GenJet_pt", "CleanGenJet_pt")
+        .Redefine("GenJet_eta", "CleanGenJet_eta")
+        .Redefine("GenJet_phi", "CleanGenJet_phi")
+        .Redefine("GenJet_mass", "CleanGenJet_mass")
+        .Redefine("GenJet_partonFlavour", "CleanGenJet_partonFlavour")
+        .Redefine("GenJet_hadronFlavour", "CleanGenJet_hadronFlavour")
+    )
+
     extracted = (
         df.Define(
             "GenJet_EncodedPartonFlavour_light",
