@@ -47,18 +47,18 @@ pu = [
 ele_cond = ele_cond + pu
 
 jet_cond = [
-    "GenJet_eta",
-    "GenJet_phi",
-    "GenJet_pt",
-    "GenJet_mass",
-    "GenJet_EncodedPartonFlavour_light",
-    "GenJet_EncodedPartonFlavour_gluon",
-    "GenJet_EncodedPartonFlavour_c",
-    "GenJet_EncodedPartonFlavour_b",
-    "GenJet_EncodedPartonFlavour_undefined",
-    "GenJet_EncodedHadronFlavour_b",
-    "GenJet_EncodedHadronFlavour_c",
-    "GenJet_EncodedHadronFlavour_light",
+    "CleanGenJet_eta",
+    "CleanGenJet_phi",
+    "CleanGenJet_pt",
+    "CleanGenJet_mass",
+    "CleanGenJet_EncodedPartonFlavour_light",
+    "CleanGenJet_EncodedPartonFlavour_gluon",
+    "CleanGenJet_EncodedPartonFlavour_c",
+    "CleanGenJet_EncodedPartonFlavour_b",
+    "CleanGenJet_EncodedPartonFlavour_undefined",
+    "CleanGenJet_EncodedHadronFlavour_b",
+    "CleanGenJet_EncodedHadronFlavour_c",
+    "CleanGenJet_EncodedHadronFlavour_light",
 ]
 
 eff_ele_jet = jet_cond.copy()
