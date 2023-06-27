@@ -189,7 +189,7 @@ def extractGenJetFeatures(df):
             "CleanGenJet_EncodedPartonFlavour_undefined",
             "flavour_encoder(CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{0})",
         )
-        .Define("CleanGenJet_hadronFlavour_uchar", "CleanGenJet_hadronFlavour")
+        # .Define("CleanGenJet_hadronFlavour_uchar", "CleanGenJet_hadronFlavour")
         .Define(
             "CleanGenJet_hadronFlavour_int",
             "static_cast<ROOT::VecOps::RVec<int>>(CleanGenJet_hadronFlavour_uchar)",
