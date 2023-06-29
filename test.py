@@ -32,8 +32,8 @@ mc_dir = "/gpfs/ddn/srm/cms//store/mc"
 
 ### DrellYan new
 prod_camp = "RunIISummer20UL18NanoAODv9"
-sample = "DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8"
-nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2"
+sample = "DYJetsToLL_LHEFilterPtZ-0To50_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+nano = "NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1"
 
 
 ### DrellYan old
