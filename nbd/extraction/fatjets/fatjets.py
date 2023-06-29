@@ -23,9 +23,10 @@ def extractGenFatJetsFeatures(df):
         .Define("MGenJetAK8_hadronFlavour", "GenJetAK8_hadronFlavour[GenJetAK8Mask]")
         .Define("MGenJetAK8_partonFlavour", "GenJetAK8_partonFlavour[GenJetAK8Mask]")
         .Define("MGenJetAK8_mass", "GenJetAK8_mass[GenJetAK8Mask]")
+        .Define("GenPart_pdgId_abs", "abs(GenPart_pdgId)")
         .Define(
             "GenPart_IsLastB",
-            "(GenPart_pdgId >=500 && GenPart_pdgId < 600) | (GenPart_pdgId >=5000 && GenPart_pdgId < 6000) && (GenPart_statusFlags &(1<<13))!=0",
+            "(GenPart_pdgId_abs >=500 && GenPart_pdgId_abs < 600) | (GenPart_pdgId_abs >=5000 && GenPart_pdgId_abs < 6000) && (GenPart_statusFlags &(1<<13))!=0",
         )
         .Define("GenPart_IsLastB_m", "Take(GenPart_IsLastB, GenPart_genPartIdxMother)")
         .Define(
@@ -41,7 +42,7 @@ def extractGenFatJetsFeatures(df):
         )
         .Define(
             "GenPart_IsLastC",
-            "(GenPart_pdgId >=400 && GenPart_pdgId < 500) | (GenPart_pdgId >=4000 && GenPart_pdgId < 5000) && (GenPart_statusFlags &(1<<13))!=0",
+            "(GenPart_pdgId_abs >=400 && GenPart_pdgId_abs < 500) | (GenPart_pdgId_abs >=4000 && GenPart_pdgId_abs < 5000) && (GenPart_statusFlags &(1<<13))!=0",
         )
         .Define("GenPart_IsLastC_m", "Take(GenPart_IsLastC, GenPart_genPartIdxMother)")
         .Define(
