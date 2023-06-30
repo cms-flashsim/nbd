@@ -21,7 +21,7 @@ keys = ["eta", "pt", "phi", "msoftdrop", "particleNetMD_XbbvsQCD"]
 full_keys = [f"FatJet_{key}" for key in keys]
 post_actions = [
     [["a", "MGenJetAK8_eta"], ["s"]],
-    [["m", "MGenJetAK8_pt"], ["s"], ["calibrate_pt_fatjets"]],
+    [["m", "MGenJetAK8_pt"], ["calibrate_pt_fatjets"], ["s"],],
     [["a", "MGenJetAK8_phi"], ["pmp"], ["s"]],
     [["m", "MGenJetAK8_mass"], ["lower_b", 0, -10], ["s"]],
     [["s"]],
