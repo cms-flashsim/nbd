@@ -314,8 +314,8 @@ def calibrate_pt_fatjets(df):
         0.704,
         1.0,
     ]
-    df['calibrated_pt'] = df['FatJet_pt'] * np.select(conditions, choices, default=1.0)
-    return df['calibrated_pt']
+    df['FatJet_pt'] = df['FatJet_pt'] * np.select(conditions, choices, default=1.0)
+    return df['FatJet_pt']
 
 
 def rename_column(df, old_name, new_name):
