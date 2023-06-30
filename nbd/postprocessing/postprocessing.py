@@ -526,7 +526,7 @@ def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path
             value = op[1]
             df[column_name] = create_column(df, column_name, value)
         elif op[0] == "calibrate_pt_fatjets":
-            df["FatJet_pt"] = calibrate_pt_fatjets(df)
+            df[column_name] = calibrate_pt_fatjets(df)
         else:
             pass
     return df[column_name]
