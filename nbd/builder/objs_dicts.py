@@ -158,7 +158,7 @@ reco_objects = [
     # "FatJet",
 ]  # list of FullSim branches to be copied and saved in the dedicated tree
 
-merge_dict = {"Electron": ["Electron", "Electron_fromJets"]}
+merge_dict = {}  # "Electron": ["Electron", "Electron_fromJets"]
 
 # all the columns that are needed for the extraction
 
