@@ -153,31 +153,31 @@ objs_dicts = {
 
 reco_objects = [
     "Electron",
-    "Muon",
-    "Jet",
+    # "Muon",
+    # "Jet",
     # "FatJet",
 ]  # list of FullSim branches to be copied and saved in the dedicated tree
 
-merge_dict = {"Electron": ["Electron", "Electron_fromJets"]}
+merge_dict = {}
 
 # all the columns that are needed for the extraction
 
 needed_columns = [
-    'GenPart_pdgId',
-    'GenPart_pt',
-    'GenPart_eta',
-    'GenPart_phi',
-    'GenPart_statusFlags',
-    'GenPart_genPartIdxMother',
-    'GenJet_pt',
-    'GenJet_eta',
-    'GenJet_phi',
-    'GenJet_partonFlavour',
-    'GenJet_hadronFlavour',
-    'GenJetAK8_pt',
-    'GenJetAK8_eta',
-    'GenJetAK8_phi',
-    'GenJetAK8_mass',
-    'GenJetAK8_partonFlavour',
-    'GenJetAK8_hadronFlavour',
+    "GenPart_pdgId",
+    "GenPart_pt",
+    "GenPart_eta",
+    "GenPart_phi",
+    "GenPart_statusFlags",
+    "GenPart_genPartIdxMother",
+    "GenJet_pt",
+    "GenJet_eta",
+    "GenJet_phi",
+    "GenJet_partonFlavour",
+    "GenJet_hadronFlavour",
+    "GenJetAK8_pt",
+    "GenJetAK8_eta",
+    "GenJetAK8_phi",
+    "GenJetAK8_mass",
+    "GenJetAK8_partonFlavour",
+    "GenJetAK8_hadronFlavour",
 ]
