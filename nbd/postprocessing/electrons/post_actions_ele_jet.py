@@ -48,7 +48,7 @@ target_dictionary = {
     "Electron_etaMinusGen": [
         ["i", np.tan, [10, 0]],
         ["s"],
-        ["a", "CleanGenJet_eta"],
+        ["a", "GenJet_eta"],
         ["rename", "Electron_eta"],
     ],
     "Electron_hoe": [
@@ -93,13 +93,13 @@ target_dictionary = {
     "Electron_phiMinusGen": [
         ["i", np.tan, [10, 0]],
         ["s"],
-        ["a", "CleanGenJet_phi"],
+        ["a", "GenJet_phi"],
         ["rename", "Electron_phi"],
     ],
     "Electron_ptRatio": [
         ["i", np.expm1, [1, 0]],
         ["s"],
-        ["m", "CleanGenJet_pt"],
+        ["m", "GenJet_pt"],
         ["rename", "Electron_pt"],
     ],
     "Electron_r9": [["i", np.exp, [1, 1e-2]], ["s"]],

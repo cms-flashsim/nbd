@@ -166,45 +166,43 @@ def extractGenJetFeatures(df):
     Returns:
         rdataframe: rdataframe with new features
     """
-    df = cleanGenJetCollection(df)
-
     extracted = (
         df.Define(
-            "CleanGenJet_EncodedPartonFlavour_light",
-            "flavour_encoder(CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{1,2,3})",
+            "GenJet_EncodedPartonFlavour_light",
+            "flavour_encoder(GenJet_partonFlavour, ROOT::VecOps::RVec<int>{1,2,3})",
         )
         .Define(
-            "CleanGenJet_EncodedPartonFlavour_gluon",
-            "flavour_encoder(CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{21})",
+            "GenJet_EncodedPartonFlavour_gluon",
+            "flavour_encoder(GenJet_partonFlavour, ROOT::VecOps::RVec<int>{21})",
         )
         .Define(
-            "CleanGenJet_EncodedPartonFlavour_c",
-            "flavour_encoder(CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{4})",
+            "GenJet_EncodedPartonFlavour_c",
+            "flavour_encoder(GenJet_partonFlavour, ROOT::VecOps::RVec<int>{4})",
         )
         .Define(
-            "CleanGenJet_EncodedPartonFlavour_b",
-            "flavour_encoder(CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{5})",
+            "GenJet_EncodedPartonFlavour_b",
+            "flavour_encoder(GenJet_partonFlavour, ROOT::VecOps::RVec<int>{5})",
         )
         .Define(
-            "CleanGenJet_EncodedPartonFlavour_undefined",
-            "flavour_encoder(CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{0})",
+            "GenJet_EncodedPartonFlavour_undefined",
+            "flavour_encoder(GenJet_partonFlavour, ROOT::VecOps::RVec<int>{0})",
         )
-        # .Define("CleanGenJet_hadronFlavour_uchar", "CleanGenJet_hadronFlavour")
+        .Define("GenJet_hadronFlavour_uchar", "GenJet_hadronFlavour")
         .Define(
-            "CleanGenJet_hadronFlavour_int",
-            "static_cast<ROOT::VecOps::RVec<int>>(CleanGenJet_hadronFlavour_uchar)",
-        )
-        .Define(
-            "CleanGenJet_EncodedHadronFlavour_b",
-            "flavour_encoder(CleanGenJet_hadronFlavour_int, ROOT::VecOps::RVec<int>{5})",
+            "GenJet_hadronFlavour_int",
+            "static_cast<ROOT::VecOps::RVec<int>>(GenJet_hadronFlavour_uchar)",
         )
         .Define(
-            "CleanGenJet_EncodedHadronFlavour_c",
-            "flavour_encoder(CleanGenJet_hadronFlavour_int, ROOT::VecOps::RVec<int>{4})",
+            "GenJet_EncodedHadronFlavour_b",
+            "flavour_encoder(GenJet_hadronFlavour_int, ROOT::VecOps::RVec<int>{5})",
         )
         .Define(
-            "CleanGenJet_EncodedHadronFlavour_light",
-            "flavour_encoder(CleanGenJet_hadronFlavour_int, ROOT::VecOps::RVec<int>{0})",
+            "GenJet_EncodedHadronFlavour_c",
+            "flavour_encoder(GenJet_hadronFlavour_int, ROOT::VecOps::RVec<int>{4})",
+        )
+        .Define(
+            "GenJet_EncodedHadronFlavour_light",
+            "flavour_encoder(GenJet_hadronFlavour_int, ROOT::VecOps::RVec<int>{0})",
         )
     )
 
