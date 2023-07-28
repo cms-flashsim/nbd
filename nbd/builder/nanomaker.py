@@ -184,19 +184,6 @@ def nanomaker(
 
     print("Done")
 
-    # add a new ttrees to the output file
-
-    print("Writing the FullSim tree...")
-    a_full = ak.from_rdataframe(full, columns=old_reco_columns)
-    d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
-    old_reco = ak.to_rdataframe(d_full)
-
-    opts = ROOT.RDF.RSnapshotOptions()
-    opts.fMode = "Update"
-    old_reco.Snapshot("FullSim", output_file, "", opts)
-
-    print("Done")
-
     print(
         f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
     )
