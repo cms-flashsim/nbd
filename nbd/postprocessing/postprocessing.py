@@ -59,6 +59,9 @@ def add_gen(df, gen_df, column_name, gen_column_name):
     df[column_name] = df[column_name] + gen_df[gen_column_name]
     return df[column_name]
 
+def copy_gen(df, gen_df, column_name, gen_column_name):
+    df[column_name] = gen_df[gen_column_name]
+    return df[column_name]
 
 def restore_range(column_name, scale_dict, df):
     """
