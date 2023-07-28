@@ -26,10 +26,7 @@ def nanomaker(
     print(f"Processing file {input_file}")
 
     file = ROOT.TFile.Open(input_file)
-    events = file.Events
-    lumi = file.LuminosityBlocks
-    runs = file.Runs
-    meta = file.MetaData
+    events = file.MJets
 
     print(
         f"Memory usage before processing: {(process.memory_info().rss / 1024 / 1024):.0f} MB"
@@ -199,14 +196,6 @@ def nanomaker(
     old_reco.Snapshot("FullSim", output_file, "", opts)
 
     print("Done")
-
-    print("Writing others trees...")
-    outfile = ROOT.TFile.Open(output_file, "UPDATE")
-    outfile.cd()
-    lumi.CloneTree().Write()
-    runs.CloneTree().Write()
-    meta.CloneTree().Write()
-    outfile.Close()
 
     print(
         f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
