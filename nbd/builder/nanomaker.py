@@ -180,6 +180,9 @@ def nanomaker(
         if name in total.keys():
             to_file = to_file.Redefine(name, f"({type}) {name}")
 
+    if "FatJets" in objects_keys:
+        to_file = to_file.Redefine("FatJet_particleNetMD_XbbvsQCD", "float(FatJet_particleNetMD_XbbvsQCD)")
+
     to_file.Snapshot("Events", output_file)
 
     print("Done")
