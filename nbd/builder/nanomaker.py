@@ -187,7 +187,7 @@ def nanomaker(
     # add a new ttrees to the output file
 
     print("Writing the FullSim tree...")
-    a_full = ak.from_rdataframe(full, columns=old_reco_columns + ["run", "event"])
+    a_full = ak.from_rdataframe(full, columns=old_reco_columns)
     d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
     old_reco = ak.to_rdataframe(d_full)
 
