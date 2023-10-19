@@ -61,6 +61,15 @@ saturate_file_path_fatjets = os.path.join(
     "postprocessing/fatjets/saturate_ranges_fatjets.json",
 )
 
+# taus imports
+from nbd.extraction.taus import taus
+from nbd.postprocessing.taus.columns_taus import (
+    tau_cond,
+    reco_columns as reco_columns_taus,
+)
+from nbd.models.jets.jets_muons import load_mixture_model as load_model_taus
+from nbd.postprocessing.taus.post_actions_taus import target_dictionary_taus
+
 objs_dicts = {
     "Electron": {
         "derived_vars_func": electrons.extractGenElectronFeatures,
@@ -149,12 +158,30 @@ objs_dicts = {
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,
     },
+    "Tau": {
+        "derived_vars_func": taus.extractGenTauFeatures,
+        "eff_model": None,
+        "eff_model_path": None,
+        "flow_loader": load_model_taus,
+        "flow_path": "/mnt/c/Users/user/Desktop/FlashSim-Tau/others/FlashSim-Models/tau_model@epoch500.pt",
+        "eff_columns": None,
+        "gen_columns": tau_cond,
+        "reco_columns": reco_columns_taus,
+        "vars_dictionary": target_dictionary_taus,
+        "scale_file_path": "/mnt/c/Users/user/Desktop/FlashSim-Tau/trainer/training/taus_v9/scale_factors_taus.json",
+        "batch_size": 10000,
+        "saturate_ranges_path": "/mnt/c/Users/user/Desktop/FlashSim-Tau/trainer/training/taus_v9/ranges_taus.json",
+        "eff": False,
+        "preprocess_dict": None,
+        "gen_postprocessing_dict": None,
+    },
 }
 
 reco_objects = [
     "Electron",
     "Muon",
     "Jet",
+    "Tau",
     # "FatJet",
 ]  # list of FullSim branches to be copied and saved in the dedicated tree
 
