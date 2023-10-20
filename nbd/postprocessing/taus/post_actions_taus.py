@@ -33,17 +33,17 @@ target_dictionary = {
     ], 
  'idDeepTau2017v2p1VSe': [
      ["d", None, None],
-     ["i", np.power, [1, 0], 2]
+     ["i", np.power, [1, 1], 2]
      ],
  'idDeepTau2017v2p1VSjet': [
      ["d", None, None],
-     ["i", np.power, [1, 0], 2]
+     ["i", np.power, [1, 1], 2]
      ],
  'decayMode': [["udm"]],
  'charge': [["c", 0.0, [-1, 1]]], 
  'idDeepTau2017v2p1VSmu': [
      ["d", None, None],
-     ["i", np.power, [1, 0], 2]
+     ["i", np.power, [1, 1], 2]
      ],
  'idAntiMu': [["d", None, None]],
  'idDecayModeOldDMs': [["d", None, None]],
