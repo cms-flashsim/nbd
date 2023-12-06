@@ -14,18 +14,24 @@ from nflows.transforms.base import Transform
 from nflows.transforms.autoregressive import AutoregressiveTransform
 from nflows.transforms import made as made_module
 
-from modded_spline import (
-    unconstrained_rational_quadratic_spline,
-    rational_quadratic_spline,
-)
-import modded_spline
+
 from nflows.utils import torchutils
 
 # from nflows.transforms import splines
 from torch.nn.functional import softplus
 
-from modded_coupling import PiecewiseCouplingTransformRQS, CouplingTransformMAF
-from modded_base_flow import FlowM
+from nbd.models.modded_nflows.modded_spline import (
+    unconstrained_rational_quadratic_spline,
+    rational_quadratic_spline,
+)
+from nbd.models.modded_nflows.modded_coupling import (
+    PiecewiseCouplingTransformRQS,
+    CouplingTransformMAF,
+)
+
+# import .modded_nflows.modded_spline
+from nbd.models.modded_nflows import modded_spline
+from nbd.models.modded_nflows.modded_base_flow import FlowM
 
 
 class AffineCouplingTransform(CouplingTransformMAF):
