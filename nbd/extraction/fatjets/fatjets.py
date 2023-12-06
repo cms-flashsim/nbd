@@ -56,6 +56,7 @@ def extractGenFatJetsFeatures(df):
             "MGenJetAK8_ncFlavour",
             "count_nHadrons(GenPart_eta_goodc, GenPart_phi_goodc, MGenJetAK8_eta, MGenJetAK8_phi)",
         )
+        .Define("Mhas_H_within_0_8", "has_H_within_0_8(GenPart_eta, GenPart_phi, GenPart_pdgId, MGenJetAK8_eta, MGenJetAK8_phi)")
     )
 
     return extracted

@@ -7,6 +7,7 @@ fatjet_cond = [
     "MGenJetAK8_mass",
     "MGenJetAK8_ncFlavour",
     "MGenJetAK8_nbFlavour",
+    "Mhas_H_within_0_8",
 ]
 
 jet_names = [
