@@ -24,7 +24,7 @@ post_actions = [
     [["a", "MGenJetAK8_eta"], ["s"]],
     [["a", "MGenJetAK8_phi"], ["pmp"], ["s"]],
     [["m", "MGenJetAK8_mass"], ["lower_b", 0, -10], ["s"]],
-    [["s"]],
+    [["postprocess_disc_fatjet"],["s"]],
     [["genow", "MGenJetAK8_nbFlavour"]]
 ]
 

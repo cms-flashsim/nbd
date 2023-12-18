@@ -23,6 +23,13 @@ def overwrite_with_gen(df, gen_df, column_name, gen_column_name):
     df[column_name] = gen_df[gen_column_name]
     return df[column_name]
 
+def postprocess_disc_fatjet(df, column_name):
+    disc = df[column_name].values
+    range_disc = 20.56
+    min = -0.8281470664258219
+    disc = np.where(disc < min, -0.1, (np.tanh(disc * range_disc) + 1) / 2)
+    return disc
+
 
 def saturate_on_full(df, column_name, saturate_ranges_path):
     if saturate_ranges_path != None:
@@ -199,6 +206,9 @@ def process_column_var(column_name, operations, df, gen_df, saturate_ranges_path
         elif op[0] == "pmp":
             df[column_name] = pi_minuspi_periodicity(df, column_name)
 
+        elif op[0] == "postprocess_disc_fatjet":
+            df[column_name] = postprocess_disc_fatjet(df, column_name)
+            
         elif op[0] == "genow":
             gen_column_name = op[1]
             df[column_name] = overwrite_with_gen(
