@@ -161,7 +161,7 @@ def flash_simulate(
     flow.eval()
 
     if continuous:
-        sampler = ModelWrapper(flow)
+        sampler = ModelWrapper(flow, context_dim=len(gen_columns))
         timesteps = 100
         t_span = torch.linspace(0, 1, timesteps).to(device)
 
