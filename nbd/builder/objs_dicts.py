@@ -50,6 +50,7 @@ from nbd.postprocessing.gen_muons.post_actions_gen_muons import cond_dictionary_
 # fat jets imports
 from nbd.extraction.fatjets import fatjets
 from nbd.models.fatjets.fat_jets import load_mixture_model as load_model_fatjets
+from nbd.models.fatjets.fat_jets_cfm import resume_cfm_model as load_model_fatjets_cfm
 from nbd.postprocessing.fatjets.columns_fatjets import (
     reco_columns as reco_columns_fatjets,
     fatjet_cond,
@@ -136,7 +137,7 @@ objs_dicts = {
         "derived_vars_func": fatjets.extractGenFatJetsFeatures,
         "eff_model": None,
         "eff_model_path": None,
-        "flow_loader": load_model_fatjets,
+        "flow_loader": load_model_fatjets_cfm,
         "flow_path": "/gpfs/ddn/cms/user/fvaselli/fat_jets_weights/model_@epoch_999.pt",
         "eff_columns": None,
         "gen_columns": fatjet_cond,
@@ -146,6 +147,7 @@ objs_dicts = {
         "batch_size": 10000,
         "saturate_ranges_path": saturate_file_path_fatjets,
         "eff": False,
+        "continuous": True,
         "preprocess_dict": None,
         "gen_postprocessing_dict": None,
     },

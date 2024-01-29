@@ -12,9 +12,12 @@ from matplotlib import pyplot as plt
 from nbd.utils.gendataset import GenDataset
 from nbd.postprocessing.postprocessing import postprocessing
 from nbd.postprocessing.electrons.columns_ele_old import pu
+from nbd.models.modded_cfm.modded_cfm import ModelWrapper
 
 # from ..models.electrons.geneleeff import ElectronClassifier
 from torch.utils.data import DataLoader
+
+from torchdiffeq import odeint
 
 
 def isReco(y_pred):
@@ -138,6 +141,7 @@ def flash_simulate(
     vars_dictionary,
     scale_file_path,
     reco_struct,
+    continuous=False,
     device="cpu",
     batch_size=10000,
     saturate_ranges_path=None,
@@ -156,6 +160,11 @@ def flash_simulate(
 
     flow.eval()
 
+    if continuous:
+        sampler = ModelWrapper(flow)
+        timesteps = 100
+        t_span = torch.linspace(0, 1, timesteps).to(device)
+
     tot_sample = []
     leftover_sample = []
     times = []
@@ -164,16 +173,33 @@ def flash_simulate(
     with torch.no_grad():
         for batch_idx, y in enumerate(tqdm(data_loader, ascii=True)):
             # print(f"Batch: {batch_idx}/{len(data_loader)}")
-
             y = y.float().to(device, non_blocking=True)
             if len(y) == batch_size:
                 start = time.time()
-                while True:
-                    try:
-                        sample = flow.sample(1, context=y)
-                        break
-                    except AssertionError:
-                        print("Error, retrying")
+
+                if not continuous:
+                    while True:
+                        try:
+                            sample = flow.sample(1, context=y)
+                            break
+                        except AssertionError:
+                            print("Error, retrying")
+                if continuous:
+                    x0_sample = torch.randn(len(y), len(reco_columns)).to(device)
+                    initial_conditions = torch.cat([x0_sample, y], dim=-1)
+
+                    sample = odeint(
+                        sampler,
+                        initial_conditions,
+                        t_span,
+                        atol=1e-6,
+                        rtol=1e-6,
+                        method="dopri5",
+                    )[-1, :, : len(reco_columns)]
+
+                else:
+                    raise ValueError("Continuous should be True or False")
+
                 taken = time.time() - start
                 # print(f"{(batch_size / taken):.0f} Hz")
                 times.append(taken)
