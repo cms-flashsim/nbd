@@ -204,23 +204,38 @@ def flash_simulate(
                 # print(f"{(batch_size / taken):.0f} Hz")
                 times.append(taken)
                 sample = sample.detach().cpu().numpy()
-                sample = np.squeeze(sample, axis=1)
+                if not continuous:
+                    sample = np.squeeze(sample, axis=1)
                 tot_sample.append(sample)
 
             else:
                 leftover_shape = len(y)
                 start = time.time()
-                while True:
-                    try:
-                        sample = flow.sample(1, context=y)
-                        break
-                    except AssertionError:
-                        print("Error, retrying")
+                if not continuous:
+                    while True:
+                        try:
+                            sample = flow.sample(1, context=y)
+                            break
+                        except AssertionError:
+                            print("Error, retrying")
+                if continuous:
+                    x0_sample = torch.randn(len(y), len(reco_columns)).to(device)
+                    initial_conditions = torch.cat([x0_sample, y], dim=-1)
+
+                    sample = odeint(
+                        sampler,
+                        initial_conditions,
+                        t_span,
+                        atol=1e-6,
+                        rtol=1e-6,
+                        method="dopri5",
+                    )[-1, :, : len(reco_columns)]
                 taken = time.time() - start
                 # print(f"{(leftover_shape / taken):.0f} Hz")
                 times.append(taken)
                 sample = sample.detach().cpu().numpy()
-                sample = np.squeeze(sample, axis=1)
+                if not continuous:
+                    sample = np.squeeze(sample, axis=1)
                 leftover_sample.append(sample)
 
     print(f"Main sampling done with mean rate: {(batch_size / np.mean(times)):.0f} Hz")
