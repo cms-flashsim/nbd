@@ -53,7 +53,9 @@ def nanomaker(
         full_columns_.append(str(name))
 
     # Temporary fix: LHEPdfWeight leads to a segmentation fault when calling ak.from_rdataframe
-    full_columns = [name for name in full_columns_ if name != "LHEPdfWeight"]
+    # full_columns = [name for name in full_columns_ if name != "LHEPdfWeight"]
+    # Avoid to load all the columns if not needed
+    full_columns = ["run", "event"]
 
     # Selecting FullSim reco variables to copy in the FullSim tree
     # Reco objects are defined in reco_full.py
@@ -181,7 +183,10 @@ def nanomaker(
             to_file = to_file.Redefine(name, f"({type}) {name}")
 
     if "FatJets" in objects_keys:
-        to_file = to_file.Redefine("FatJet_particleNetMD_XbbvsQCD", "(ROOT::VecOps::RVec<float>) FatJet_particleNetMD_XbbvsQCD")
+        to_file = to_file.Redefine(
+            "FatJet_particleNetMD_XbbvsQCD",
+            "(ROOT::VecOps::RVec<float>) FatJet_particleNetMD_XbbvsQCD",
+        )
 
     to_file.Snapshot("Events", output_file)
 
@@ -189,24 +194,24 @@ def nanomaker(
 
     # add a new ttrees to the output file
 
-    print("Writing the FullSim tree...")
-    a_full = ak.from_rdataframe(full, columns=old_reco_columns + ["run", "event"])
-    d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
-    old_reco = ak.to_rdataframe(d_full)
+    # print("Writing the FullSim tree...")
+    # a_full = ak.from_rdataframe(full, columns=old_reco_columns + ["run", "event"])
+    # d_full = dict(zip(a_full.fields, [a_full[field] for field in a_full.fields]))
+    # old_reco = ak.to_rdataframe(d_full)
 
-    opts = ROOT.RDF.RSnapshotOptions()
-    opts.fMode = "Update"
-    old_reco.Snapshot("FullSim", output_file, "", opts)
+    # opts = ROOT.RDF.RSnapshotOptions()
+    # opts.fMode = "Update"
+    # old_reco.Snapshot("FullSim", output_file, "", opts)
 
-    print("Done")
+    # print("Done")
 
-    print("Writing others trees...")
-    outfile = ROOT.TFile.Open(output_file, "UPDATE")
-    outfile.cd()
-    lumi.CloneTree().Write()
-    runs.CloneTree().Write()
-    meta.CloneTree().Write()
-    outfile.Close()
+    # print("Writing others trees...")
+    # outfile = ROOT.TFile.Open(output_file, "UPDATE")
+    # outfile.cd()
+    # lumi.CloneTree().Write()
+    # runs.CloneTree().Write()
+    # meta.CloneTree().Write()
+    # outfile.Close()
 
     print(
         f"Memory after writing the output file: {(process.memory_info().rss / 1024/ 1024):.0f} MB"
